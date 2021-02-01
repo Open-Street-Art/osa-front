@@ -48,6 +48,37 @@
 				<p class="text-h5">
 					Textes
 				</p>
+				<p class="base">
+					<v-container>
+						<v-ul>
+							<v-li>
+								<p class="title">
+									Texte de titre
+								</p>
+							</v-li>
+							<v-li>
+								<p class="emphase">
+									Texte emphasé
+								</p>
+							</v-li>
+							<v-li>
+								<p class="base">
+									Texte de base
+								</p>
+							</v-li>
+							<v-li>
+								<p class="light">
+									Texte clair
+								</p>
+							</v-li>
+							<v-li>
+								<p class="button">
+									bouton / lien
+								</p>
+							</v-li>
+						</v-ul>
+					</v-container>
+				</p>
 			</div>
 			<div>
 				<p class="text-h5">
@@ -72,3 +103,7 @@
 		</v-container>
 	</v-main>
 </template>
+
+<style lang="scss">
+  @import "../assets/styles/text.scss";
+</style>

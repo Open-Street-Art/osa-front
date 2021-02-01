@@ -17,10 +17,10 @@
 <script>
 export default {
 	name: 'App',
-	data () {
+	data() {
 		return {
-			isProduction: process.env.NODE_ENV === 'production'
+			isProduction: process.env.NODE_ENV === 'production',
 		};
-	}
+	},
 };
 </script>

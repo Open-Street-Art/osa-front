@@ -1,0 +1,27 @@
+@import "variables";
+
+.title{
+  color: $base-color;
+  font: $title-font;
+}
+
+.emphase{
+  color: $base-color;
+  font: $em-font;
+}
+
+.base{
+  color: $base-color;
+  font: $base-font;
+}
+
+.light{
+  color: $light-color;
+  font: $base-font;
+}
+
+.button{
+  color: $main-color;
+  font: $em-font;
+}
+
