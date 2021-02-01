@@ -1,9 +1,9 @@
 <template>
 	<v-main>
-		<v-container>
-			<p class="text-h3">
-				Toolbox
-			</p>
+		<v-container fluid>
+			<Clipboard code="Le code a copier">
+				<Sample />
+			</Clipboard>
 			<div>
 				<p class="text-h5">
 					Searchbar
@@ -105,5 +105,19 @@
 </template>
 
 <style lang="scss">
-  @import "../assets/styles/text.scss";
+	@import "../assets/styles/text.scss";
 </style>
+
+<script>
+import Clipboard from '../components/Clipboard.vue';
+import Sample from '../components/Sample.vue';
+
+export default {
+	name: 'Toolbox',
+	components: {
+		Clipboard,
+		Sample
+	}
+};
+</script>
+
