@@ -52,29 +52,39 @@
 					<v-container>
 						<v-ul>
 							<v-li>
-								<p class="title">
-									Texte de titre
-								</p>
+								<clipboard code="title">
+									<p class="title">
+										Texte de titre
+									</p>
+								</clipboard>
 							</v-li>
 							<v-li>
-								<p class="emphase">
-									Texte emphasé
-								</p>
+								<clipboard code="emphase">
+									<p class="emphase">
+										Texte emphasé
+									</p>
+								</clipboard>
 							</v-li>
 							<v-li>
-								<p class="base">
-									Texte de base
-								</p>
+								<clipboard code="base">
+									<p class="base">
+										Texte de base
+									</p>
+								</clipboard>
 							</v-li>
 							<v-li>
-								<p class="light">
-									Texte clair
-								</p>
+								<clipboard code="light">
+									<p class="light">
+										Texte clair
+									</p>
+								</clipboard>
 							</v-li>
 							<v-li>
-								<p class="button">
-									bouton / lien
-								</p>
+								<clipboard code="button">
+									<p class="button">
+										bouton / lien
+									</p>
+								</clipboard>
 							</v-li>
 						</v-ul>
 					</v-container>
