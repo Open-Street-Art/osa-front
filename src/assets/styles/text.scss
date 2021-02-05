@@ -20,8 +20,17 @@
   font: $base-font;
 }
 
+.light-emphase{
+  color: $light-color;
+  font: $em-font;
+}
+
 .button{
   color: $main-color;
   font: $em-font;
 }
 
+.button-white{
+  color: $white-color;
+  font: $em-font;
+}
