@@ -1,8 +1,6 @@
 import Texts from './Texts.vue';
 import { action } from '@storybook/addon-actions';
 
-
-
 export default {
 	title: 'Texts',
 	component: Texts,

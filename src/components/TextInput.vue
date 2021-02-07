@@ -1,24 +1,47 @@
 <template>
 	<v-text-field
-		:label="label"
+		v-model="input"
+		:label="labelString"
+		:type="show ? 'text' : 'password'"
 		outlined
 		class="light rounded-pill"
-		color="light" />
+		color="light"
+		:rules="rules" />
 </template>
 
 <script>
 export default {
 	name: 'TextInput',
 	props: {
-		label: {
-			default: 'default',
+		labelString: {
+			default: 'standard',
 			type: String
+		},
+		show: {
+			default: true,
+			type: Boolean
+		},
+		inputRules: {
+			default: () => [],
+			type: Array
 		}
 	},
+	data: function() {
+		return {
+			input: '',
+			rules: this.inputRules
+		};
+	},
 	watch: {
-      	label: function(newVal, oldVal) { // watch it
+      	labelString: function(newVal, oldVal) { // watch it
 			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		}
+		},
+		show: function(newVal, oldVal) {
+			console.log('Prop change: ', newVal, ' | was: ', oldVal);
+		},
+		rules: function(newVal, oldVal) {
+			console.log('Prop change: ', newVal, ' | was: ', oldVal);
+		},
 	}
 };
 </script>
