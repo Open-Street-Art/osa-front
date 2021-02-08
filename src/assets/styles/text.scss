@@ -40,9 +40,15 @@
   font: $base-font;
 }
 
+.theme--light.v-label--active {
+  color: $light-color;
+  font: $label-font;
+}
+
+
 .v-text-field--outlined.v-input--is-focused  .theme--light.v-label--active {
   color: $main-color;
-  font: $base-font;
+  font: $label-font;
 }
 
 .v-text-field {

@@ -6,7 +6,8 @@
 		outlined
 		class="light rounded-pill"
 		color="light"
-		:rules="rules" />
+		:rules="rules"
+		dense />
 </template>
 
 <script>
@@ -48,17 +49,19 @@ export default {
 
 <style lang="scss">
 	@import "../assets/styles/text.scss";
+
 .v-text-field--outlined fieldset {
-  border-color: $light-color
+  border-color: $light-color;
 }
 
 .v-text-field--outlined.v-input--is-focused fieldset{
 	color: $main-color ;
-  border-color: $main-color !important
+  border-color: $main-color !important;
 }
 
 .v-text-field--outlined.v-input--is-focused >>> label{
-	color: $main-color !important
+	color: $main-color !important;
+	font: $label-font !important
 }
 
 </style>
