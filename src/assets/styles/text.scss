@@ -34,28 +34,3 @@
   color: $white-color;
   font: $em-font;
 }
-
-.theme--light.v-label {
-  color: $light-color;
-  font: $base-font;
-}
-
-.theme--light.v-label--active {
-  color: $light-color;
-  font: $label-font;
-}
-
-
-.v-text-field--outlined.v-input--is-focused  .theme--light.v-label--active {
-  color: $main-color;
-  font: $label-font;
-}
-
-.v-text-field {
-  color: $light-color;
-  font: $base-font;
-}
-
-.v-text-field--outlined >>> fieldset {
-  border-color: $main-color;
-}

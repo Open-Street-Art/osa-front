@@ -14,7 +14,7 @@ const Template = (args, { argTypes }) => ({
 
 export const TextInputSample = Template.bind({});
 
-TextInputSample.args = { labelString: 'default label', show: 'true'};
+TextInputSample.args = { labelString: 'default label', show: true};
 
 const Template2 = (args, { argTypes }) => ({
 	components: { TextInput },
@@ -24,4 +24,4 @@ const Template2 = (args, { argTypes }) => ({
 
 export const RulesInputSample = Template2.bind({});
 
-RulesInputSample.args = { labelString: 'default label', show: 'true', inputRules: [v => v.length >= 8 || 'Min 8 characters']};
+RulesInputSample.args = { labelString: 'default label', show: true, inputRules: [v => v.length >= 8 || 'Min 8 characters']};
