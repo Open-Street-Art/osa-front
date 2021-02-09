@@ -1,18 +1,31 @@
 <template>
 	<div
-		id="button"
-		class="button">
-		<button class="button-full">
+		id="button">
+		<button
+			class="button-full button-white">
+			{{ textButton }}
 			full button
 		</button>
-		<button class="button-empty">
+		<button class="button-empty button">
 			empty button
 		</button>
 	</div>
 </template>
 <script>
 export default {
-	name: 'Button'
+	name: 'Button',
+	props: {
+		textButton: {
+			default: 'Par défaut',
+			type: String
+		}
+	},
+	data: function() {
+		return {
+			button: '',
+		};
+	},
+	
 };
 </script>
 <style lang="scss">
@@ -41,4 +54,5 @@ export default {
   border-radius: 20px;
   font : 14px Arial, Helvetica, sans-serif;
 }
+ @import "../assets/styles/text.scss";
 </style>
