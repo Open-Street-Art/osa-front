@@ -9,7 +9,8 @@ export default {
 const Template = (args, { argTypes }) => ({
 	components: { Buttons },
 	props: Object.keys(argTypes),
-	template: '<Buttons />',
+	template: '<Buttons :textButton="textButton"/>',
 });
 
 export const Bouton = Template.bind({});
+Bouton.args={textButton: 'Par défaut'};
