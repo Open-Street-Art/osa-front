@@ -7,12 +7,7 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-links",
-    {
-      name: "@storybook/addon-essentials",
-      options: {
-        docs: false
-      }
-     },
+    "@storybook/addon-essentials",
     "@storybook/preset-scss"
   ],
   webpackFinal: async (config, { configType }) => {
