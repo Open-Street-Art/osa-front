@@ -5,7 +5,9 @@
 		:counter="counter"
 		rounded
 		no-resize
-		:rows="rows" />
+		:rows="rows"
+		:value="value"
+		@input="$emit('update', $event)" />
 </template>
 
 <script>
