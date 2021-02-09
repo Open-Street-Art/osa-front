@@ -45,7 +45,6 @@ export default {
 				reader.onload = (e) => {
 					this.imageData = e.target.result;
 					this.imageStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url("' + this.imageData + '")';
-					alert(this.imageStyle);
 				};
 				reader.readAsDataURL(input.files[0]);
 			}
