@@ -1,28 +1,28 @@
 @import "variables";
 
 .title{
-  color: $base-color;
-  font: $title-font;
+  color: $base-color !important;
+  font: $title-font !important;
 }
 
 .emphase{
-  color: $base-color;
-  font: $em-font;
+  color: $base-color !important;
+  font: $em-font !important;
 }
 
 .base{
-  color: $base-color;
-  font: $base-font;
+  color: $base-color !important;
+  font: $base-font !important;
 }
 
 .light{
-  color: $light-color;
-  font: $base-font;
+  color: $light-color !important;
+  font: $base-font !important;
 }
 
 .light-emphase{
-  color: $light-color;
-  font: $em-font;
+  color: $light-color !important;
+  font: $em-font !important;
 }
 
 .button{
@@ -31,6 +31,6 @@
 }
 
 .button-white{
-  color: $white-color;
-  font: $em-font;
+  color: $white-color !important;
+  font: $em-font !important;
 }
