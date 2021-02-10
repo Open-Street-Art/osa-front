@@ -1,12 +1,13 @@
 import { addDecorator } from '@storybook/vue';
 import vuetify from './vuetify_storybook';
+import vuetifyConfig from '../src/plugins/vuetify'
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
 }
 
 addDecorator(() => ({
-  vuetify,
+  vuetify: vuetifyConfig,
   template: `
     <v-app>
       <v-main>
@@ -16,4 +17,4 @@ addDecorator(() => ({
       </v-main>
     </v-app>
     `,
-}));
+}))

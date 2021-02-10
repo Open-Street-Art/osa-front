@@ -2,55 +2,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
 .title{
-  color: $base-color;
-  font: $title-font;
+  color: $base-color !important;
+  font: $title-font !important;
 }
 
 .emphase{
-  color: $base-color;
-  font: $em-font;
+  color: $base-color !important;
+  font: $em-font !important;
 }
 
 .base{
-  color: $base-color;
-  font: $base-font;
+  color: $base-color !important;
+  font: $base-font !important;
 }
 
 .light{
-  color: $light-color;
-  font: $base-font;
+  color: $light-color !important;
+  font: $base-font !important;
 }
 
 .light-emphase{
-  color: $light-color;
-  font: $em-font;
+  color: $light-color !important;
+  font: $em-font !important;
 }
 
 .button{
-  color: $main-color;
-  font: $em-font;
+  color: $main-color!important;
+  font: $em-font !important;
 }
 
 .button-white{
-  color: $white-color;
-  font: $em-font;
-}
-
-.theme--light.v-label {
-  color: $light-color;
-  font: $base-font;
-}
-
-.v-text-field--outlined.v-input--is-focused  .theme--light.v-label--active {
-  color: $main-color;
-  font: $base-font;
-}
-
-.v-text-field {
-  color: $light-color;
-  font: $base-font;
-}
-
-.v-text-field--outlined >>> fieldset {
-  border-color: $main-color;
+  color: $white-color !important;
+  font: $em-font !important;
 }

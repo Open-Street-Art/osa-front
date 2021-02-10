@@ -1,0 +1,48 @@
+@import "variables";
+
+.v-text-field--outlined.v-input--is-focused  .theme--light.v-label--active {
+  color: $main-color;
+  font: $label-font;
+}
+
+.v-text-field {
+  color: $light-color;
+  font: $base-font;
+}
+
+.v-text-field--outlined >>> fieldset {
+  border-color: $main-color;
+}
+
+.theme--light.v-label {
+  color: $light-color;
+  font: $base-font;
+}
+
+.theme--light.v-label--active {
+  font: $label-font;
+}
+
+.v-text-field--outlined fieldset {
+  border-color: $light-color;
+}
+
+.v-text-field--outlined.v-input--is-focused fieldset{
+  border-color: $main-color;
+}
+
+.v-text-field--outlined.v-input--is-focused >>> label{
+	color: $main-color !important;
+	font: $label-font !important
+}
+
+textarea {
+  line-height: 1rem !important;
+  font: $base-font !important;
+}
+
+
+textarea::placeholder {
+  color: $light-color !important;
+}
+

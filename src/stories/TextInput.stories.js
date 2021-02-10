@@ -3,13 +3,31 @@ import { action } from '@storybook/addon-actions';
 
 export default {
 	title: 'TextInput',
-	component: TextInput
+	component: TextInput,
 };
 
 const Template = (args, { argTypes }) => ({
 	components: { TextInput },
 	props: Object.keys(argTypes),
-	template: '<v-container><TextInput /></v-container>',
+	template: '<v-container><TextInput :labelString="labelString" :show="show" @update="action"/></v-container>',
+	methods: {
+		action: action('update')
+	}
 });
 
 export const TextInputSample = Template.bind({});
+
+TextInputSample.args = { labelString: 'default label', show: true};
+
+const Template2 = (args, { argTypes }) => ({
+	components: { TextInput },
+	props: Object.keys(argTypes),
+	template: '<v-container><TextInput :labelString="labelString" :show="show" @update="action":inputRules="inputRules"  /></v-container>',
+	methods: {
+		action: action('update')
+	}
+});
+
+export const RulesInputSample = Template2.bind({});
+
+RulesInputSample.args = { labelString: 'default label', show: true, inputRules: [v => v.length >= 8 || 'Min 8 characters']};

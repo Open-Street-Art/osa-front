@@ -6,13 +6,13 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
     "@storybook/preset-scss": "^1.0.3",
     "core-js": "^3.6.5",
-    "css-loader": "^5.0.1",
+    "css-loader": "^5.0.2",
     "register-service-worker": "^1.7.1",
     "sass": "^1.32.6",
     "sass-loader": "^10.1.1",
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@mdi/font": "^5.9.55",
+    "@mdi/js": "^5.9.55",
     "@storybook/addon-actions": "^6.1.16",
     "@storybook/addon-essentials": "^6.1.16",
     "@storybook/addon-links": "^6.1.16",
@@ -41,6 +42,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.12.0",
+    "sass": "^1.32.0",
+    "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.1.0",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"

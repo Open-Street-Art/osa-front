@@ -1,41 +1,49 @@
 <template>
 	<v-text-field
-		:label="label"
+		:label="labelString"
+		:type="show ? 'text' : 'password'"
 		outlined
 		class="light rounded-pill"
-		color="light" />
+		color="light"
+		:rules="rules"
+		dense
+		:value="value"
+		@input="$emit('update', $event)" />
 </template>
 
 <script>
 export default {
 	name: 'TextInput',
+	model: {
+		prop: 'value',
+		event: 'update'
+	},
 	props: {
-		label: {
-			default: 'default',
+		labelString: {
+			default: 'standard',
+			type: String
+		},
+		show: {
+			default: true,
+			type: Boolean
+		},
+		inputRules: {
+			default: () => [],
+			type: Array
+		},
+		value: {
+			default: '',
 			type: String
 		}
 	},
-	watch: {
-      	label: function(newVal, oldVal) { // watch it
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		}
-	}
+	data: function() {
+		return {
+			rules: this.inputRules
+		};
+	},
 };
 </script>
 
 <style lang="scss">
-	@import "../assets/styles/text.scss";
-.v-text-field--outlined fieldset {
-  border-color: $light-color
-}
-
-.v-text-field--outlined.v-input--is-focused fieldset{
-	color: $main-color ;
-  border-color: $main-color !important
-}
-
-.v-text-field--outlined.v-input--is-focused >>> label{
-	color: $main-color !important
-}
-
+	@import "../assets/styles/input.scss";
 </style>
