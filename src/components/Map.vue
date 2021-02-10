@@ -1,0 +1,65 @@
+<template>
+	<l-map
+		ref="map"
+		style="height: 500px; width: 100%"
+		:zoom="baseZoom"
+		:center="baseCenter"
+		@update:zoom="$emit('zoomUpdate', $event)"
+		@update:center="$emit('centerUpdate', $event)"
+		@update:bounds="$emit('boundsUpdate', $event)">
+		<l-tile-layer :url="url" />
+		<l-marker
+			:lat-lng="[49.386758892241396, 1.0686564445495608]"
+			:icon="icon" />
+	</l-map>
+</template>
+
+<script>
+import L from 'leaflet';
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+
+export default {
+	name: 'Map',
+	components: {
+		LMap,
+		LTileLayer,
+		LMarker
+	},
+	props: {
+		baseCenter: {
+			type: Array,
+			default: () => [49.386758892241396, 1.0686564445495608]
+		},
+		url: {
+			type: String,
+			default: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+		},
+		baseZoom: {
+			type: Number,
+			default: 15
+		}
+	},
+	data () {
+		return {
+			zoom: 3,
+			center: [47.413220, -1.219482],
+			markerLatLng: [49.386758892241396, 1.0686564445495608],
+			bounds: null,
+			icon: L.divIcon({
+				html: '<svg width="30" height="42" viewBox="0 0 30 42" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 2C7.81286 2 2 7.81286 2 15C2 24.75 15 39.1429 15 39.1429C15 39.1429 28 24.75 28 15C28 7.81286 22.1871 2 15 2ZM15 19.6429C12.4371 19.6429 10.3571 17.5629 10.3571 15C10.3571 12.4371 12.4371 10.3571 15 10.3571C17.5629 10.3571 19.6429 12.4371 19.6429 15C19.6429 17.5629 17.5629 19.6429 15 19.6429Z" fill="#00BAAF" stroke="#FAFAFA" stroke-width="3"/></svg>'
+			})
+		};
+	},
+	methods: {
+		zoomUpdated (zoom) {
+			this.zoom = zoom;
+		},
+		centerUpdated (center) {
+			this.center = center;
+		},
+		boundsUpdated (bounds) {
+			this.bounds = bounds;
+		}
+	}
+};
+</script>
