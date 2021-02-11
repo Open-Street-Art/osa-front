@@ -5,7 +5,7 @@
 			class="button-full button-white">
 			{{ textButton }}
 		</button>
-		<button class="button-empty button">
+		<button class="button-empty button pos">
 			{{ textButton }}
 		</button>
 	</div>
@@ -41,6 +41,22 @@ export default {
   background: #00baaf;
   border-radius: 20px;
 
+position: absolute;
+width: 206px;
+height: 30px;
+left: 59px;
+top: 70px;
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 22px;
+display: flex;
+align-items: center;
+text-align: center;
+color: #FAFAFA;
+
 }
 
 .button-empty {
@@ -54,6 +70,26 @@ export default {
   box-sizing: border-box;
   border-radius: 20px;
 
+position: absolute;
+width: 206px;
+height: 30px;
+left: 59px;
+top: 18px;
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 22px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #00BAAF;
+
 }
- @import "../assets/styles/text.scss";
+
+	 @import "../assets/styles/text.scss";
+
+
 </style>
