@@ -31,16 +31,13 @@ export default {
 			default: () => [],
 			type: Array
 		},
-		value: {
-			default: '',
-			type: String
-		}
 	},
 	data: function() {
 		return {
-			rules: this.inputRules
+			rules: this.inputRules,
+			value: ''
 		};
-	},
+	}
 };
 </script>
 

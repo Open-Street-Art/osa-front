@@ -9,7 +9,7 @@ export default {
 const Template = (args, { argTypes }) => ({
 	components: { CheckBoxInput },
 	props: Object.keys(argTypes),
-	template: '<CheckBoxInput ref="cb" @update="action"/>',
+	template: '<CheckBoxInput @update="action"/>',
 	methods: {
 		action: action('update')
 	}

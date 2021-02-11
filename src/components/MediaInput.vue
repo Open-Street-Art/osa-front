@@ -1,6 +1,7 @@
 <template>
 	<span
-		class="fInput">
+		class="fInput"
+		:value="imageData">
 		<input
 			ref="fileIpt"
 			type="file"
@@ -25,6 +26,10 @@
 <script>
 export default {
 	name: 'MediaInput',
+	model: {
+		prop: 'imageData',
+		event: 'onFileInput'
+	},
 	props: {
 		round: {
 			default: false,
