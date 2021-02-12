@@ -25,7 +25,7 @@ export default {
 		},
 		forme:{
 			default: 'forme-oeuvre',
-			type: String  
+			type: String
 		}
 	},
 	data: function() {
@@ -50,17 +50,16 @@ export default {
 };
 </script>
 <style lang="scss">
+
 .forme-oeuvre{
-position: absolute;
-left: 3.72%;
-right: 82.52%;
-top: 17.57%;
-bottom: 17.57%;
-border-radius: 10px;
+	position: absolute;
+	left: 3.72%;
+	right: 82.52%;
+	top: 17.57%;
+	bottom: 17.57%;
+	border-radius: 10px;
 }
-border: 4px solid #00BAAF;
-box-sizing: border-box;
-}*/
+
 .forme-profile{
     overflow:hidden;
     -webkit-border-radius:50px;
