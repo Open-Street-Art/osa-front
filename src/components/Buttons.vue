@@ -1,13 +1,14 @@
 <template>
 	<div
 		id="button">
-		<button
-			class="button-full button-white">
+		<v-btn
+			class="button-full button-white"
+			color="#00baaf">
 			{{ textButton }}
-		</button>
-		<button class="button-empty button pos">
+		</v-btn>
+		<v-btn class="button-empty button">
 			{{ textButton }}
-		</button>
+		</v-btn>
 	</div>
 </template>
 <script>
