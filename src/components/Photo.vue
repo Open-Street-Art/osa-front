@@ -1,22 +1,10 @@
 <template>
 	<div id="app">
-		<div>
-			<v-img
-				:max-height="maxHeigth"
-				:max-width="maxWidth"
-				:src="linkPhoto"
-				:class="forme" />
-		</div>
-		<div>
-			<v-avatar
-				color="primary"
-				size="56">
-				<img
-            
-					:src="linkPhoto"
-					alt="John">
-			</v-avatar>
-		</div>
+		<v-img
+			:max-height="maxHeigth"
+			:max-width="maxWidth"
+			:src="linkPhoto"
+			:class="forme" />
 	</div>
 </template>
 <script>
@@ -72,7 +60,7 @@ bottom: 17.57%;
 //background: url(image.png);
 border-radius: 10px;
 }
-.forme-profile{
+/*.forme-profile{
 position: absolute;
 width: 80px;
 height: 80px;
@@ -82,5 +70,13 @@ top: 60px;
 //background: url(image.png);
 border: 4px solid #00BAAF;
 box-sizing: border-box;
+}*/
+.forme-profile{
+    overflow:hidden;
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:50px;
+    width:90px;
+    height:90px;
 }
 </style>
