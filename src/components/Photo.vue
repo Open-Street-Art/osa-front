@@ -56,18 +56,8 @@ left: 3.72%;
 right: 82.52%;
 top: 17.57%;
 bottom: 17.57%;
-
-//background: url(image.png);
 border-radius: 10px;
 }
-/*.forme-profile{
-position: absolute;
-width: 80px;
-height: 80px;
-left: 13px;
-top: 60px;
-
-//background: url(image.png);
 border: 4px solid #00BAAF;
 box-sizing: border-box;
 }*/
