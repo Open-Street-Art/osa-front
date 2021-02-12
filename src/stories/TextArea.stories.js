@@ -9,7 +9,10 @@ export default {
 const Template = (args, { argTypes }) => ({
 	components: { TextArea },
 	props: Object.keys(argTypes),
-	template: '<v-container><TextArea :placeholder="placeholder" :rows="rows" :counter="counter"/></v-container>',
+	template: '<TextArea :placeholder="placeholder" :rows="rows" :counter="counter" @update="action"/>',
+	methods: {
+		action: action('update')
+	}
 });
 
 export const TextAreaSample = Template.bind({});

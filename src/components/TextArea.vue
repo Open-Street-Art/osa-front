@@ -5,12 +5,18 @@
 		:counter="counter"
 		rounded
 		no-resize
-		:rows="rows" />
+		:rows="rows"
+		:value="value"
+		@input="$emit('update', $event)" />
 </template>
 
 <script>
 export default {
 	name: 'TextArea',
+	model: {
+		prop: 'value',
+		event: 'update'
+	},
 	props: {
 		placeholder: {
 			default: 'Default',
@@ -24,6 +30,11 @@ export default {
 			default: 5,
 			type: Number
 		}
+	},
+	data: function() {
+		return {
+			value: ''
+		};
 	}
 };
 </script>
