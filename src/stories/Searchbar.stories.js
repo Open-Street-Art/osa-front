@@ -9,13 +9,11 @@ export default {
 const Template = (args, { argTypes }) => ({
 	components: { Searchbar },
 	props: Object.keys(argTypes),
-	template: '<v-container><Searchbar :labelString="labelString" :show="show" @update="action"/></v-container>',
+	template: '<v-container><Searchbar/></v-container>',
 	methods: {
 		action: action('update')
 	}
 });
 
 export const SearchbarSample = Template.bind({});
-
-SearchbarSample.args = { labelString: 'default label', show: true};
 
