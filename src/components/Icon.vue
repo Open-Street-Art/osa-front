@@ -9,7 +9,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Mon profile</td>
+					<td>Mon profile ({{ catalogProps.Profile }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -18,7 +18,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Chercher un utilisateur</td>
+					<td>Chercher un utilisateur ({{ catalogProps.profile }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -27,7 +27,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Outils d'administration</td>
+					<td>Outils d'administration ({{ catalogProps.profil }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -36,7 +36,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Artiste favoris</td>
+					<td>Artiste favoris ({{ catalogProps.profile_box }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -45,7 +45,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Proposer une oeuvre</td>
+					<td>Proposer une oeuvre ({{ catalogProps.palette }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -54,7 +54,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Oeuvre favorite</td>
+					<td>Oeuvre favorite ({{ catalogProps.palette }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -63,7 +63,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Email</td>
+					<td>Email ({{ catalogProps.email }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -72,7 +72,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Parametre</td>
+					<td>Parametre ({{ catalogProps.param }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -82,7 +82,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Déconnection</td>
+					<td>Déconnection ({{ catalogProps.logout }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -92,7 +92,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Ajouter une oeuvre</td>
+					<td>Ajouter une oeuvre ({{ catalogProps.add }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -103,7 +103,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Menu</td>
+					<td>Menu ({{ catalogProps.menu }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -113,7 +113,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Carte</td>
+					<td>Carte ({{ catalogProps.geo }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -123,7 +123,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Ville favorite</td>
+					<td>Ville favorite ({{ catalogProps.city }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -133,7 +133,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Mot de passe</td>
+					<td>Mot de passe ({{ catalogProps.key }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -143,7 +143,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Valider la contribution</td>
+					<td>Valider la contribution ({{ catalogProps.check }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -153,7 +153,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Refuser contribution</td>
+					<td>Refuser contribution ({{ catalogProps.refuse }})</td>
 				</tr>
 			
 				<tr>
@@ -164,7 +164,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Modifier l'oeuvre</td>
+					<td>Modifier l'oeuvre ({{ catalogProps.edit }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -174,7 +174,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Supprimer l'oeuvre</td>
+					<td>Supprimer l'oeuvre ({{ catalogProps.delete }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -184,7 +184,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Ajouter au favoris</td>
+					<td>Ajouter au favoris ({{ catalogProps.favoris }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -194,7 +194,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Signaler l'oeuvre</td>
+					<td>Signaler l'oeuvre ({{ catalogProps.flag }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -204,7 +204,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Afficher l'itinéraire</td>
+					<td>Afficher l'itinéraire ({{ catalogProps.map }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -214,7 +214,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Exporter</td>
+					<td>Exporter ({{ catalogProps.export }})</td>
 				</tr>
 				<tr>
 					<td>
@@ -224,7 +224,7 @@
 						</v-icon>
 					</td>
 					<td />
-					<td>Contribuer à l'oeuvre</td>
+					<td>Contribuer à l'oeuvre ({{ catalogProps.oeuvre }})</td>
 				</tr>
 			</table>
 		</div>
@@ -262,7 +262,7 @@ export default {
 				favoris:'mdi-star-outline',
 				flag:'mdi-flag-variant',
 				map:'mdi-map',
-				export:'mdi-export',
+				export:'mdi-export-variant',
 				oeuvre:'mdi-text-box-plus-outline'
 			},
 		};
