@@ -1,9 +1,15 @@
 <template>
 	<div class="card">
-        <img :class="roundImg ? 'card-img round-img' : 'card-img'" :src="imgSrc" />
-        <div class="emphase card-title">{{ cardTitle }}</div>
-        <div class="light card-desc">{{ cardDesc }}</div>
-    </div>
+		<img
+			:class="roundImg ? 'card-img round-img' : 'card-img'"
+			:src="imgSrc">
+		<div class="emphase card-title">
+			{{ cardTitle }}
+		</div>
+		<div class="light card-desc">
+			{{ cardDesc }}
+		</div>
+	</div>
 </template>
 
 <script>
@@ -14,20 +20,20 @@ export default {
 			default: 'Nom de la carte',
 			type: String
 		},
-        cardDesc: {
-            default: 'Description de la carte',
-            type: String
-        },
-        imgSrc: {
-            default: 'https://www.ales.fr/wp-content/uploads/2019/03/atelier-street-art.jpg',
-            type: String
-        },
-        roundImg: {
-            default: false,
-            type: Boolean
-        }
+		cardDesc: {
+			default: 'Description de la carte',
+			type: String
+		},
+		imgSrc: {
+			default: 'https://www.ales.fr/wp-content/uploads/2019/03/atelier-street-art.jpg',
+			type: String
+		},
+		roundImg: {
+			default: false,
+			type: Boolean
+		}
 	},
-    watch: {
+	watch: {
       	cardTitle: function(newVal, oldVal) {
 			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
 		},
