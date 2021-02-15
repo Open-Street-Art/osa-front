@@ -9,7 +9,7 @@ export default {
 const Template = (args, { argTypes }) => ({
 	components: { TextInput },
 	props: Object.keys(argTypes),
-	template: '<v-container><TextInput :labelString="labelString" :show="show" @update="action"/></v-container>',
+	template: '<TextInput :labelString="labelString" :show="show" @update="action"/>',
 	methods: {
 		action: action('update')
 	}
@@ -22,7 +22,7 @@ TextInputSample.args = { labelString: 'default label', show: true};
 const Template2 = (args, { argTypes }) => ({
 	components: { TextInput },
 	props: Object.keys(argTypes),
-	template: '<v-container><TextInput :labelString="labelString" :show="show" @update="action":inputRules="inputRules"  /></v-container>',
+	template: '<TextInput :labelString="labelString" :show="show" @update="action":inputRules="inputRules" />',
 	methods: {
 		action: action('update')
 	}
