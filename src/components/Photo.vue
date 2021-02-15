@@ -58,9 +58,6 @@ top: 17.57%;
 bottom: 17.57%;
 border-radius: 10px;
 }
-border: 4px solid #00BAAF;
-box-sizing: border-box;
-}*/
 .forme-profile{
     overflow:hidden;
     -webkit-border-radius:50px;
