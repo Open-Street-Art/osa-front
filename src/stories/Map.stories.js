@@ -1,5 +1,6 @@
 import ArtMap from '../components/ArtMap.vue';
 import Pin from '../components/Pin.vue';
+import Card from '../components/Card.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
@@ -40,9 +41,9 @@ MapPinSample.args = { baseCenter:[49.386758892241396, 1.0686564445495608] ,baseZ
 
 
 const Template3 = (args, { argTypes }) => ({
-	components: { ArtMap, Pin},
+	components: { ArtMap, Pin, Card},
 	props: Object.keys(argTypes),
-	template: '<ArtMap style="width: 80%" :baseCenter="baseCenter" :baseZoom="baseZoom" @zoomUpdate="zoomAction" @centerUpdate="centerAction" @boundsUpdate="boundsAction"><Pin :markerLatlng="markerLatlng"></Pin></ArtMap>',
+	template: '<ArtMap style="width: 80%" :baseCenter="baseCenter" :baseZoom="baseZoom" @zoomUpdate="zoomAction" @centerUpdate="centerAction" @boundsUpdate="boundsAction"><Pin :markerLatlng="markerLatlng"><Card :cardTitle="cardTitle" :cardDesc="cardDesc"/></Pin></ArtMap>',
 	methods: {
 		zoomAction: action('zoomUpdate'),
 		centerAction: action('centerUpdate'),
@@ -52,4 +53,4 @@ const Template3 = (args, { argTypes }) => ({
 
 export const MapPopupSample = Template3.bind({});
 
-MapPinSample.args = { baseCenter:[49.386758892241396, 1.0686564445495608] ,baseZoom: 15, markerLatlng: [49.386758892241396, 1.0686564445495608]};
+MapPopupSample.args = { baseCenter:[49.386758892241396, 1.0686564445495608] ,baseZoom: 15, markerLatlng: [49.386758892241396, 1.0686564445495608], cardTitle: 'Nom de l’œuvre', cardDesc: 'Artiste inconnu, Rouen'};

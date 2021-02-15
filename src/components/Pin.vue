@@ -2,7 +2,8 @@
 	<l-marker
 		:icon="icon"
 		:lat-lng="markerLatlng">
-		<l-popup v-if="hasDefaultSlot">
+		<l-popup
+			v-if="hasDefaultSlot">
 			<slot />
 		</l-popup>
 	</l-marker>
@@ -31,6 +32,7 @@ export default {
 				className: 'dummy',
 				iconAnchor: [15, 42],
 			}),
+
 		};
 	},
 	computed: {
@@ -40,3 +42,17 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.leaflet-pane.leaflet-popup-pane {
+	visibility: hidden;
+}
+
+.leaflet-popup-content {
+	visibility: visible;
+	padding:0px;
+	margin:0px;
+	margin-bottom: 30px;
+	margin-left:-30px;
+}
+</style>
