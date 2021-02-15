@@ -1,26 +1,28 @@
 <template>
 	<l-map
-		ref="map"
-		style="height: 500px; width: 100%"
+		id="map"
 		:zoom="baseZoom"
 		:center="baseCenter"
+		:options="{zoomControl: false}"
 		@update:zoom="$emit('zoomUpdate', $event)"
 		@update:center="$emit('centerUpdate', $event)"
 		@update:bounds="$emit('boundsUpdate', $event)">
 		<l-tile-layer :url="url" />
+		<l-control-zoom position="topright" />
 		<slot />
 	</l-map>
 </template>
 
 <script>
 import L from 'leaflet';
-import { LMap, LTileLayer} from 'vue2-leaflet';
+import { LMap, LTileLayer, LControlZoom} from 'vue2-leaflet';
 
 export default {
-	name: 'Map',
+	name: 'ArtMap',
 	components: {
 		LMap,
 		LTileLayer,
+		LControlZoom
 	},
 	props: {
 		baseCenter: {
@@ -60,3 +62,15 @@ export default {
 	}
 };
 </script>
+
+<style >
+#map {
+	height:100vh;
+	width: 100vw;
+}
+
+html {
+	overflow-y: hidden
+}
+</style>
+
