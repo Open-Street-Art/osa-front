@@ -13,6 +13,10 @@
 <script>
 export default {
 	name: 'TextArea',
+	model: {
+		prop: 'value',
+		event: 'update'
+	},
 	props: {
 		placeholder: {
 			default: 'Default',
@@ -26,6 +30,11 @@ export default {
 			default: 5,
 			type: Number
 		}
+	},
+	data: function() {
+		return {
+			value: ''
+		};
 	}
 };
 </script>

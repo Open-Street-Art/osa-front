@@ -2,12 +2,22 @@
 	<v-switch
 		color="primary"
 		inset
+		:value="value"
 		@change="$emit('update', $event)" />
 </template>
 
 <script>
 export default {
 	name: 'CheckBoxInput',
+	model: {
+		prop: 'value',
+		event: 'update'
+	},
+	data: function() {
+		return {
+			value: ''
+		};
+	}
 };
 </script>
 
