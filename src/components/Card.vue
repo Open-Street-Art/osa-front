@@ -1,5 +1,5 @@
 <template>
-	<div class="card">
+	<div class="card" @click="openModal">
         <img :class="roundImg ? 'card-img round-img' : 'card-img'" :src="imgSrc" />
         <div class="emphase card-title">{{ cardTitle }}</div>
         <div class="light card-desc">{{ cardDesc }}</div>
@@ -27,6 +27,11 @@ export default {
             type: Boolean
         }
 	},
+    methods: {
+        openModal: function(event) {
+            console.log("click !");
+        }
+    },
     watch: {
       	cardTitle: function(newVal, oldVal) {
 			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
