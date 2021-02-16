@@ -59,7 +59,6 @@ export default {
 	bottom: 17.57%;
 	border-radius: 10px;
 }
-
 .forme-profile{
     overflow:hidden;
     -webkit-border-radius:50px;
