@@ -36,6 +36,18 @@
 	font: $label-font !important
 }
 
+.v-input__slot {
+  padding-left: 20px !important
+}
+
+.v-textarea>.v-input__control>.v-input__slot {
+  padding-left: 13px !important
+}
+
+fieldset {
+  padding-left: 16px !important
+}
+
 textarea {
   line-height: 1rem !important;
   font: $base-font !important;
