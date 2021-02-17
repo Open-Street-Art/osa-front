@@ -1,29 +1,31 @@
 <template>
 	<div :class="'header ' + (bigHeader?'header-big':'header-small')">
-      <slot name="left"></slot>
-      <div class="header-title titles">{{ title }}</div>
-      <slot name="right"></slot>
-  </div>
+		<slot name="left" />
+		<div class="header-title titles">
+			{{ title }}
+		</div>
+		<slot name="right" />
+	</div>
 </template>
 
 <script>
 export default {
 	name: 'Header',
-  props: {
+	props: {
 		bigHeader: {
 			default: false,
 			type: Boolean
 		},
-    title: {
-      default: "",
-      type: String
-    }
+		title: {
+			default: '',
+			type: String
+		}
 	},
-  watch: {
-    bigHeader: function(newVal, oldVal) {
+	watch: {
+		bigHeader: function(newVal, oldVal) {
 			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
 		},
-    title: function(newVal, oldVal) {
+		title: function(newVal, oldVal) {
 			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
 		}
 	}

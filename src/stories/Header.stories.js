@@ -16,5 +16,5 @@ const Template = (args, { argTypes }) => ({
 });
 
 export const HeaderSample = Template.bind({});
-HeaderSample.args = { bigHeader: false, title: "Titre du header"};
+HeaderSample.args = { bigHeader: false, title: 'Titre du header'};
 

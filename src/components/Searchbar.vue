@@ -1,16 +1,24 @@
 <template>
-	<div class="searchbar" ref="container">
+	<div
+		ref="container"
+		class="searchbar">
 		<v-text-field
+			v-model="value"
 			clearable
 			flat
 			solo
 			hide-details
-			v-model="value"
 			placeholder="Rechercher une œuvre, un artiste..."
 			@input="update" />
-		<div class="separator"></div>
-		<div class="sad light-emphase">Aucun résultat ne correspond à votre recherche :(</div>
-		<div :class="'explorer button' + (showButton?'':' hidden')" @click="close">Explorer la carte</div>
+		<div class="separator" />
+		<div class="sad light-emphase">
+			Aucun résultat ne correspond à votre recherche :(
+		</div>
+		<div
+			:class="'explorer button' + (showButton?'':' hidden')"
+			@click="close">
+			Explorer la carte
+		</div>
 	</div>
 </template>
 
@@ -18,7 +26,7 @@
 
 export default {
 	name: 'Searchbar',
-    model: {
+	model: {
 		prop: 'value',
 		event: 'update'
 	},
@@ -44,11 +52,11 @@ export default {
 
 			if(this.value != null && this.value.length > this.minSize) {
 				console.log('affiche les cartes');
-				this.$refs.container.classList.add("large");
+				this.$refs.container.classList.add('large');
 			}
 			else {
-				console.log("cache les cartes");
-				this.$refs.container.classList.remove("large");
+				console.log('cache les cartes');
+				this.$refs.container.classList.remove('large');
 			}
 
 			if (this.lastUpdate >= (Date.now() - this.delay)) return; //évite de bombarder d'update a chaque input (limite a 1/300ms)
@@ -56,7 +64,7 @@ export default {
 			console.log('update !');
 		},
 		close: function() {
-			this.$refs.container.classList.remove("large");
+			this.$refs.container.classList.remove('large');
 		}
 	}
 };
