@@ -15,7 +15,7 @@ export default {
 			type: Boolean
 		},
     title: {
-      default: "Titre du header",
+      default: "",
       type: String
     }
 	},
