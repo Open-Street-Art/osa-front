@@ -38,6 +38,9 @@ export default {
 </script>
 
 <style lang="scss">
-			@import "../assets/styles/text.scss";
+	@import "../assets/styles/text.scss";
 
+	.v-snack__content {
+		text-align: center;
+	}
 </style>
