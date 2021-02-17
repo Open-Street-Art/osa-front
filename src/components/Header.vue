@@ -22,6 +22,9 @@ export default {
   watch: {
     bigHeader: function(newVal, oldVal) {
 			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
+		},
+    title: function(newVal, oldVal) {
+			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
 		}
 	}
 };

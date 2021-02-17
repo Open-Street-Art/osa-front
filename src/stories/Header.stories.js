@@ -9,12 +9,12 @@ export default {
 const Template = (args, { argTypes }) => ({
 	components: { Header },
 	props: Object.keys(argTypes),
-	template: '<v-container><Header :bigHeader="bigHeader"/></v-container>',
+	template: '<v-container><Header :bigHeader="bigHeader" :title="title"/></v-container>',
 	methods: {
 		action: action('update')
 	}
 });
 
 export const HeaderSample = Template.bind({});
-HeaderSample.args = { bigHeader: false};
+HeaderSample.args = { bigHeader: false, title: "Titre du header"};
 
