@@ -1,5 +1,7 @@
 <template>
-	<div class="card">
+	<div
+		class="card"
+		@click="openModal">
 		<img
 			:class="roundImg ? 'card-img round-img' : 'card-img'"
 			:src="imgSrc">
@@ -39,6 +41,11 @@ export default {
 		},
 		cardDesc: function(newVal, oldVal) {
 			console.log('Prop change: ', newVal, ' | was: ', oldVal);
+		}
+	},
+	methods: {
+		openModal: function(event) {
+			console.log('click !');
 		}
 	}
 };

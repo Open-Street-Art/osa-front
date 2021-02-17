@@ -1,4 +1,5 @@
 import '@mdi/font/css/materialdesignicons.css';
+import 'leaflet/dist/leaflet.css';
 import Vue from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';

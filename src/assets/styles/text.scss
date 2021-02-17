@@ -1,7 +1,6 @@
 @import "variables";
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
-.title{
+.titles{
   color: $base-color !important;
   font: $title-font !important;
 }
@@ -26,6 +25,11 @@
   font: $em-font !important;
 }
 
+.grey-emphase {
+  color: $dark-grey !important;
+  font: $em-font !important;
+}
+
 .button{
   color: $main-color!important;
   font: $em-font !important;
@@ -33,5 +37,5 @@
 
 .button-white{
   color: $white-color !important;
-  font: $em-font !important;
+//   font: $em-font !important;
 }
