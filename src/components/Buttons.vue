@@ -24,11 +24,6 @@ export default {
 		return {
 			button: '',
 		};
-	},
-	watch: {
-      	textButton: function(newVal, oldVal) { // watch it
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		}
 	}
 };
 </script>
