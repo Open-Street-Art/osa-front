@@ -35,19 +35,10 @@ export default {
 			type: Boolean
 		}
 	},
-	watch: {
-      	cardTitle: function(newVal, oldVal) {
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		},
-		cardDesc: function(newVal, oldVal) {
-			console.log('Prop change: ', newVal, ' | was: ', oldVal);
-		}
-	},
 	methods: {
 		openModal: function(event) {
-			console.log('click !');
 		}
-	}
+	},
 };
 </script>
 

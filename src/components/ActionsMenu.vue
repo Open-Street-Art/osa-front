@@ -2,6 +2,7 @@
 	<v-card
 		class="mx-auto rounded-xl"
 		max-width="300"
+		:outlined="outlined"
 		style="overflow: hidden">
 		<v-list>
 			<v-list-item-group
@@ -15,6 +16,12 @@
 <script>
 export default {
 	name: 'ActionsMenu',
+	props: {
+		outlined: {
+			default: false,
+			type: Boolean
+		}
+	}
 };
 </script>
 

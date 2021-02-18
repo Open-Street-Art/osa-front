@@ -51,17 +51,14 @@ export default {
 		update: function (event) {
 
 			if(this.value != null && this.value.length > this.minSize) {
-				console.log('affiche les cartes');
 				this.$refs.container.classList.add('large');
 			}
 			else {
-				console.log('cache les cartes');
 				this.$refs.container.classList.remove('large');
 			}
 
 			if (this.lastUpdate >= (Date.now() - this.delay)) return; //évite de bombarder d'update a chaque input (limite a 1/300ms)
 			this.lastUpdate = Date.now();
-			console.log('update !');
 		},
 		close: function() {
 			this.$refs.container.classList.remove('large');
@@ -145,7 +142,7 @@ export default {
 
 		transition: height 0.125s ease;
 	}
-	
+
 	.searchbar.large > .explorer {
 		height: 64px;
 	}

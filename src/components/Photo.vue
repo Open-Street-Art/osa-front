@@ -32,20 +32,6 @@ export default {
 		return {
 			photo: '',
 		};
-	},
-	watch: {
-      	linkPhoto: function(newVal, oldVal) { // watch it
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		},
-		maxHeigth: function(newVal, oldVal) { // watch it
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		},
-		maxWidth: function(newVal, oldVal) { // watch it
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		},
-		forme: function(newVal, oldVal) { // watch it
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		}
 	}
 };
 </script>

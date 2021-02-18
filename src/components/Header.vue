@@ -20,14 +20,6 @@ export default {
 			default: '',
 			type: String
 		}
-	},
-	watch: {
-		bigHeader: function(newVal, oldVal) {
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		},
-		title: function(newVal, oldVal) {
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		}
 	}
 };
 </script>
@@ -36,7 +28,7 @@ export default {
 @import "../assets/styles/text.scss";
 
 .header {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   box-sizing: border-box;

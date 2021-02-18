@@ -17,11 +17,6 @@ export default {
 			default: 'base',
 			type: String
 		}
-	},
-	watch: {
-      	textClass: function(newVal, oldVal) { // watch it
-			console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-		}
 	}
 };
 </script>

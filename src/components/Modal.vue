@@ -34,20 +34,16 @@ export default {
 	},
 	methods: {
 		closeModal: function(event) {
-			if(event.target == this.$refs.blur)
-				console.log('click on blur !');
+
 		},
 		selectArrow: function(event) {
 			this.arrowDown = true;
-			console.log('arrow grabbed');
 		},
 		moveModal: function(event) {
-			if(this.arrowDown) console.log('moving modal');
 		},
 		hideModal: function(event) {
 			if(this.arrowDown) {
 				this.arrowDown = false;
-				console.log('trying to hide modal');
 			}
 		}
 	}
