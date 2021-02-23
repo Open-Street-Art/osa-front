@@ -1,6 +1,6 @@
 <template>
 	<v-text-field
-		:label="labelString"
+		:label="this.$t(labelString)"
 		:type="show ? 'text' : 'password'"
 		outlined
 		class="light rounded-pill"
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+
 export default {
 	name: 'TextInput',
 	model: {
@@ -20,8 +21,8 @@ export default {
 	},
 	props: {
 		labelString: {
-			default: 'standard',
-			type: String
+			type: String,
+			default: 'testMessage'
 		},
 		show: {
 			default: true,

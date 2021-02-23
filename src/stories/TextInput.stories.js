@@ -1,15 +1,17 @@
 import TextInput from '../components/TextInput.vue';
+import LocaleChanger from './LocaleChanger.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
 	title: 'TextInput',
 	component: TextInput,
+	subComponent: {LocaleChanger}
 };
 
 const Template = (args, { argTypes }) => ({
-	components: { TextInput },
+	components: { TextInput, LocaleChanger },
 	props: Object.keys(argTypes),
-	template: '<TextInput :labelString="labelString" :show="show" @update="action"/>',
+	template: '<v-container><TextInput  :show="show" @update="action"/><LocaleChanger></LocaleChanger></v-container>',
 	methods: {
 		action: action('update')
 	}
