@@ -4,7 +4,7 @@
 		color="primary"
 		:width="width"
 		:outlined="outlined">
-		{{ textButton }}
+		{{ this.$t(textButton) }}
 	</v-btn>
 </template>
 <script>
@@ -12,7 +12,7 @@ export default {
 	name: 'Button',
 	props: {
 		textButton: {
-			default: ' Par défaut ',
+			default: ' defaultLabel ',
 			type: String
 		},
 		outlined: {
