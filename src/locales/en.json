@@ -1,3 +1,4 @@
 {
-  "testMessage": "Hello World !"
+  "testMessage": "Hello World !",
+  "defaultLabel": "Default label"
 }

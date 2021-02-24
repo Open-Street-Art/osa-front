@@ -1,15 +1,16 @@
 import TextArea from '../components/TextArea.vue';
+import LocaleChanger from './LocaleChanger.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
 	title: 'TextArea',
-	component: TextArea,
+	component: TextArea, LocaleChanger
 };
 
 const Template = (args, { argTypes }) => ({
-	components: { TextArea },
+	components: { TextArea, LocaleChanger },
 	props: Object.keys(argTypes),
-	template: '<TextArea :placeholder="placeholder" :rows="rows" :counter="counter" @update="action"/>',
+	template: '<v-container><TextArea :placeholder="placeholder" :rows="rows" :counter="counter" @update="action"/><LocaleChanger></LocaleChanger></v-container>',
 	methods: {
 		action: action('update')
 	}
@@ -17,4 +18,4 @@ const Template = (args, { argTypes }) => ({
 
 export const TextAreaSample = Template.bind({});
 
-TextAreaSample.args = { placeholder: 'Default', counter: 160, rows: 5};
+TextAreaSample.args = { placeholder: 'defaultLabel', counter: 160, rows: 5};

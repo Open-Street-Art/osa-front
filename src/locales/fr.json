@@ -1,3 +1,4 @@
 {
-  "testMessage": "Bonjour le monde !"
+  "testMessage": "Bonjour le monde !",
+  "defaultLabel": "Label par défaut"
 }

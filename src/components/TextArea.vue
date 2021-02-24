@@ -1,6 +1,6 @@
 <template>
 	<v-textarea
-		:placeholder="placeholder"
+		:placeholder="this.$t(placeholder)"
 		outlined
 		:counter="counter"
 		rounded
@@ -19,7 +19,7 @@ export default {
 	},
 	props: {
 		placeholder: {
-			default: 'Default',
+			default: 'defaultLabel',
 			type: String
 		},
 		rows: {
