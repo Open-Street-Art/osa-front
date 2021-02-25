@@ -1,9 +1,7 @@
 <template>
 	<v-list-item @click="$emit('click', $event)">
 		<v-list-item-icon>
-			<v-icon color="#C4C4C4">
-				{{ icon }}
-			</v-icon>
+			<v-icon>{{ icon }}</v-icon>
 		</v-list-item-icon>
 		<v-list-item-content>
 			<v-list-item-title class="grey-emphase">
@@ -15,7 +13,7 @@
 
 <script>
 export default {
-	name: 'ActionsMenuItem',
+	name: 'ActionsMenu',
 	props: {
 		icon: {
 			type: String,
@@ -33,10 +31,7 @@ export default {
 	@import "../assets/styles/text.scss";
 
   .v-list-item__icon {
-    margin-right:10px !important;
-    margin-bottom: 14px !important;
-    margin-top: 18px !important;
-    color: $light-color !important,
+    margin-right:10px !important
   }
 
   .v-list-item {
