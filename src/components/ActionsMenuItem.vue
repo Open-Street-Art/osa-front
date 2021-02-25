@@ -7,7 +7,7 @@
 		</v-list-item-icon>
 		<v-list-item-content>
 			<v-list-item-title class="grey-emphase">
-				{{ content }}
+				{{ this.$t(content) }}
 			</v-list-item-title>
 		</v-list-item-content>
 	</v-list-item>
@@ -23,7 +23,7 @@ export default {
 		},
 		content: {
 			type: String,
-			default: 'default label'
+			default: 'defaultLabel'
 		}
 	}
 };
@@ -36,7 +36,7 @@ export default {
     margin-right:10px !important;
     margin-bottom: 14px !important;
     margin-top: 18px !important;
-    color: $light-color !important,
+    color: $light-color !important;
   }
 
   .v-list-item {
