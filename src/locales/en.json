@@ -1,4 +1,10 @@
 {
   "testMessage": "Hello World !",
-  "defaultLabel": "Default label"
+  "defaultLabel": "Default label",
+  "home" : {
+    "login" : "Log in",
+    "signin" : "Sign in",
+    "searchUser" : "Search user",
+    "commitArt" : "Suggest an art "
+  }
 }

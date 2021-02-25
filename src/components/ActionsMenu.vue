@@ -26,7 +26,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/styles/text.scss";
+
 .v-list {
+	border-color: $light-color !important;
   padding: 0px !important
 }
 

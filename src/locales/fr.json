@@ -1,4 +1,10 @@
 {
   "testMessage": "Bonjour le monde !",
-  "defaultLabel": "Label par défaut"
+  "defaultLabel": "Label par défaut",
+  "home" : {
+    "login" : "Se connecter",
+    "signin" : "S'inscrire",
+    "searchUser" : "Rechercher un utilisateur",
+    "commitArt" : "Proposer une oeuvre"
+  }
 }

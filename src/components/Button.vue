@@ -31,10 +31,14 @@ export default {
 	}
 };
 </script>
-<style lang="scss">
+<style  lang="scss">
 @import "../assets/styles/text.scss";
-.v-btn__content { 
-  font: $em-font;
+.v-btn__content {
+  font: $em-font ;
   text-transform: none;
+}
+
+.v-btn {
+	border-radius: 20px !important;
 }
 </style>

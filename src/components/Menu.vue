@@ -2,6 +2,7 @@
 	<v-navigation-drawer
 		:value="value"
 		:absolute="absolute"
+		:app="app"
 		width="323"
 		temporary
 		@input="$emit('update', $event)">
@@ -22,6 +23,10 @@ export default {
 			default: false
 		},
 		absolute: {
+			type: Boolean,
+			default: false
+		},
+		app: {
 			type: Boolean,
 			default: false
 		}
