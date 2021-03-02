@@ -2,8 +2,7 @@
 	<v-main>
 		<div class="test">
 			<base-wrapper
-				v-model="drawer"
-				base-wrapper>
+				v-model="drawer">
 				<v-btn
 					class="tempButton"
 					fab
@@ -13,7 +12,18 @@
 						mdi-menu
 					</v-icon>
 				</v-btn>
-				<art-map class="artmap" />
+				<art-map class="artmap">
+					<pin
+						v-for="{id, latitude, longitude} in pinList"
+						:key="id"
+						:marker-latlng="[latitude, longitude]"
+						@click="pinPopup(id)">
+						<card
+							:card-title="cardTitle"
+							:card-desc="cardDesc"
+							:img-src="imgSrc" />
+					</pin>
+				</art-map>
 			</base-wrapper>
 		</div>
 	</v-main>
@@ -22,14 +32,53 @@
 <script>
 import ArtMap from '../components/ArtMap.vue';
 import BaseWrapper from '../components/BaseWrapper.vue';
+import Pin from '../components/Pin.vue';
+import Card from '../components/Card.vue';
+import axios from 'axios';
 
 export default {
 	name: 'Home',
-	components: { BaseWrapper, ArtMap },
+	components: { BaseWrapper, ArtMap , Pin, Card},
 	data () {
 		return {
-			drawer: false
+			drawer: false,
+			pinList: [],
+			cardTitle: '',
+			cardDesc: '',
+			imgSrc: '',
 		};
+	},
+	mounted() {
+		this.getMapPins();
+	},
+	methods: {
+		getMapPins() {
+			console.log(axios.defaults.headers);
+			axios
+				.get('/api/art/locations')
+				.then((response) => {
+					console.log(response.data.data[0]);
+					this.pinList.push(response.data.data[0]);
+				})
+				.catch((error) => {
+					console.log(error);
+					console.log(error.response);
+				});
+		},
+		pinPopup(id) {
+			axios
+				.get('/api/art/' + id)
+				.then((response) => {
+					console.log(response.data.data);
+					this.cardTitle = response.data.data.name;
+					this.cardDesc = response.data.data.authorName;
+					this.imgSrc = response.data.data.pictures[0];
+				})
+				.catch((error) => {
+					console.log(error);
+					console.log(error.response);
+				});
+		}
 	}
 };
 </script>

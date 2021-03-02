@@ -3,7 +3,7 @@
 		<Menu
 			:value="value"
 			app="true"
-			@input="$emit('update', $event)">
+			@update="$emit('update', $event)">
 			<v-container class="text-center">
 				<v-row>
 					<Button

@@ -1,7 +1,8 @@
 <template>
 	<l-marker
 		:icon="icon"
-		:lat-lng="markerLatlng">
+		:lat-lng="markerLatlng"
+		@click="$emit('click', $event)">
 		<l-popup
 			v-if="hasDefaultSlot">
 			<slot />
