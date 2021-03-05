@@ -2,6 +2,11 @@
 	<div class="viewInscription">
 		<BaseWrapper>
 			<Modal>
+				<template v-slot:header>
+					<Header
+						big-header="true"
+						title="Titre du modal" />
+				</template>
 				<TextInput
 					label-string="Adresse mail"
 					show
@@ -18,15 +23,26 @@
 					label-string="Confirmation de mot de passe"
 					show
 					:input-rules="[null]" />
-				<CheckBoxInput />
-
-				<Button
-					text-button="Annuler"
-					outlined="false" />
-				<LocaleChanger />
-				<Button
-					text-button="Valider"
-					outlined="true" />
+				<v-row
+					justify="space-between"
+					class="v-input__slot">
+					<p class="base">
+						Profil artiste
+					</p>
+					<CheckBoxInput />
+				</v-row><br>	
+				<v-divider /><br>
+				<v-row justify="space-between">
+					<Button
+						text-button="Annuler"
+						:outlined="true" 
+						:width="235" />
+					<LocaleChanger />
+					<Button
+						text-button="Valider"
+						:outlined="false" 
+						:width="235" />
+				</v-row>
 			</Modal>
 		</BaseWrapper>
 	</div>
@@ -37,7 +53,9 @@ import BaseWrapper from '../components/BaseWrapper.vue';
 import TextInput from '../components/TextInput.vue';
 import CheckBoxInput from '../components/CheckBoxInput.vue';
 import Button from '../components/Button.vue';
-//import Modal from '../components/Modal.vue';
+import Modal from '../components/Modal.vue';
+import Header from '../components/Header.vue';
+
 
 export default {
 	name: 'Inscription',
@@ -46,11 +64,13 @@ export default {
 		TextInput,
 		CheckBoxInput,
 		Button,
-		//Modal
+		Modal,
+		Header,
+		
 	}
 };
 </script>
 <style lang="scss">
 @import "../assets/styles/input.scss";
+@import "../assets/styles/text.scss";
 </style>
-
