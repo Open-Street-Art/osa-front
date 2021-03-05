@@ -28,4 +28,3 @@ const TemplateHeader = (args, { argTypes }) => ({
 export const ModalSample = Template.bind({});
 
 export const ModalWithHeader = TemplateHeader.bind({});
-
