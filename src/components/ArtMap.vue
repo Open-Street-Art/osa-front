@@ -8,7 +8,7 @@
 		@update:center="$emit('centerUpdate', $event)"
 		@update:bounds="$emit('boundsUpdate', $event)">
 		<l-tile-layer :url="url" />
-		<l-control-zoom position="topright" />
+
 		<slot />
 	</l-map>
 </template>
@@ -21,8 +21,7 @@ export default {
 	name: 'ArtMap',
 	components: {
 		LMap,
-		LTileLayer,
-		LControlZoom
+		LTileLayer
 	},
 	props: {
 		baseCenter: {

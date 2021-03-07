@@ -1,16 +1,20 @@
 <template>
 	<div
 		ref="container"
-		class="searchbar">
+		class="searchbar"
+		:value="value"
+		@update="$emit('update', $event)">
 		<v-text-field
 			v-model="value"
+			:value="value"
 			clearable
 			flat
 			solo
 			hide-details
 			placeholder="Rechercher une œuvre, un artiste..."
-			@input="update" />
+			@input="updateSearchBar" />
 		<div class="separator" />
+		<slot />
 		<div class="sad light-emphase">
 			Aucun résultat ne correspond à votre recherche :(
 		</div>
@@ -45,11 +49,12 @@ export default {
 			lastUpdate: 0,
 			delay: 300,
 			minSize: 1,
+			value: ''
 		};
 	},
 	methods: {
-		update: function (event) {
-
+		updateSearchBar: function (event) {
+			this.$emit('update', event);
 			if(this.value != null && this.value.length > this.minSize) {
 				this.$refs.container.classList.add('large');
 			}
@@ -111,7 +116,7 @@ export default {
 	}
 
 	.sad {
-		position: absolute;
+
 		top: 41px;
 		left: 0;
 		height: 74px;
