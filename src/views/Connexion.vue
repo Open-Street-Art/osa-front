@@ -5,7 +5,7 @@
 				<template v-slot:header>
 					<Header
 						big-header="true"
-						title="Titre du modal" />
+						title="Connexion" />
 				</template>
 				<TextInput
 					label-string="Adresse mail ou nom d'utilisateur"
