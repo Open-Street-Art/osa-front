@@ -15,11 +15,14 @@
 			@input="updateSearchBar" />
 		<div class="separator" />
 		<slot />
-		<div class="sad light-emphase">
+		<div
+			v-if="resultCount==0"
+			class="sad light-emphase py-5">
 			Aucun résultat ne correspond à votre recherche :(
 		</div>
 		<div
-			:class="'explorer button' + (showButton?'':' hidden')"
+			v-if="resultCount>0 && showButton"
+			class="explorer button"
 			@click="close">
 			Explorer la carte
 		</div>
@@ -117,12 +120,10 @@ export default {
 
 	.sad {
 
-		top: 41px;
-		left: 0;
-		height: 74px;
+
+
 		width: 100%;
 		text-align: center;
-		padding-top: 24px;
 	}
 
 	.explorer {
@@ -133,7 +134,6 @@ export default {
 		user-select: none;
 
 		display: block;
-		position: absolute;
 		bottom: 0;
 		left: 0;
 		width: 100%;

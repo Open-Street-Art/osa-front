@@ -24,7 +24,9 @@
 						<searchbar
 							v-model="searchValue"
 							class="searchbarHome"
-							@update="test"
+							:result-count="searchCount"
+							:show-button="true"
+							@update="search"
 							@click:clear="getMapPins">
 							<card
 								v-for="{id, title, desc, img} in searchList"
@@ -75,7 +77,8 @@ export default {
 			cardTitle: '',
 			cardDesc: '',
 			imgSrc: '',
-			searchValue: ''
+			searchValue: '',
+			searchCount: 0
 		};
 	},
 	mounted() {
@@ -109,11 +112,12 @@ export default {
 					console.log(error.response);
 				});
 		},
-		test() {
-			this.searchList = [];
+		search() {
+			var tempList = [];
+			var tempCount = 0;
 			console.log(this.searchValue);
 			if(this.searchValue != null && this.searchValue.length > 0 ) {
-				this.pinList = [];
+				var tempPinList = [];
 				axios
 					.get('/api/search/arts/' + this.searchValue)
 					.then((response) => {
@@ -126,9 +130,18 @@ export default {
 								var title = response.data.data[i].name;
 								var desc = response.data.data[i].authorName;
 								var img = response.data.data[i].pictures[0];
-								this.searchList.push({id, title, desc, img});
-								this.pinList.push({id,latitude,longitude});
+								tempList.push({id, title, desc, img});
+								tempPinList.push({id,latitude,longitude});
+								tempCount += 1;
 							}
+							this.searchList = tempList;
+							this.pinList = tempPinList;
+							this.searchCount = tempCount;
+						}
+						else {
+							this.searchList = [];
+							this.pinList = [];
+							this.searchCount = 0;
 						}
 					})
 					.catch((error) => {
