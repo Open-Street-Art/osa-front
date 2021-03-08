@@ -8,13 +8,13 @@
 						title="Connexion" />
 				</template>
 				<TextInput
-					label-string="Adresse mail ou nom d'utilisateur"
-					show
-					:input-rules="[null]" />
+					label-string="Adresse mail ou nom d'utilisateur" 
+					:show=true
+					:input-rule="[null]" />
 				<TextInput
-					label-string="Mot de passe"
-					show
-					:input-rules="[null]" />	
+					label-string="Mot de passe" 
+					:show=false
+					:input-rule="[null]" />	
 				<v-divider /><br>
 				<v-row justify="space-between">
 					<Button
