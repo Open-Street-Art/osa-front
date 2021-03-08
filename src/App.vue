@@ -1,6 +1,12 @@
 <template>
 	<v-app>
 		<v-main>
+			<router-link to="/">
+				Home
+			</router-link>
+			<router-link to="/inscription">
+				Inscription
+			</router-link>
 			<router-view />
 		</v-main>
 	</v-app>
