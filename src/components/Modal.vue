@@ -1,8 +1,12 @@
 <template>
-	<v-dialog
+	<v-bottom-sheet
 		transition="dialog-bottom-transition"
+		max-width="98%"
+		scrollable
 		:value="value">
-		<v-card class="content rounded-t-xl">
+		<v-card
+			class="content rounded-t-xl"
+			transition="dialog-bottom-transition">
 			<svg
 				class="modal-arrow"
 				width="52"
@@ -17,7 +21,7 @@
 			</svg>
 			<slot />
 		</v-card>
-	</v-dialog>
+	</v-bottom-sheet>
 </template>
 <script>
 export default {
@@ -38,15 +42,12 @@ export default {
 <style scoped lang="scss">
 @import "../assets/styles/_variables.scss";
 .content {
-    position: absolute;
+	margin-top: 0px;
     background-color: $white-color;
     width: 90%;
-    height: 98%;
-    bottom: 0;
-    left: 0px;
-    right: 0px;
-    margin: auto;
+    min-height: 200vh;
     overflow: hidden;
+	margin-top: -9vh;
 }
 
 .modal-arrow {
