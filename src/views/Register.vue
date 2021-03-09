@@ -6,7 +6,7 @@
 					<Header
 						big-header="true"
 						title="Titre du modal" />
-				</template>
+				</template><br>
 				<TextInput
 					label-string="Adresse mail"
 					show

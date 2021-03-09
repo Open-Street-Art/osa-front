@@ -4,8 +4,8 @@
 			<router-link to="/">
 				Home
 			</router-link>
-			<router-link to="/inscription">
-				Inscription
+			<router-link to="/register">
+				Register
 			</router-link>
 			<router-view />
 		</v-main>
