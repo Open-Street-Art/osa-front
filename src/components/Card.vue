@@ -1,17 +1,29 @@
 <template>
-	<div
-		class="card"
-		@click="openModal">
-		<img
-			:class="roundImg ? 'card-img round-img' : 'card-img'"
-			:src="imgSrc">
-		<div class="emphase card-title">
-			{{ cardTitle }}
-		</div>
-		<div class="light card-desc">
-			{{ cardDesc }}
-		</div>
-	</div>
+	<v-card
+		height="74"
+		width="349"
+		class="card rounded-xl"
+		@click="$emit('click')">
+		<v-row>
+			<v-col
+				cols="3"
+				class="ml-3">
+				<img
+					height="48"
+					width="48"
+					:class="roundImg ? 'rounded-xl' : 'rounded-lg'"
+					:src="imgSrc">
+			</v-col>
+			<v-col>
+				<v-row class="mt-0 emphase">
+					{{ cardTitle }}
+				</v-row>
+				<v-row class="mt-4 light">
+					{{ cardDesc }}
+				</v-row>
+			</v-col>
+		</v-row>
+	</v-card>
 </template>
 
 <script>
@@ -34,11 +46,7 @@ export default {
 			default: false,
 			type: Boolean
 		}
-	},
-	methods: {
-		openModal: function(event) {
-		}
-	},
+	}
 };
 </script>
 
@@ -46,37 +54,9 @@ export default {
 @import "../assets/styles/text.scss";
 
 .card {
-    position: relative;
     height: 74px;
     width: 349px;
     background-color: $white-color;
-    border-radius: 20px;
-}
-
-.card-img {
-    position: absolute;
-    top: 13px;
-    left: 13px;
-    border-radius: 10px;
-    height: 48px;
-    width: 48px;
-    object-fit: cover;
-}
-
-.round-img {
-    border-radius: 50% !important;
-}
-
-.card-title {
-    position: absolute;
-    top: 14px;
-    left: 74px;
-}
-
-.card-desc {
-    position: absolute;
-    top: 38px;
-    left: 74px;
 }
 
 </style>

@@ -21,7 +21,8 @@
 						<card
 							:card-title="cardTitle"
 							:card-desc="cardDesc"
-							:img-src="imgSrc" />
+							:img-src="imgSrc"
+							@click="pinClicked(id)" />
 					</pin>
 				</art-map>
 			</base-wrapper>
@@ -35,6 +36,7 @@ import BaseWrapper from '../components/BaseWrapper.vue';
 import Pin from '../components/Pin.vue';
 import Card from '../components/Card.vue';
 import axios from 'axios';
+import router from '../router';
 
 export default {
 	name: 'Home',
@@ -53,31 +55,26 @@ export default {
 	},
 	methods: {
 		getMapPins() {
-			console.log(axios.defaults.headers);
 			axios
 				.get('/api/art/locations')
 				.then((response) => {
-					console.log(response.data.data[0]);
 					this.pinList.push(response.data.data[0]);
 				})
-				.catch((error) => {
-					console.log(error);
-					console.log(error.response);
-				});
+				.catch((error) => console.error(error));
 		},
 		pinPopup(id) {
 			axios
 				.get('/api/art/' + id)
 				.then((response) => {
-					console.log(response.data.data);
 					this.cardTitle = response.data.data.name;
 					this.cardDesc = response.data.data.authorName;
 					this.imgSrc = response.data.data.pictures[0];
 				})
-				.catch((error) => {
-					console.log(error);
-					console.log(error.response);
-				});
+				.catch((error) => console.error(error));
+		},
+		pinClicked(id) {
+			console.log('toto');
+			router.push('/art/' + id);
 		}
 	}
 };
@@ -88,8 +85,8 @@ export default {
 .tempButton {
     position: absolute !important;
     top: 10px;
-		left: 10px;
-		z-index: 1000;
+	left: 10px;
+	z-index: 1000;
 }
 
 </style>
