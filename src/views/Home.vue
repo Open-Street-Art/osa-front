@@ -27,11 +27,9 @@
 				</art-map>
 			</base-wrapper>
 		</div>
-		<Modal
-			v-model="artDisplayModal"
-			@close="artDisplayClosed()">
-			ArtDisplay test
-		</Modal>
+		<ArtDisplay
+			:data="artDisplayModal"
+			@close="artDisplayClosed()" />
 	</v-main>
 </template>
 
@@ -40,13 +38,13 @@ import ArtMap from '../components/ArtMap.vue';
 import BaseWrapper from '../components/BaseWrapper.vue';
 import Pin from '../components/Pin.vue';
 import Card from '../components/Card.vue';
-import Modal from '../components/Modal.vue';
+import ArtDisplay from '../components/ArtDisplay.vue';
 import axios from 'axios';
 import router from '../router';
 
 export default {
 	name: 'Home',
-	components: { BaseWrapper, ArtMap , Pin, Card, Modal},
+	components: { BaseWrapper, ArtMap , Pin, Card, ArtDisplay },
 	props: {
 		artDisplay: {
 			default: false,
