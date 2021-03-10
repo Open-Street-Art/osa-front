@@ -1,5 +1,6 @@
 <template>
 	<v-bottom-sheet
+		style="z-index:1100"
 		transition="dialog-bottom-transition"
 		max-width="98%"
 		scrollable
@@ -59,4 +60,5 @@ export default {
     border-top-left-radius: 0px !important;
     border-top-right-radius: 0px !important;
 }
+
 </style>

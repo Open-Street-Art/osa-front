@@ -9,6 +9,14 @@ const routes = [
 		path: '/',
 		name: 'Home',
 		component: Home
+	},
+	{
+		path: '/art/:id',
+		name: 'ArtDisplay',
+		component: Home,
+		props: {
+			artDisplay: true
+		}
 	}
 ];
 

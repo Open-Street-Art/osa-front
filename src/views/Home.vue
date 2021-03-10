@@ -27,6 +27,11 @@
 				</art-map>
 			</base-wrapper>
 		</div>
+		<Modal
+			v-model="artDisplayModal"
+			@close="artDisplayClosed()">
+			ArtDisplay test
+		</Modal>
 	</v-main>
 </template>
 
@@ -35,12 +40,19 @@ import ArtMap from '../components/ArtMap.vue';
 import BaseWrapper from '../components/BaseWrapper.vue';
 import Pin from '../components/Pin.vue';
 import Card from '../components/Card.vue';
+import Modal from '../components/Modal.vue';
 import axios from 'axios';
 import router from '../router';
 
 export default {
 	name: 'Home',
-	components: { BaseWrapper, ArtMap , Pin, Card},
+	components: { BaseWrapper, ArtMap , Pin, Card, Modal},
+	props: {
+		artDisplay: {
+			default: false,
+			type: Boolean
+		}
+	},
 	data () {
 		return {
 			drawer: false,
@@ -48,6 +60,7 @@ export default {
 			cardTitle: '',
 			cardDesc: '',
 			imgSrc: '',
+			artDisplayModal: false
 		};
 	},
 	mounted() {
@@ -73,8 +86,12 @@ export default {
 				.catch((error) => console.error(error));
 		},
 		pinClicked(id) {
-			console.log('toto');
+			this.artDisplayModal = !this.artDisplayModal;
 			router.push('/art/' + id);
+		},
+		artDisplayClosed() {
+			router.push('/');
+			this.artDisplayModal = !this.artDisplayModal;
 		}
 	}
 };
