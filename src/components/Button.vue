@@ -31,7 +31,7 @@ export default {
 	}
 };
 </script>
-<style  lang="scss">
+<style  scoped lang="scss">
 @import "../assets/styles/text.scss";
 .v-btn__content {
   font: $em-font ;

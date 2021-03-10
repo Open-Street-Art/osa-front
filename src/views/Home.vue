@@ -40,7 +40,9 @@
 						</searchbar>
 					</v-row>
 				</v-col>
-				<art-map class="artmap">
+				<art-map
+					class="artmap"
+					@mapref="getMap">
 					<pin
 						v-for="{id, latitude, longitude} in pinList"
 						:key="id"
@@ -52,6 +54,15 @@
 							:img-src="imgSrc" />
 					</pin>
 				</art-map>
+				<v-btn
+					fab
+					rounded
+					class="locate-button"
+					@click="locateUser">
+					<v-icon color="primary">
+						mdi-crosshairs-gps
+					</v-icon>
+				</v-btn>
 			</base-wrapper>
 		</div>
 	</v-main>
@@ -71,6 +82,7 @@ export default {
 	components: { BaseWrapper, ArtMap , Pin, Card, Header, Searchbar},
 	data () {
 		return {
+			map: null,
 			drawer: false,
 			pinList: [],
 			searchList: [],
@@ -85,6 +97,12 @@ export default {
 		this.getMapPins();
 	},
 	methods: {
+		getMap(map) {
+			this.map = map;
+		},
+		locateUser() {
+			this.map.locate({setView: true, maxZoom: 16});
+		},
 		getMapPins() {
 			console.log(axios.defaults.headers);
 			axios
@@ -148,6 +166,41 @@ export default {
 						console.log(error);
 						console.log(error.response);
 					});
+				axios
+					.get('/api/search/arts/artist/' + this.searchValue)
+					.then((response) => {
+						console.log(response.data.data);
+						if(response.data.data.length > 0) {
+							tempList = this.searchList;
+							tempPinList = this.pinList;
+							tempCount = this.searchCount;
+							for(let i = 0;i < response.data.data.length;++i) {
+								var id = response.data.data[i].id;
+								var latitude = response.data.data[i].latitude;
+								var longitude = response.data.data[i].longitude;
+								var title = response.data.data[i].name;
+								var desc = response.data.data[i].authorName;
+								var img = response.data.data[i].pictures[0];
+								if(!tempList.includes({id, title, desc, img})) {
+									tempList.push({id, title, desc, img});
+									tempPinList.push({id,latitude,longitude});
+									tempCount += 1;
+								}
+							}
+							this.searchList = tempList;
+							this.pinList = tempPinList;
+							this.searchCount = tempCount;
+						}
+						else {
+							this.searchList = [];
+							this.pinList = [];
+							this.searchCount = 0;
+						}
+					})
+					.catch((error) => {
+						console.log(error);
+						console.log(error.response);
+					});
 			}
 			else {
 				this.getMapPins();
@@ -165,6 +218,13 @@ export default {
 	top: 10px;
 	width:85%;
 	z-index:1000 !important
+}
+
+.locate-button {
+	position: absolute;
+	bottom: 70px;
+	right: 10px;
+	z-index: 1000 !important;
 }
 
 </style>
