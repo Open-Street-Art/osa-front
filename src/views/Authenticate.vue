@@ -9,11 +9,11 @@
 				</template>
 				<TextInput
 					label-string="Adresse mail ou nom d'utilisateur" 
-					:show=true
+					:show="true"
 					:input-rule="[null]" />
 				<TextInput
 					label-string="Mot de passe" 
-					:show=false
+					:show="false"
 					:input-rule="[null]" />	
 				<v-divider /><br>
 				<v-row justify="space-between">

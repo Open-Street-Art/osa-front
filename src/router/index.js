@@ -11,9 +11,9 @@ const routes = [
 		component: Home
 	},
 	{
-		path: '/connexion',
-		name: 'Connexion',
-		component: () => import('../views/Connexion.vue')
+		path: '/authenticate',
+		name: 'Authenticate',
+		component: () => import('../views/Authenticate.vue')
 	}
 ];
 

@@ -4,7 +4,7 @@
 			<router-link to="/">
 				Home
 			</router-link>
-			<router-link to="/inscription">
+			<router-link to="/authenticate">
 				Inscription
 			</router-link>
 			<router-view />
