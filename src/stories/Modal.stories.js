@@ -4,27 +4,35 @@ import { action } from '@storybook/addon-actions';
 
 export default {
 	title: 'Modal',
-	component: Modal,
+	component: Modal, Header
 };
 
 const Template = (args, { argTypes }) => ({
-	components: { Modal },
-	props: Object.keys(argTypes),
-	template: '<v-container><Modal/></v-container>',
-	methods: {
-		action: action('update')
-	}
-});
-
-const TemplateHeader = (args, { argTypes }) => ({
 	components: { Modal, Header },
 	props: Object.keys(argTypes),
-	template: '<v-container><Modal><template v-slot:header><Header bigHeader=true title="Titre du modal"/></template></Modal></v-container>',
+	template: `<v-container>
+					<v-btn
+						class="tempButton"
+						fab
+						color="primary"
+						@click.stop="modal = !modal">
+						Clic
+					</v-btn>
+					<Modal v-model="modal" @close="modal = !modal">
+						<Header>
+							<h1>Modal</h1>
+						</Header>
+						Sous le header
+					</Modal>
+				</v-container>`,
 	methods: {
 		action: action('update')
+	},
+	data () {
+		return {
+			modal: false
+		};
 	}
 });
 
 export const ModalSample = Template.bind({});
-
-export const ModalWithHeader = TemplateHeader.bind({});
