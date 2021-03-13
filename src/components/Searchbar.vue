@@ -12,7 +12,8 @@
 			solo
 			hide-details
 			placeholder="Rechercher une œuvre, un artiste..."
-			@input="updateSearchBar" />
+			@input="updateSearchBar"
+			@focus="updateSearchBar" />
 		<div class="separator" />
 		<slot />
 		<div

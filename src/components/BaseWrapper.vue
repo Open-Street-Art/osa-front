@@ -2,7 +2,7 @@
 	<div id="view">
 		<Menu
 			:value="value"
-			app="true"
+			:app="true"
 			@update="$emit('update', $event)">
 			<v-container class="text-center">
 				<v-row>
@@ -19,7 +19,7 @@
 			</v-container>
 			<v-divider class="mx-auto" />
 			<v-container>
-				<ActionsMenu outlined="true">
+				<ActionsMenu :outlined="true">
 					<ActionsMenuItem
 						icon="mdi-account-search"
 						content="home.searchUser" />

@@ -36,7 +36,7 @@
 								:img-src="img" />
 							<v-divider
 								v-for="item in searchList"
-								:key="item" />
+								:key="item.id" />
 						</searchbar>
 					</v-row>
 				</v-col>
@@ -90,13 +90,52 @@ export default {
 			cardDesc: '',
 			imgSrc: '',
 			searchValue: '',
-			searchCount: 0
+			searchCount: 0,
+			gotData: false
 		};
 	},
 	mounted() {
 		this.getMapPins();
 	},
 	methods: {
+		includeArt(id, array) {
+			for(let i = 0;i < array.length;++i) {
+				var json = JSON.parse(JSON.stringify(array[i]));
+				if(json.id == id) {
+					return true;
+				}
+			}
+			return false;
+		},
+		addArt(array) {
+			if(this.searchCount == 0) {
+				var tempList = [];
+				var tempCount = 0;
+				var tempPinList = [];
+			}
+			else {
+				var tempList = this.searchList;
+				var tempCount = this.searchCount;
+				var tempPinList = this.pinList;
+			}
+			for(let i = 0;i < array.length;++i) {
+				var id = array[i].id;
+				var latitude = array[i].latitude;
+				var longitude = array[i].longitude;
+				var title =array[i].name;
+				var desc = array[i].authorName;
+				var img = array[i].pictures[0];
+				if(!this.includeArt(id, tempList)) {
+					tempList.push({id, title, desc, img});
+					tempPinList.push({id,latitude,longitude});
+					tempCount += 1;
+				}
+			}
+			this.searchList = tempList;
+			this.pinList = tempPinList;
+			this.searchCount = tempCount;
+			console.log(this.searchList);
+		},
 		getMap(map) {
 			this.map = map;
 		},
@@ -104,11 +143,10 @@ export default {
 			this.map.locate({setView: true, maxZoom: 16});
 		},
 		getMapPins() {
-			console.log(axios.defaults.headers);
+			this.pinList = [];
 			axios
 				.get('/api/art/locations')
 				.then((response) => {
-					console.log(response.data.data[0]);
 					this.pinList.push(response.data.data[0]);
 				})
 				.catch((error) => {
@@ -131,76 +169,42 @@ export default {
 				});
 		},
 		search() {
-			var tempList = [];
-			var tempCount = 0;
-			console.log(this.searchValue);
-			if(this.searchValue != null && this.searchValue.length > 0 ) {
-				var tempPinList = [];
-				axios
+			if(this.searchValue != null && this.searchValue.length > 1 ) {
+				if(!this.gotData) {
+					this.pinList = [];
+				}
+				this.gotData = false;
+				var promise1 = axios
 					.get('/api/search/arts/' + this.searchValue)
 					.then((response) => {
-						console.log(response.data.data);
 						if(response.data.data.length > 0) {
-							for(let i = 0;i < response.data.data.length;++i) {
-								var id = response.data.data[i].id;
-								var latitude = response.data.data[i].latitude;
-								var longitude = response.data.data[i].longitude;
-								var title = response.data.data[i].name;
-								var desc = response.data.data[i].authorName;
-								var img = response.data.data[i].pictures[0];
-								tempList.push({id, title, desc, img});
-								tempPinList.push({id,latitude,longitude});
-								tempCount += 1;
-							}
-							this.searchList = tempList;
-							this.pinList = tempPinList;
-							this.searchCount = tempCount;
-						}
-						else {
-							this.searchList = [];
-							this.pinList = [];
-							this.searchCount = 0;
+							this.addArt(response.data.data);
+							this.gotData = true;
 						}
 					})
 					.catch((error) => {
 						console.log(error);
 						console.log(error.response);
 					});
-				axios
+				var promise2 =axios
 					.get('/api/search/arts/artist/' + this.searchValue)
 					.then((response) => {
-						console.log(response.data.data);
 						if(response.data.data.length > 0) {
-							tempList = this.searchList;
-							tempPinList = this.pinList;
-							tempCount = this.searchCount;
-							for(let i = 0;i < response.data.data.length;++i) {
-								var id = response.data.data[i].id;
-								var latitude = response.data.data[i].latitude;
-								var longitude = response.data.data[i].longitude;
-								var title = response.data.data[i].name;
-								var desc = response.data.data[i].authorName;
-								var img = response.data.data[i].pictures[0];
-								if(!tempList.includes({id, title, desc, img})) {
-									tempList.push({id, title, desc, img});
-									tempPinList.push({id,latitude,longitude});
-									tempCount += 1;
-								}
-							}
-							this.searchList = tempList;
-							this.pinList = tempPinList;
-							this.searchCount = tempCount;
-						}
-						else {
-							this.searchList = [];
-							this.pinList = [];
-							this.searchCount = 0;
+							this.addArt(response.data.data);
+							this.gotData = true;
 						}
 					})
 					.catch((error) => {
 						console.log(error);
 						console.log(error.response);
 					});
+				Promise.all([promise1, promise2]).then(() =>{
+					if(!this.gotData) {
+						this.searchList = [];
+						this.pinList = [];
+						this.searchCount = 0;
+					}
+				});
 			}
 			else {
 				this.getMapPins();
