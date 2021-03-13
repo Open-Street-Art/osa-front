@@ -5,21 +5,19 @@
 				v-model="drawer">
 				<v-col>
 					<v-row>
-						<Header>
-							<template v-slot:left>
-								<v-btn
-									class="homeButton"
-									left
-									fab
-									text
-									small
-									color="primary"
-									@click.stop="drawer = !drawer">
-									<v-icon color="white">
-										mdi-menu
-									</v-icon>
-								</v-btn>
-							</template>
+						<Header class="test">
+							<v-btn
+								class="homeButton"
+								left
+								fab
+								text
+								small
+								color="primary"
+								@click.stop="drawer = !drawer">
+								<v-icon color="white">
+									mdi-menu
+								</v-icon>
+							</v-btn>
 						</Header>
 						<searchbar
 							v-model="searchValue"
@@ -53,16 +51,16 @@
 							:card-desc="cardDesc"
 							:img-src="imgSrc" />
 					</pin>
+					<v-btn
+						fab
+						rounded
+						class="locate-button"
+						@click="locateUser">
+						<v-icon color="primary">
+							mdi-crosshairs-gps
+						</v-icon>
+					</v-btn>
 				</art-map>
-				<v-btn
-					fab
-					rounded
-					class="locate-button"
-					@click="locateUser">
-					<v-icon color="primary">
-						mdi-crosshairs-gps
-					</v-icon>
-				</v-btn>
 			</base-wrapper>
 		</div>
 	</v-main>
@@ -198,7 +196,19 @@ export default {
 						console.log(error);
 						console.log(error.response);
 					});
-				Promise.all([promise1, promise2]).then(() =>{
+				var promise3 =axios
+					.get('/api/search/cities/' + this.searchValue)
+					.then((response) => {
+						if(response.data.data.length > 0) {
+							this.addArt(response.data.data);
+							this.gotData = true;
+						}
+					})
+					.catch((error) => {
+						console.log(error);
+						console.log(error.response);
+					});
+				Promise.all([promise1, promise2, promise3]).then(() =>{
 					if(!this.gotData) {
 						this.searchList = [];
 						this.pinList = [];
@@ -216,6 +226,13 @@ export default {
 
 <style style="scss" >
 
+.homeButton {
+	top:10px;
+	left:5px;
+	height:16px;
+	width:24px;
+}
+
 .searchbarHome {
 	position: absolute;
 	left:50px;
@@ -226,9 +243,14 @@ export default {
 
 .locate-button {
 	position: absolute;
-	bottom: 70px;
-	right: 10px;
 	z-index: 1000 !important;
+	bottom:70px;
+	right: 10px;
+}
+
+.test {
+	width: 100%;
+	height: 60px
 }
 
 </style>
