@@ -1,60 +1,19 @@
 <template>
-	<div :class="'header ' + (bigHeader?'header-big':'header-small')">
-		<slot name="left" />
-		<div class="header-title titles">
-			{{ title }}
-		</div>
-		<slot name="right" />
+	<div class="header">
+		<slot />
 	</div>
 </template>
 
 <script>
 export default {
-	name: 'Header',
-	props: {
-		bigHeader: {
-			default: false,
-			type: Boolean
-		},
-		title: {
-			default: '',
-			type: String
-		}
-	}
+	name: 'Header'
 };
 </script>
 
 <style lang="scss">
-@import "../assets/styles/text.scss";
-
+@import "../assets/styles/_variables.scss";
 .header {
-  position: relative;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  padding: 10px;
-  width: 100%;
-  overflow: hidden;
-
-  transition: height 0.12s ease;
-
-  background-color: $main-color;
+	background-color: $main-color;
+	height: 40px;
 }
-
-.header-big {
-  height: 100px;
-}
-
-.header-small {
-  height: 60px;
-}
-
-.header-title {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-}
-
 </style>
