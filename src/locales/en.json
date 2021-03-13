@@ -1,10 +1,14 @@
 {
-  "testMessage": "Hello World !",
-  "defaultLabel": "Default label",
-  "home" : {
-    "login" : "Log in",
-    "signin" : "Sign in",
-    "searchUser" : "Search user",
-    "commitArt" : "Suggest an art "
-  }
+	"testMessage": "Hello World !",
+	"defaultLabel": "Default label",
+	"home": {
+		"login": "Log in",
+		"signin": "Sign in",
+		"searchUser": "Search user",
+		"commitArt": "Suggest an art "
+	},
+	"artDisplay": {
+		"created": "Art added on ",
+		"modified": "Last modification on "
+	}
 }

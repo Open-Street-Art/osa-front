@@ -63,6 +63,8 @@ export default {
 	},
 	mounted() {
 		this.getMapPins();
+		if (this.artDisplay == true)
+			this.artDisplayModal = true;
 	},
 	methods: {
 		getMapPins() {

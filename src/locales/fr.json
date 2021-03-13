@@ -1,10 +1,14 @@
 {
-  "testMessage": "Bonjour le monde !",
-  "defaultLabel": "Label par défaut",
-  "home" : {
-    "login" : "Se connecter",
-    "signin" : "S'inscrire",
-    "searchUser" : "Rechercher un utilisateur",
-    "commitArt" : "Proposer une oeuvre"
-  }
+	"testMessage": "Bonjour le monde !",
+	"defaultLabel": "Label par défaut",
+	"home": {
+		"login": "Se connecter",
+		"signin": "S'inscrire",
+		"searchUser": "Rechercher un utilisateur",
+		"commitArt": "Proposer une oeuvre"
+	},
+	"artDisplay": {
+		"created": "Œuvre ajoutée le ",
+		"modified": "Dernière modification le "
+	}
 }
