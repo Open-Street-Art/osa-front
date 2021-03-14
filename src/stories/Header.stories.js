@@ -9,7 +9,11 @@ export default {
 const Template = (args, { argTypes }) => ({
 	components: { Header },
 	props: Object.keys(argTypes),
-	template: '<v-container><Header :bigHeader="bigHeader" :title="title"/></v-container>',
+	template: ` <v-container>
+					<Header>
+						<h1>Exemple</h1>
+					</Header>
+				</v-container>`,
 	methods: {
 		action: action('update')
 	}

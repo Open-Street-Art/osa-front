@@ -11,9 +11,12 @@ const routes = [
 		component: Home
 	},
 	{
-		path: '/register',
-		name: 'Register',
-		component: () => import('../views/Register.vue')
+		path: '/art/:id',
+		name: 'ArtDisplay',
+		component: Home,
+		props: {
+			artDisplay: true
+		}
 	}
 ];
 
