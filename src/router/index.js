@@ -17,7 +17,15 @@ const routes = [
 		props: {
 			artDisplay: true
 		}
-	}
+	},
+	{
+		path: '/contribution',
+		name: 'Contribution',
+		component: Home,
+		props: {
+			contribution: true
+		}
+	},
 ];
 
 const router = new VueRouter({

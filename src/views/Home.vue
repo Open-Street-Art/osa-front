@@ -30,6 +30,7 @@
 		<ArtDisplay
 			:data="artDisplayModal"
 			@close="artDisplayClosed()" />
+		<Contribution />
 	</v-main>
 </template>
 
@@ -49,7 +50,7 @@ export default {
 		artDisplay: {
 			default: false,
 			type: Boolean
-		}
+		},
 	},
 	data () {
 		return {
@@ -58,7 +59,8 @@ export default {
 			cardTitle: '',
 			cardDesc: '',
 			imgSrc: '',
-			artDisplayModal: false
+			artDisplayModal: false,
+			contributionModal: false
 		};
 	},
 	mounted() {
