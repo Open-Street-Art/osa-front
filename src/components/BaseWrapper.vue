@@ -29,6 +29,14 @@
 						content="home.commitArt" />
 				</ActionsMenu>
 			</v-container>
+			<v-btn
+				v-model="$i18n.locale"
+				class="localeChanger"
+				fab
+				small
+				@click="switchLocale">
+				{{ $i18n.locale }}
+			</v-btn>
 		</Menu>
 		<slot />
 	</div>
@@ -39,6 +47,7 @@ import Menu from './Menu.vue';
 import ActionsMenu from './ActionsMenu.vue';
 import ActionsMenuItem from './ActionsMenuItem.vue';
 import Button from './Button.vue';
+import store  from '../store/index.js';
 
 export default {
 	name: 'BaseWrapper',
@@ -56,6 +65,21 @@ export default {
 		value: {
 			type: Boolean,
 			default: false
+		}
+	},
+	data () {
+		return { langs: ['fr', 'en'] };
+	},
+	methods: {
+		switchLocale() {
+			if(this.$i18n.locale == this.langs[1]) {
+				store.commit('setAppLanguage',this.langs[0]);
+				this.$i18n.locale = this.langs[0];
+			}
+			else {
+				this.$i18n.locale = this.langs[1];
+				store.commit('setAppLanguage',this.langs[1]);
+			}
 		}
 	}
 };
@@ -81,4 +105,9 @@ div.view {
 	position: fixed
 }
 
+.localeChanger {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}
 </style>
