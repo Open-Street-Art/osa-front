@@ -17,6 +17,11 @@ const routes = [
 		props: {
 			artDisplay: true
 		}
+	},
+	{
+		path: '/register',
+		name: 'Register',
+		component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
 	}
 ];
 
