@@ -10,5 +10,13 @@
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",
 		"modified": "Dernière modification le "
+	},
+	"register":{
+		"email":"Adresse mail",
+		"username":"Nom d'utilisateur",
+	    "password":"Mot de passe",
+		"confirmPassword":"Confirmation de mot de passe",
+		"cancel":"Annuler",
+		"validate":"Valider"
 	}
 }

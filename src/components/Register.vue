@@ -3,47 +3,65 @@
 		v-model="open"
 		class="toto"
 		@close="$emit('close')">
-		<template v-slot:header>
-			<Header
-				big-header="true"
-				title="Titre du modal" />
-		</template><br>
-		<TextInput
-			label-string="Adresse mail"
-			show
-			:input-rules="[null]" />
-		<TextInput
-			label-string="Nom d'utiisateur"
-			show
-			:input-rules="[null]" />
-		<TextInput
-			label-string="Mot de passe"
-			show
-			:input-rules="[null]" />
-		<TextInput
-			label-string="Confirmation de mot de passe"
-			show
-			:input-rules="[null]" />
-		<v-row
-			justify="space-between"
-			class="v-input__slot">
-			<p class="base">
-				Profil artiste
-			</p>
-			<CheckBoxInput />
-		</v-row><br>
-		<v-divider /><br>
-		<v-row justify="space-between">
-			<Button
-				text-button="Annuler"
-				:outlined="true"
-				:width="235" />
+		<Header><h1 class="center emphase" /></Header>
+		<Header>
+			<h1 class="center emphase">
+				Inscription
+			</h1>
+		</Header>
+		<br>
+		<div class="left right">
+			<TextInput
+				v-model="email"
+				label-string="register.email"
+				show
+				:input-rules="[null]" />
 			<LocaleChanger />
-			<Button
-				text-button="Valider"
-				:outlined="false"
-				:width="235" />
-		</v-row>
+			<TextInput
+				label-string="register.username"
+				show
+				:input-rules="[null]" />
+			<LocaleChanger />
+			<TextInput
+				label-string="register.password"
+				show
+				:input-rules="[null]" />
+			<LocaleChanger />
+			<TextInput
+				label-string="register.confirmPassword"
+				show
+				:input-rules="[null]" />
+			<LocaleChanger />
+			<div class="row">
+				<div class="col-9 v-input__slot">
+					<p class="base">
+						Profil artiste
+					</p>
+				</div>
+				<div
+					class="col-3">
+					<CheckBoxInput class="c" />
+				</div>
+			</div>
+			<br>
+			
+			<v-divider class="top" />
+			<v-row />
+			<v-row
+				justify="space-between">
+				<Button
+					text-button="register.cancel"
+					:outlined="true"
+					class="mx-auto my-4 logButton" />
+				<LocaleChanger />
+				<Button
+					text-button="register.validate"
+					:outlined="false"
+					class="mx-auto my-4 logButton" />
+				<LocaleChanger />
+			</v-row>
+			<div class="left right" />
+		</div>
 	</Modal>
 </template>
 
@@ -83,5 +101,23 @@ export default {
 
 .toto {
 	z-index: 99999 !important;
+}
+.center{
+	text-align: center;
+}
+.left{
+margin-left:20px;
+}
+.right{
+margin-right:20px;
+}
+.top{
+margin-top:40%;	
+}
+.logButton {
+	width: 48%;
+}
+.c{	
+margin-right:0%;
 }
 </style>
