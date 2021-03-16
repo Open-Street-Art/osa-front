@@ -23,7 +23,7 @@ const routes = [
 		name: 'Register',
 		component: Home,
 		props: {
-			artDisplay: true
+			registerModal: true
 		}
 	}
 ];
