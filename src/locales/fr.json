@@ -7,6 +7,9 @@
 		"searchUser": "Rechercher un utilisateur",
 		"commitArt": "Proposer une oeuvre"
 	},
+	"register": {
+		"mailLabel": "Adresse mail"
+	},
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",
 		"modified": "Dernière modification le "
