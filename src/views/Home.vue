@@ -2,7 +2,8 @@
 	<v-main>
 		<div class="test">
 			<base-wrapper
-				v-model="drawer">
+				v-model="drawer"
+				:register="registerModal">
 				<v-btn
 					class="tempButton"
 					fab
@@ -49,6 +50,10 @@ export default {
 		artDisplay: {
 			default: false,
 			type: Boolean
+		},
+		registerModal: {
+			default: false,
+			type: Boolean
 		}
 	},
 	data () {
@@ -58,7 +63,7 @@ export default {
 			cardTitle: '',
 			cardDesc: '',
 			imgSrc: '',
-			artDisplayModal: false
+			artDisplayModal: false,
 		};
 	},
 	mounted() {
