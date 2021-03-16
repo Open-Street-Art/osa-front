@@ -14,7 +14,8 @@
 				<v-row>
 					<Button
 						class="mx-auto mb-4 logButton"
-						text-button="home.signin" />
+						text-button="home.signin"
+						@click="registerClicked" />
 				</v-row>
 			</v-container>
 			<v-divider class="mx-auto" />
@@ -31,6 +32,9 @@
 			</v-container>
 		</Menu>
 		<slot />
+		<Register
+			:open="registerModal"
+			@close="registerClosed" />
 	</div>
 </template>
 
@@ -39,6 +43,8 @@ import Menu from './Menu.vue';
 import ActionsMenu from './ActionsMenu.vue';
 import ActionsMenuItem from './ActionsMenuItem.vue';
 import Button from './Button.vue';
+import Register from './Register.vue';
+import router from '../router';
 
 export default {
 	name: 'BaseWrapper',
@@ -46,7 +52,8 @@ export default {
 		Menu,
 		ActionsMenu,
 		ActionsMenuItem,
-		Button
+		Button,
+		Register
 	},
 	model: {
 		prop: 'value',
@@ -56,6 +63,30 @@ export default {
 		value: {
 			type: Boolean,
 			default: false
+		},
+		register: {
+			default: false,
+			type: Boolean
+		}
+	},
+	data() {
+		return {
+			registerModal: false
+		};
+	},
+	mounted() {
+		if(this.register) {
+			this.registerModal = true;
+		}
+	},
+	methods : {
+		registerClicked() {
+			this.registerModal = !this.registerModal;
+			router.push('/register');
+		},
+		registerClosed() {
+			router.push('/');
+			this.registerModal = !this.registerModal;
 		}
 	}
 };

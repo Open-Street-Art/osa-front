@@ -1,12 +1,6 @@
 <template>
 	<v-app>
 		<v-main>
-			<router-link to="/">
-				Home
-			</router-link>
-			<router-link to="/register">
-				Register
-			</router-link>
 			<router-view />
 		</v-main>
 	</v-app>
@@ -25,7 +19,7 @@ export default {
 
 <style>
 .v-navigation-drawer {
-z-index: 999999 !important;
+z-index: 9999 !important;
 }
 
 html {

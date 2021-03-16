@@ -17,6 +17,14 @@ const routes = [
 		props: {
 			artDisplay: true
 		}
+	},
+	{
+		path: '/register',
+		name: 'Register',
+		component: Home,
+		props: {
+			artDisplay: true
+		}
 	}
 ];
 

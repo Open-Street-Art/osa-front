@@ -3,7 +3,8 @@
 		class="button-white"
 		color="primary"
 		:width="width"
-		:outlined="outlined">
+		:outlined="outlined"
+		@click="$emit('click', $event)">
 		{{ this.$t(textButton) }}
 	</v-btn>
 </template>
