@@ -14,22 +14,25 @@
 				v-model="email"
 				label-string="register.email"
 				show
-				:input-rules="[null]" />
+				:input-rules="rules.mail" />
 			<LocaleChanger />
 			<TextInput
+				v-model="username"
 				label-string="register.username"
 				show
-				:input-rules="[null]" />
+				:input-rules="rules.username" />
 			<LocaleChanger />
 			<TextInput
+				v-model="password"
 				label-string="register.password"
-				show
-				:input-rules="[null]" />
+				:show="false"
+				:input-rules="rules.password" />
 			<LocaleChanger />
 			<TextInput
+				v-model="confirmPassword"
 				label-string="register.confirmPassword"
-				show
-				:input-rules="[null]" />
+				:show="false"
+				:input-rules="rules.confirmPassword" />
 			<LocaleChanger />
 			<div class="row">
 				<div class="col-9 v-input__slot">
@@ -43,7 +46,7 @@
 				</div>
 			</div>
 			<br>
-			
+
 			<v-divider class="top" />
 			<v-row />
 			<v-row
@@ -52,12 +55,11 @@
 					text-button="register.cancel"
 					:outlined="true"
 					class="mx-auto my-4 logButton" />
-				<LocaleChanger />
 				<Button
 					text-button="register.validate"
 					:outlined="false"
-					class="mx-auto my-4 logButton" />
-				<LocaleChanger />
+					class="mx-auto my-4 logButton"
+					@click="register" />
 			</v-row>
 			<div class="left right" />
 		</div>
@@ -134,7 +136,7 @@ export default {
 				})
 				// le bloc then est exécuté lorsque le back renvoie la réponse car axios est asynchrone (système de promesse)
 				.then((response) => {
-
+					console.log(response.data.message);
 				})
 				.catch((error) => console.error(error));
 		}
@@ -146,9 +148,6 @@ export default {
 @import "../assets/styles/input.scss";
 @import "../assets/styles/text.scss";
 
-.toto {
-	z-index: 99999 !important;
-}
 .center{
 	text-align: center;
 }
@@ -159,12 +158,12 @@ margin-left:20px;
 margin-right:20px;
 }
 .top{
-margin-top:40%;	
+margin-top:40%;
 }
 .logButton {
 	width: 48%;
 }
-.c{	
+.c{
 margin-right:0%;
 }
 </style>
