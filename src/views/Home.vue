@@ -30,7 +30,9 @@
 		<ArtDisplay
 			:data="artDisplayModal"
 			@close="artDisplayClosed()" />
-		<Contribution />
+		<Contribution 
+			:data="contributionModal"
+			@close="contributionClosed()" />
 	</v-main>
 </template>
 
@@ -40,17 +42,22 @@ import BaseWrapper from '../components/BaseWrapper.vue';
 import Pin from '../components/Pin.vue';
 import Card from '../components/Card.vue';
 import ArtDisplay from '../components/ArtDisplay.vue';
+import Contribution from '../components/Contribution.vue';
 import axios from 'axios';
 import router from '../router';
 
 export default {
 	name: 'Home',
-	components: { BaseWrapper, ArtMap , Pin, Card, ArtDisplay },
+	components: { BaseWrapper, ArtMap , Pin, Card, ArtDisplay, Contribution },
 	props: {
 		artDisplay: {
 			default: false,
 			type: Boolean
 		},
+		contributionDisplay: {
+			default: false,
+			type: Boolean
+		}
 	},
 	data () {
 		return {
@@ -67,6 +74,8 @@ export default {
 		this.getMapPins();
 		if (this.artDisplay == true)
 			this.artDisplayModal = true;
+		else if (this.contributionDisplay == true)
+			this.contributionModal = true;
 	},
 	methods: {
 		getMapPins() {
@@ -88,12 +97,16 @@ export default {
 				.catch((error) => console.error(error));
 		},
 		pinClicked(id) {
-			this.artDisplayModal = !this.artDisplayModal;
+			this.artDisplayModal = true;
 			router.push('/art/' + id);
 		},
 		artDisplayClosed() {
 			router.push('/');
-			this.artDisplayModal = !this.artDisplayModal;
+			this.artDisplayModal = false;
+		},
+		contributionClosed() {
+			router.push('/');
+			this.contributionModal = false;
 		}
 	}
 };

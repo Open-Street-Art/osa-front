@@ -23,11 +23,11 @@ export default {
 			type: String
 		},
 		rows: {
-			default: 160,
+			default: 5,
 			type: Number
 		},
 		counter: {
-			default: 5,
+			default: 160,
 			type: Number
 		}
 	},

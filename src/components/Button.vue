@@ -4,7 +4,8 @@
 		class="button-white"
 		color="primary"
 		:width="width"
-		:outlined="outlined">
+		:outlined="outlined"
+		@click="$emit('click')">
 		{{ this.$t(textButton) }}
 	</v-btn>
 </template>
@@ -41,5 +42,6 @@ export default {
 
 .v-btn {
 	border-radius: 20px !important;
+	box-shadow: none;
 }
 </style>

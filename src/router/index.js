@@ -19,11 +19,11 @@ const routes = [
 		}
 	},
 	{
-		path: '/contribution',
+		path: '/contrib',
 		name: 'Contribution',
 		component: Home,
 		props: {
-			contribution: true
+			contributionDisplay: true
 		}
 	},
 ];
