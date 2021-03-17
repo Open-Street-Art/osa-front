@@ -1,21 +1,29 @@
 <template>
 	<div
 		ref="container"
-		class="searchbar">
+		class="searchbar"
+		:value="value"
+		@update="$emit('update', $event)">
 		<v-text-field
 			v-model="value"
+			:value="value"
 			clearable
 			flat
 			solo
 			hide-details
 			placeholder="Rechercher une œuvre, un artiste..."
-			@input="update" />
+			@input="updateSearchBar"
+			@focus="updateSearchBar" />
 		<div class="separator" />
-		<div class="sad light-emphase">
+		<slot />
+		<div
+			v-if="resultCount==0"
+			class="sad light-emphase py-5">
 			Aucun résultat ne correspond à votre recherche :(
 		</div>
 		<div
-			:class="'explorer button' + (showButton?'':' hidden')"
+			v-if="resultCount>0 && showButton"
+			class="explorer button"
 			@click="close">
 			Explorer la carte
 		</div>
@@ -45,11 +53,12 @@ export default {
 			lastUpdate: 0,
 			delay: 300,
 			minSize: 1,
+			value: ''
 		};
 	},
 	methods: {
-		update: function (event) {
-
+		updateSearchBar: function (event) {
+			this.$emit('update', event);
 			if(this.value != null && this.value.length > this.minSize) {
 				this.$refs.container.classList.add('large');
 			}
@@ -111,13 +120,11 @@ export default {
 	}
 
 	.sad {
-		position: absolute;
-		top: 41px;
-		left: 0;
-		height: 74px;
+
+
+
 		width: 100%;
 		text-align: center;
-		padding-top: 24px;
 	}
 
 	.explorer {
@@ -128,7 +135,6 @@ export default {
 		user-select: none;
 
 		display: block;
-		position: absolute;
 		bottom: 0;
 		left: 0;
 		width: 100%;

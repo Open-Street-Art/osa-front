@@ -2,7 +2,7 @@
 	<div id="view">
 		<Menu
 			:value="value"
-			app="true"
+			:app="true"
 			@update="$emit('update', $event)">
 			<v-container
 				v-if="!connected"
@@ -38,7 +38,7 @@
 				</Header>
 			</div>
 			<v-container>
-				<ActionsMenu outlined="true">
+				<ActionsMenu :outlined="true">
 					<ActionsMenuItem
 						v-if="connected"
 						icon="mdi-account"
