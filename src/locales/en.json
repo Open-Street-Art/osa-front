@@ -21,5 +21,12 @@
 		"confirmPassword":"Confirmation of the password",
 		"cancel":"Cancel",
 		"validate":"Validate"
+	},
+	"authenticate": {
+		"title": "Log In",
+		"username": "Username",
+		"password": "Password",
+		"cancel": "Cancel",
+		"login": "Log In"
 	}
 }
