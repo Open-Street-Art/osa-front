@@ -26,6 +26,13 @@ const routes = [
 			contributionDisplay: true
 		}
 	},
+		path: '/register',
+		name: 'Register',
+		component: Home,
+		props: {
+			registerModal: true
+		}
+	}
 ];
 
 const router = new VueRouter({

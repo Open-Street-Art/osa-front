@@ -2,7 +2,8 @@
 	<v-main>
 		<div class="test">
 			<base-wrapper
-				v-model="drawer">
+				v-model="drawer"
+				:register="registerModal">
 				<v-btn
 					class="tempButton"
 					fab
@@ -12,7 +13,7 @@
 						mdi-menu
 					</v-icon>
 				</v-btn>
-				<art-map class="artmap">
+				<art-map>
 					<pin
 						v-for="{id, latitude, longitude} in pinList"
 						:key="id"
@@ -30,7 +31,7 @@
 		<ArtDisplay
 			:data="artDisplayModal"
 			@close="artDisplayClosed()" />
-		<Contribution 
+		<Contribution
 			:data="contributionModal"
 			@close="contributionClosed()" />
 	</v-main>
@@ -55,6 +56,10 @@ export default {
 			type: Boolean
 		},
 		contributionDisplay: {
+			default: false,
+			type: Boolean
+		},
+		registerModal: {
 			default: false,
 			type: Boolean
 		}

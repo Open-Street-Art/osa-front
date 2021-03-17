@@ -2,7 +2,7 @@
 	<div>
 		<v-bottom-sheet
 			v-if="isMobile()"
-			style="z-index:1100"
+			style="z-index:99999"
 			transition="dialog-bottom-transition"
 			max-width="98%"
 			scrollable
@@ -26,7 +26,7 @@
 		</v-bottom-sheet>
 		<v-dialog
 			v-if="!isMobile()"
-			style="z-index:1100"
+			style="z-index:99999"
 			transition="dialog-bottom-transition"
 			max-width="120vh"
 			content-class="rounded-xl"
@@ -111,5 +111,4 @@ export default {
 .round {
   border-radius: 30px;
 }
-
 </style>

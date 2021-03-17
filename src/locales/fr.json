@@ -5,10 +5,21 @@
 		"login": "Se connecter",
 		"signin": "S'inscrire",
 		"searchUser": "Rechercher un utilisateur",
-		"commitArt": "Proposer une oeuvre"
+		"commitArt": "Proposer une oeuvre",
+		"myProfile": "Mon profil",
+		"addArt" : "Ajouter une oeuvre",
+		"adminPanel" : "Outils d'administration"
 	},
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",
 		"modified": "Dernière modification le "
+	},
+	"register":{
+		"email":"Adresse mail",
+		"username":"Nom d'utilisateur",
+	    "password":"Mot de passe",
+		"confirmPassword":"Confirmation de mot de passe",
+		"cancel":"Annuler",
+		"validate":"Valider"
 	}
 }
