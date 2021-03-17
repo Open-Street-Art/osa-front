@@ -5,7 +5,10 @@
 		"login": "Se connecter",
 		"signin": "S'inscrire",
 		"searchUser": "Rechercher un utilisateur",
-		"commitArt": "Proposer une oeuvre"
+		"commitArt": "Proposer une oeuvre",
+		"myProfile": "Mon profil",
+		"addArt" : "Ajouter une oeuvre",
+		"adminPanel" : "Outils d'administration"
 	},
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",

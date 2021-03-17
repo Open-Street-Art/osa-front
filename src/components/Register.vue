@@ -15,25 +15,21 @@
 				label-string="register.email"
 				show
 				:input-rules="rules.mail" />
-			<LocaleChanger />
 			<TextInput
 				v-model="username"
 				label-string="register.username"
 				show
 				:input-rules="rules.username" />
-			<LocaleChanger />
 			<TextInput
 				v-model="password"
 				label-string="register.password"
 				:show="false"
 				:input-rules="rules.password" />
-			<LocaleChanger />
 			<TextInput
 				v-model="confirmPassword"
 				label-string="register.confirmPassword"
 				:show="false"
 				:input-rules="rules.confirmPassword" />
-			<LocaleChanger />
 			<div class="row">
 				<div class="col-9 v-input__slot">
 					<p class="base">
@@ -137,6 +133,16 @@ export default {
 				// le bloc then est exécuté lorsque le back renvoie la réponse car axios est asynchrone (système de promesse)
 				.then((response) => {
 					console.log(response.data.message);
+					axios
+						.post('/api/authenticate', {
+							username: this.username,
+							password: this.password
+						})
+						.then((response) => {
+							localStorage.setItem('authtoken',response.data.data.token);
+							axios.defaults.headers.common = {'Authorization': `bearer ${response.data.data.token}`};
+						})
+						.catch((error) => console.error(error));
 				})
 				.catch((error) => console.error(error));
 		}

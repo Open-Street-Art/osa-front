@@ -13,7 +13,7 @@
 						mdi-menu
 					</v-icon>
 				</v-btn>
-				<art-map class="artmap">
+				<art-map>
 					<pin
 						v-for="{id, latitude, longitude} in pinList"
 						:key="id"

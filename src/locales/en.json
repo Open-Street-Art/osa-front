@@ -5,7 +5,10 @@
 		"login": "Log in",
 		"signin": "Sign in",
 		"searchUser": "Search user",
-		"commitArt": "Suggest an art "
+		"commitArt": "Suggest an art ",
+		"myProfile": "My profile",
+		"addArt" : "Add an art",
+		"adminPanel" : "Administration tools"
 	},
 	"artDisplay": {
 		"created": "Art added on ",

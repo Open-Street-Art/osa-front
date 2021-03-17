@@ -1,11 +1,9 @@
 <template>
-	<div id="app">
-		<v-img
-			:max-height="maxHeigth"
-			:max-width="maxWidth"
-			:src="linkPhoto"
-			:class="forme" />
-	</div>
+	<v-img
+		:max-height="maxHeigth"
+		:max-width="maxWidth"
+		:src="linkPhoto"
+		:class="forme" />
 </template>
 <script>
 export default {
@@ -46,9 +44,6 @@ export default {
 	border-radius: 10px;
 }
 .forme-profile{
-    overflow:hidden;
-    -webkit-border-radius:50px;
-    -moz-border-radius:50px;
     border-radius:50px;
     width:90px;
     height:90px;
