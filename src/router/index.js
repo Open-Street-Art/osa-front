@@ -32,6 +32,14 @@ const routes = [
 		component: Home,
 		props: {
 			registerModal: true
+		},
+	},
+	{
+		path: '/authenticate',
+		name: 'Authenticate',
+		component: Home,
+		props: {
+			authenticateDisplay: true
 		}
 	}
 ];

@@ -21,5 +21,12 @@
 		"confirmPassword":"Confirmation de mot de passe",
 		"cancel":"Annuler",
 		"validate":"Valider"
+	},
+	"authenticate": {
+		"title": "Connexion",
+		"username": "Nom d'utilisateur",
+		"password": "Mot de passe",
+		"cancel": "Annuler",
+		"login": "Valider"
 	}
 }
