@@ -18,8 +18,8 @@
 						class="mx-auto mb-4 logButton"
 						text-button="home.signin"
 						@click="registerClicked" />
-					<v-divider class="mx-auto" />
 				</v-row>
+				<v-divider class="mx-auto mt-4" />
 			</v-container>
 			<div
 				v-if="connected">
@@ -69,6 +69,14 @@
 				small
 				@click="switchLocale">
 				{{ $i18n.locale }}
+			</v-btn>
+			<v-btn
+				class="logout"
+				fab
+				small
+				flat
+				@click="logout">
+				<v-icon>mdi-logout</v-icon>
 			</v-btn>
 		</Menu>
 		<slot />
@@ -145,7 +153,6 @@ export default {
 		var token = localStorage.getItem('authtoken');
 		if(token!=null) {
 			axios.defaults.headers.common = {'Authorization': `bearer ${token}`};
-			console.log(axios.defaults.headers.common);
 			var userInfo = jwt_decode(token);
 			this.connected = true;
 			this.username = userInfo.sub;
@@ -160,8 +167,6 @@ export default {
 				this.role = 'Artiste';
 			}
 		}
-		var userInfo = jwt_decode(token);
-		console.log(userInfo);
 	},
 	methods : {
 		registerClicked() {
@@ -189,6 +194,10 @@ export default {
 				this.$i18n.locale = this.langs[1];
 				store.commit('setAppLanguage',this.langs[1]);
 			}
+		},
+		logout() {
+			localStorage.removeItem('authtoken');
+			router.go();
 		}
 	}
 };
@@ -223,7 +232,15 @@ div.view {
 .userDisplay {
 	text-align: center;
 }
+
 .picture {
 	top:10px;
 }
+
+.logout {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+
 </style>
