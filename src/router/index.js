@@ -26,6 +26,7 @@ const routes = [
 			contributionDisplay: true
 		}
 	},
+	{
 		path: '/register',
 		name: 'Register',
 		component: Home,

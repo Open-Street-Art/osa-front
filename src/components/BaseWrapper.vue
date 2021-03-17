@@ -50,7 +50,8 @@
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-palette"
-						content="home.commitArt" />
+						content="home.commitArt"
+						@click="contributionClicked" />
 					<ActionsMenuItem
 						v-if="admin"
 						icon="mdi-plus-circle-outline"
@@ -74,6 +75,9 @@
 		<Register
 			:open="registerModal"
 			@close="registerClosed" />
+		<Contribution
+			:data="contributionModal"
+			@close="contributionClosed" />
 	</div>
 </template>
 
@@ -85,6 +89,7 @@ import ActionsMenuItem from './ActionsMenuItem.vue';
 import Button from './Button.vue';
 import store  from '../store/index.js';
 import Register from './Register.vue';
+import Contribution from './Contribution.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
@@ -99,7 +104,8 @@ export default {
 		Button,
 		Register,
 		Header,
-		Photo
+		Photo,
+		Contribution
 	},
 	model: {
 		prop: 'value',
@@ -113,21 +119,24 @@ export default {
 		register: {
 			default: false,
 			type: Boolean
+		},
+		contributionDisplay: {
+			default: false,
+			type: Boolean
 		}
 	},
 	data() {
 		return {
 			registerModal: false,
+			contributionModal: false,
 			connected: false,
 			admin: false,
 			username: '',
 			role:'',
 			forme: 'forme-profile',
-			placeholder: require('../assets/avatarPlaceholder.png')
+			placeholder: require('@/assets/avatarPlaceholder.png'),
+			langs: ['fr', 'en']
 		};
-	},
-	data () {
-		return { langs: ['fr', 'en'] };
 	},
 	mounted() {
 		if(this.register) {
@@ -162,9 +171,15 @@ export default {
 		registerClosed() {
 			router.push('/');
 			this.registerModal = !this.registerModal;
-		}
-	},
-	methods: {
+		},
+		contributionClicked() {
+			this.contributionModal = !this.contributionModal;
+			router.push('/contrib');
+		},
+		contributionClosed() {
+			router.push('/');
+			this.contributionModal = false;
+		},
 		switchLocale() {
 			if(this.$i18n.locale == this.langs[1]) {
 				store.commit('setAppLanguage',this.langs[0]);
