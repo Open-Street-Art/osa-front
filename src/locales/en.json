@@ -10,5 +10,12 @@
 	"artDisplay": {
 		"created": "Art added on ",
 		"modified": "Last modification on "
+	},
+	"authenticate": {
+		"title": "Log In",
+		"username": "Username",
+		"password": "Password",
+		"cancel": "Cancel",
+		"login": "Log In"
 	}
 }

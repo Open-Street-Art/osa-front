@@ -33,6 +33,9 @@
 		<Contribution 
 			:data="contributionModal"
 			@close="contributionClosed()" />
+		<Authenticate 
+			:data="authenticateModal"
+			@close="authenticateClosed()" />
 	</v-main>
 </template>
 
@@ -43,18 +46,31 @@ import Pin from '../components/Pin.vue';
 import Card from '../components/Card.vue';
 import ArtDisplay from '../components/ArtDisplay.vue';
 import Contribution from '../components/Contribution.vue';
+import Authenticate from '../components/Authenticate.vue';
 import axios from 'axios';
 import router from '../router';
 
 export default {
 	name: 'Home',
-	components: { BaseWrapper, ArtMap , Pin, Card, ArtDisplay, Contribution },
+	components: { 
+		BaseWrapper,
+		ArtMap,
+		Pin,
+		Card,
+		ArtDisplay,
+		Contribution,
+		Authenticate
+	},
 	props: {
 		artDisplay: {
 			default: false,
 			type: Boolean
 		},
 		contributionDisplay: {
+			default: false,
+			type: Boolean
+		},
+		authenticateDisplay: {
 			default: false,
 			type: Boolean
 		}
@@ -67,7 +83,8 @@ export default {
 			cardDesc: '',
 			imgSrc: '',
 			artDisplayModal: false,
-			contributionModal: false
+			contributionModal: false,
+			authenticateModal: false
 		};
 	},
 	mounted() {
@@ -76,6 +93,8 @@ export default {
 			this.artDisplayModal = true;
 		else if (this.contributionDisplay == true)
 			this.contributionModal = true;
+		else if (this.authenticateDisplay == true)
+			this.authenticateModal = true;
 	},
 	methods: {
 		getMapPins() {
@@ -107,6 +126,10 @@ export default {
 		contributionClosed() {
 			router.push('/');
 			this.contributionModal = false;
+		},
+		authenticateClosed() {
+			router.push('/');
+			this.authenticateModal = false;
 		}
 	}
 };

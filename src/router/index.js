@@ -26,6 +26,14 @@ const routes = [
 			contributionDisplay: true
 		}
 	},
+	{
+		path: '/authenticate',
+		name: 'Authenticate',
+		component: Home,
+		props: {
+			authenticateDisplay: true
+		}
+	}
 ];
 
 const router = new VueRouter({

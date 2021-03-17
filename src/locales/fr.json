@@ -10,5 +10,12 @@
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",
 		"modified": "Dernière modification le "
+	},
+	"authenticate": {
+		"title": "Connexion",
+		"username": "Nom d'utilisateur",
+		"password": "Mot de passe",
+		"cancel": "Annuler",
+		"login": "Valider"
 	}
 }
