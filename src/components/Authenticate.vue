@@ -37,6 +37,10 @@
 				</v-row>
 			</v-container>
 		</v-container>
+		<snackbar
+			v-model="error"
+			color="error"
+			content="authenticate.error" />
 	</Modal>
 </template>
 
@@ -47,6 +51,7 @@ import Button from '../components/Button.vue';
 import Header from  '../components/Header.vue';
 import axios from 'axios';
 import router from '../router';
+import Snackbar from './Snackbar.vue';
 
 export default {
 	name: 'Authenticate',
@@ -54,7 +59,8 @@ export default {
 		TextInput,
 		Modal,
 		Button,
-		Header
+		Header,
+		Snackbar
 	},
 	props: {
 		data: {
@@ -65,7 +71,8 @@ export default {
 	data() {
 		return {
 			username: '',
-			password: ''
+			password: '',
+			error: false
 		};
 	},
 	methods: {
@@ -77,11 +84,14 @@ export default {
 				})
 				.then((response) => {
 					localStorage.setItem('authtoken', response.data.data.token);
-					axios.defaults.headers.common = { 'Authorization': `bearer ${response.data.data.token}` };
+					axios.defaults.headers.common = { 'Authorization': `Bearer ${response.data.data.token}` };
 					router.push('/');
 					router.go();
 				})
-				.catch((error) => console.error(error));
+				.catch((error) => {
+					console.error(error);
+					this.error = true;
+				});
 		}
 	}
 };

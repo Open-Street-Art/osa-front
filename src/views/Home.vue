@@ -4,7 +4,8 @@
 			<base-wrapper
 				v-model="drawer"
 				:register="registerModal"
-				:authenticate="authenticateDisplay">
+				:authenticate="authenticateDisplay"
+				:contribution-display="contributionDisplay">
 				<v-col>
 					<v-row>
 						<Header class="test">
@@ -28,20 +29,24 @@
 							:show-button="true"
 							@update="search"
 							@click:clear="getMapPins">
-							<card
+							<div class="mb-4" />
+							<div
 								v-for="{id, title, desc, img} in searchList"
-								:key="id"
-								:card-title="title"
-								:card-desc="desc"
-								:img-src="img" />
-							<v-divider
-								v-for="item in searchList"
-								:key="item.id" />
+								:key="id">
+								<card
+									class="searchResult"
+									:card-title="title"
+									:card-desc="desc"
+									:img-src="img"
+									@click="centerMap(id)" />
+								<div class="separator mt-1 mb-4" />
+							</div>
 						</searchbar>
 					</v-row>
 				</v-col>
 				<art-map
 					class="artmap"
+					:base-center="centerTest"
 					@mapref="getMap">
 					<pin
 						v-for="{id, latitude, longitude} in pinList"
@@ -80,7 +85,6 @@ import Card from '../components/Card.vue';
 import ArtDisplay from '../components/ArtDisplay.vue';
 import Searchbar from '../components/Searchbar.vue';
 import Header from '../components/Header.vue';
-import Snackbar from '../components/Snackbar';
 import axios from 'axios';
 import router from '../router';
 
@@ -127,7 +131,8 @@ export default {
 			searchValue: '',
 			searchCount: 0,
 			gotData: false,
-			authenticateModal: false
+			authenticateModal: false,
+			centerTest: [49.386758892241396, 1.0686564445495608]
 		};
 	},
 	mounted() {
@@ -149,7 +154,7 @@ export default {
 			}
 			return false;
 		},
-		addArt(array) {
+		addArt(array, res) {
 			if(this.searchCount == 0) {
 				var tempList = [];
 				var tempCount = 0;
@@ -173,23 +178,26 @@ export default {
 					tempCount += 1;
 				}
 			}
-			this.searchList = tempList;
-			this.pinList = tempPinList;
-			this.searchCount = tempCount;
-			console.log(this.searchList);
+			res.searchList = tempList;
+			res.pinList = tempPinList;
+			res.searchCount = tempCount;
 		},
 		getMap(map) {
 			this.map = map;
 		},
 		locateUser() {
-			this.map.locate({setView: true, maxZoom: 16});
+			this.map.mapObject.locate({setView: true, maxZoom: 16});
 		},
 		getMapPins() {
-			this.pinList = [];
+			var tempPinList = [];
 			axios
 				.get('/api/art/locations')
 				.then((response) => {
-					this.pinList.push(response.data.data[0]);
+					var array = response.data.data;
+					for(let i = 0;i < array.length;++i) {
+						tempPinList.push(array[i]);
+					}
+					this.pinList = tempPinList;
 				})
 				.catch((error) => console.error(error));
 		},
@@ -217,67 +225,74 @@ export default {
 		},
 		search() {
 			if(this.searchValue != null && this.searchValue.length > 1 ) {
-				if(!this.gotData) {
-					this.pinList = [];
-				}
+				var res = {
+					searchList: [],
+					pinList: [],
+					searchCount: 0,
+				};
 				this.gotData = false;
-				var promise1 = axios
+				axios
 					.get('/api/search/arts/' + this.searchValue)
 					.then((response) => {
 						if(response.data.data.length > 0) {
-							this.addArt(response.data.data);
+							this.addArt(response.data.data, res);
 							this.gotData = true;
 						}
+						axios
+							.get('/api/search/arts/artist/' + this.searchValue)
+							.then((response) => {
+								if(response.data.data.length > 0) {
+									this.addArt(response.data.data, res);
+									this.gotData = true;
+								}
+								axios
+									.get('/api/search/cities/' + this.searchValue)
+									.then((response) => {
+										if(response.data.data.length > 0) {
+											this.addArt(response.data.data, res);
+											this.gotData = true;
+										}
+										if(!this.gotData) {
+											this.searchList = [];
+											this.pinList = [];
+											this.searchCount = 0;
+										}
+										else {
+											this.searchList = res.searchList;
+											this.pinList = res.pinList;
+											this.searchCount = res.searchCount;
+										}
+									})
+									.catch((error) => console.error(error));
+							})
+							.catch((error) => console.error(error));
 					})
-					.catch((error) => {
-						console.log(error);
-						console.log(error.response);
-					});
-				var promise2 =axios
-					.get('/api/search/arts/artist/' + this.searchValue)
-					.then((response) => {
-						if(response.data.data.length > 0) {
-							this.addArt(response.data.data);
-							this.gotData = true;
-						}
-					})
-					.catch((error) => {
-						console.log(error);
-						console.log(error.response);
-					});
-				var promise3 =axios
-					.get('/api/search/cities/' + this.searchValue)
-					.then((response) => {
-						if(response.data.data.length > 0) {
-							this.addArt(response.data.data);
-							this.gotData = true;
-						}
-					})
-					.catch((error) => {
-						console.log(error);
-						console.log(error.response);
-					});
-				Promise.all([promise1, promise2, promise3]).then(() =>{
-					if(!this.gotData) {
-						this.searchList = [];
-						this.pinList = [];
-						this.searchCount = 0;
-					}
-				});
+					.catch((error) => console.error(error));
 			}
 			else {
+				this.searchList = [];
+				this.searchCount = 0;
 				this.getMapPins();
 			}
 		},
 		authenticateClosed() {
 			router.push('/');
 			this.authenticateModal = false;
+		},
+		centerMap(id) {
+			for(let i = 0; i < this.pinList.length;++i) {
+				if(this.pinList[i].id == id) {
+					this.centerTest = [this.pinList[i].latitude,this.pinList[i].longitude];
+					return;
+				}
+			}
 		}
 	}
 };
 </script>
 
-<style style="scss" >
+<style lang="scss" >
+@import "../assets/styles/text.scss";
 
 .homeButton {
 	top:10px;
@@ -305,5 +320,16 @@ export default {
 	width: 100%;
 	height: 60px
 }
+
+.searchResult {
+	width:100% !important
+}
+
+.separator {
+		height: 1px;
+		background-color: $light-color;
+		width: 90%;
+		margin:auto
+	}
 
 </style>

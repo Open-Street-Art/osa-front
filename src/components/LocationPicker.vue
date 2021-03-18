@@ -1,6 +1,6 @@
 <template>
 	<v-dialog
-		:value="data"
+		v-model="data"
 		@click:outside="$emit('close')">
 		<div
 			id="map-locationpicker">
@@ -12,7 +12,8 @@
 				@update:zoom="$emit('zoomUpdate', $event)"
 				@update:center="$emit('centerUpdate', $event)"
 				@update:bounds="$emit('boundsUpdate', $event)"
-				@click="updateCoord($event)">
+				@click="updateCoord($event)"
+				@ready="fixSize">
 				<l-tile-layer :url="url" />
 				<pin :marker-latlng="coord" />
 			</l-map>
@@ -71,13 +72,6 @@ export default {
 			coord: [-1,-1]
 		};
 	},
-	mounted() {
-		if(this.$refs.map!=null) {
-			setInterval(function () {
-				this.$refs.map.invalidateSize();
-			}, 100);
-		}
-	},
 	methods: {
 		zoomUpdated(zoom) {
 			this.zoom = zoom;
@@ -94,6 +88,9 @@ export default {
 		sendCoord() {
 			this.$emit('coordupdate', this.coord );
 			this.$emit('close');
+		},
+		fixSize() {
+			this.$refs.map.mapObject.invalidateSize();
 		}
 	}
 };

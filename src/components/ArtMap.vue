@@ -7,7 +7,8 @@
 		:options="{zoomControl: false}"
 		@update:zoom="$emit('zoomUpdate', $event)"
 		@update:center="$emit('centerUpdate', $event)"
-		@update:bounds="$emit('boundsUpdate', $event)">
+		@update:bounds="$emit('boundsUpdate', $event)"
+		@ready="sendMap">
 		<l-tile-layer :url="url" />
 		<slot />
 	</l-map>
@@ -48,9 +49,6 @@ export default {
 			}),
 		};
 	},
-	mounted() {
-		this.$emit('mapref',this.$refs.map.mapObject);
-	},
 	methods: {
 		zoomUpdated (zoom) {
 			this.zoom = zoom;
@@ -61,6 +59,9 @@ export default {
 		boundsUpdated (bounds) {
 			this.bounds = bounds;
 		},
+		sendMap() {
+			this.$emit('mapref',this.$refs.map);
+		}
 	}
 };
 </script>

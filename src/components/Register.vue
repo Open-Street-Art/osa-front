@@ -51,6 +51,10 @@
 				</v-row>
 			</v-container>
 		</v-container>
+		<snackbar
+			v-model="error"
+			color="error"
+			content="register.error" />
 	</Modal>
 </template>
 
@@ -62,6 +66,7 @@ import Modal from './Modal.vue';
 import Header from './Header.vue';
 import axios from 'axios';
 import router from '../router';
+import Snackbar from './Snackbar.vue';
 
 export default {
 	name: 'Register',
@@ -71,7 +76,7 @@ export default {
 		Button,
 		Modal,
 		Header,
-
+		Snackbar
 	},
 	model: {
 		prop: 'open',
@@ -100,8 +105,8 @@ export default {
 			username: '',
 			password: '',
 			confirmPassword: '',
-			role: 'ROLE_USER'
-
+			role: 'ROLE_USER',
+			error: false
 		};
 	},
 	methods: {
@@ -133,13 +138,16 @@ export default {
 						})
 						.then((response) => {
 							localStorage.setItem('authtoken',response.data.data.token);
-							axios.defaults.headers.common = {'Authorization': `bearer ${response.data.data.token}`};
+							axios.defaults.headers.common = {'Authorization': `Bearer ${response.data.data.token}`};
 							router.push('/');
 							router.go();
 						})
 						.catch((error) => console.error(error));
 				})
-				.catch((error) => console.error(error));
+				.catch((error) => {
+					console.error(error);
+					this.error = true;
+				});
 		}
 	}
 };

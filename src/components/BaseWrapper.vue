@@ -53,10 +53,17 @@
 						icon="mdi-palette"
 						content="home.commitArt"
 						@click="contributionClicked" />
+					<v-divider
+						v-if="admin"
+						class="mx-auto" />
 					<ActionsMenuItem
 						v-if="admin"
 						icon="mdi-plus-circle-outline"
-						content="home.addArt" />
+						content="home.addArt"
+						@click="addArtClicked" />
+					<v-divider
+						v-if="admin"
+						class="mx-auto" />
 					<ActionsMenuItem
 						v-if="admin"
 						icon="mdi-account-cog"
@@ -90,6 +97,10 @@
 		<Contribution
 			:data="contributionModal"
 			@close="contributionClosed" />
+		<Contribution
+			:add-art="addingArt"
+			:data="addArtModal"
+			@close="addArtClosed" />
 	</div>
 </template>
 
@@ -145,9 +156,11 @@ export default {
 	},
 	data() {
 		return {
+			addingArt: true,
 			registerModal: false,
 			contributionModal: false,
 			authenticateModal: false,
+			addArtModal: false,
 			connected: false,
 			admin: false,
 			username: '',
@@ -164,9 +177,12 @@ export default {
 		if(this.authenticate) {
 			this.authenticateModal = true;
 		}
+		if(this.contributionDisplay) {
+			this.contributionModal = true;
+		}
 		var token = localStorage.getItem('authtoken');
 		if(token!=null) {
-			axios.defaults.headers.common = {'Authorization': `bearer ${token}`};
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
 			var userInfo = jwt_decode(token);
 			this.connected = true;
 			this.username = userInfo.sub;
@@ -183,6 +199,12 @@ export default {
 		}
 	},
 	methods : {
+		addArtClicked() {
+			this.addArtModal = !this.addArtModal;
+		},
+		addArtClosed() {
+			this.addArtModal = !this.addArtModal;
+		},
 		registerClicked() {
 			this.registerModal = !this.registerModal;
 			router.push('/register');

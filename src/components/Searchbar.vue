@@ -13,7 +13,7 @@
 			hide-details
 			:placeholder="this.$t('search.bar')"
 			@input="updateSearchBar"
-			@focus="updateSearchBar" />
+			@focus="focusSearchBar" />
 		<div class="separator" />
 		<slot />
 		<div
@@ -69,6 +69,14 @@ export default {
 			if (this.lastUpdate >= (Date.now() - this.delay)) return; //évite de bombarder d'update a chaque input (limite a 1/300ms)
 			this.lastUpdate = Date.now();
 		},
+		focusSearchBar() {
+			if(this.value != null && this.value.length > this.minSize) {
+				this.$refs.container.classList.add('large');
+			}
+			else {
+				this.$refs.container.classList.remove('large');
+			}
+		},
 		close: function() {
 			this.$refs.container.classList.remove('large');
 		}
@@ -86,7 +94,7 @@ export default {
 		max-height: 40px;
 		height: auto;
 		border-radius: 20px;
-		padding: 0 13px;
+		padding: px;
 		overflow: hidden;
 
 		transition: min-height 0.12s ease;
@@ -116,13 +124,11 @@ export default {
 	.separator {
 		height: 1px;
 		background-color: $light-color;
-		width: 100%;
+		width: 90%;
+		margin:auto
 	}
 
 	.sad {
-
-
-
 		width: 100%;
 		text-align: center;
 	}

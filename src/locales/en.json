@@ -22,14 +22,16 @@
 		"confirmPassword":"Confirm password",
 		"cancel":"Cancel",
 		"validate":"Sign In",
-		"profilType": "Artist account"
+		"profilType": "Artist account",
+		"error" : "Register failed."
 	},
 	"authenticate": {
 		"title": "Log In",
 		"username": "Username",
 		"password": "Password",
 		"cancel": "Cancel",
-		"login": "Log In"
+		"login": "Log In",
+		"error" : "Connection failed."
 	},
 	"contribution": {
 		"title": "Suggest an art",

@@ -3,6 +3,7 @@
 		height="74"
 		width="349"
 		class="card rounded-xl"
+		elevation="0"
 		@click="$emit('click')">
 		<v-row>
 			<v-col
@@ -56,7 +57,7 @@ export default {
 .card {
     height: 74px;
     width: 349px;
-    background-color: $white-color;
+    background-color: $white-color !important;
 }
 
 </style>

@@ -22,16 +22,19 @@
 		"confirmPassword":"Confirmation de mot de passe",
 		"cancel":"Annuler",
 		"validate":"Valider",
-		"profilType": "Profil artiste"
+		"profilType": "Profil artiste",
+		"error" : "L'inscription a échouée."
 	},
 	"authenticate": {
 		"title": "Connexion",
 		"username": "Nom d'utilisateur",
 		"password": "Mot de passe",
 		"cancel": "Annuler",
-		"login": "Valider"
+		"login": "Valider",
+		"error" : "La connexion a échouée."
 	},
 	"contribution": {
+		"addArttitle": "Ajouter une oeuvre",
 		"title": "Soumettre une œuvre",
 		"artName": "Nom de l’œuvre",
 		"artist": "Artiste",
