@@ -9,32 +9,33 @@
 			</h1>
 		</Header>
 		<v-container>
-			<v-row class="mt-2">
-				<TextInput
-					v-model="username"
-					:label-string="this.$t('authenticate.username')"
-					:input-rules="[null]" />
-			</v-row>
-			<v-row>
-				<TextInput
-					v-model="password"
-					:label-string="this.$t('authenticate.password')"
-					:show="false"
-					:input-rules="[null]" />
-			</v-row>
-			<v-divider />
-			<v-row class="mt-5">
-				<v-col>
+			<v-container>
+				<v-row class="mt-2">
+					<TextInput
+						v-model="username"
+						label-string="authenticate.username" />
+				</v-row>
+				<v-row>
+					<TextInput
+						v-model="password"
+						label-string="authenticate.password"
+						:show="false" />
+				</v-row>
+			</v-container>
+			<v-container
+				class="buttons">
+				<v-divider />
+				<v-row class="mt-2 mb-1 justify-space-around">
 					<Button
-						:text-button="this.$t('authenticate.cancel')"
+						:width="155"
+						text-button="authenticate.cancel"
 						:outlined="true" />
-				</v-col>
-				<v-col>
 					<Button
-						:text-button="this.$t('authenticate.login')"
+						:width="155"
+						text-button="authenticate.login"
 						@click="sendAuthentication" />
-				</v-col>
-			</v-row>
+				</v-row>
+			</v-container>
 		</v-container>
 	</Modal>
 </template>
@@ -45,6 +46,7 @@ import Modal from '../components/Modal.vue';
 import Button from '../components/Button.vue';
 import Header from  '../components/Header.vue';
 import axios from 'axios';
+import router from '../router';
 
 export default {
 	name: 'Authenticate',
@@ -74,8 +76,10 @@ export default {
 					password: this.password
 				})
 				.then((response) => {
-					localStorage.setItem('authToken', response.data.data.token);
+					localStorage.setItem('authtoken', response.data.data.token);
 					axios.defaults.headers.common = { 'Authorization': `bearer ${response.data.data.token}` };
+					router.push('/');
+					router.go();
 				})
 				.catch((error) => console.error(error));
 		}
@@ -96,4 +100,10 @@ export default {
 	text-align: center;
 }
 
+.buttons {
+	position: absolute;
+	bottom:0%;
+	left:0%;
+	padding-bottom:0%px
+}
 </style>

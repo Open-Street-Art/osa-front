@@ -80,7 +80,7 @@ export default {
 	margin-top: 0px;
     background-color: $white-color;
     width: 90%;
-    min-height: 200vh;
+    min-height: 100vh;
     overflow: hidden;
 	margin-top: -9vh;
 }

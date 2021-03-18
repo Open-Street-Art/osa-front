@@ -11,7 +11,7 @@
 			flat
 			solo
 			hide-details
-			placeholder="Rechercher une œuvre, un artiste..."
+			:placeholder="this.$t('search.bar')"
 			@input="updateSearchBar"
 			@focus="updateSearchBar" />
 		<div class="separator" />

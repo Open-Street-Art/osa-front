@@ -15,12 +15,14 @@
 		"modified": "Last modification on "
 	},
 	"register":{
+		"title": "Registration",
 		"email":"Email",
 		"username":"Username",
 	    "password":"Password",
-		"confirmPassword":"Confirmation of the password",
+		"confirmPassword":"Confirm password",
 		"cancel":"Cancel",
-		"validate":"Validate"
+		"validate":"Sign In",
+		"profilType": "Artist account"
 	},
 	"authenticate": {
 		"title": "Log In",
@@ -28,5 +30,17 @@
 		"password": "Password",
 		"cancel": "Cancel",
 		"login": "Log In"
+	},
+	"contribution": {
+		"title": "Suggest an art",
+		"artName": "Art Name",
+		"artist": "Artist",
+		"artDescription": "Art description",
+		"artLocalisation": "Place the art on the map",
+		"cancel" : "Cancel",
+		"confirm" : "Confirm"
+	},
+	"search" : {
+		"bar" : "Search for an art, an artist ..."
 	}
 }

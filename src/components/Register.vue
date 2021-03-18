@@ -2,14 +2,12 @@
 	<Modal
 		v-model="open"
 		@close="$emit('close')">
-		<Header><h1 class="center emphase" /></Header>
-		<Header>
-			<h1 class="center emphase">
-				Inscription
+		<Header class="header">
+			<h1 class="header-text header-title">
+				{{ this.$t('register.title') }}
 			</h1>
 		</Header>
-		<br>
-		<div class="left right">
+		<v-container>
 			<TextInput
 				v-model="email"
 				label-string="register.email"
@@ -30,35 +28,29 @@
 				label-string="register.confirmPassword"
 				:show="false"
 				:input-rules="rules.confirmPassword" />
-			<div class="row">
-				<div class="col-9 v-input__slot">
-					<p class="base">
-						Profil artiste
-					</p>
-				</div>
-				<div
-					class="col-3">
-					<CheckBoxInput class="c" />
-				</div>
-			</div>
-			<br>
-
-			<v-divider class="top" />
-			<v-row />
-			<v-row
-				justify="space-between">
-				<Button
-					text-button="register.cancel"
-					:outlined="true"
-					class="mx-auto my-4 logButton" />
-				<Button
-					text-button="register.validate"
-					:outlined="false"
-					class="mx-auto my-4 logButton"
-					@click="register" />
+			<v-row class="align-center d-flex justify-space-between">
+				<p class="base ml-1">
+					{{ this.$t("register.profilType") }}
+				</p>
+				<CheckBoxInput class="pt-0 pb-1" />
 			</v-row>
-			<div class="left right" />
-		</div>
+			<v-container
+				class="buttons">
+				<v-divider />
+				<v-row
+					class="mt-2 mb-1 justify-space-around">
+					<Button
+						:width="155"
+						text-button="register.cancel"
+						:outlined="true" />
+					<Button
+						:width="155"
+						text-button="register.validate"
+						:outlined="false"
+						@click="register" />
+				</v-row>
+			</v-container>
+		</v-container>
 	</Modal>
 </template>
 
@@ -69,6 +61,7 @@ import Button from './Button.vue';
 import Modal from './Modal.vue';
 import Header from './Header.vue';
 import axios from 'axios';
+import router from '../router';
 
 export default {
 	name: 'Register',
@@ -141,6 +134,8 @@ export default {
 						.then((response) => {
 							localStorage.setItem('authtoken',response.data.data.token);
 							axios.defaults.headers.common = {'Authorization': `bearer ${response.data.data.token}`};
+							router.push('/');
+							router.go();
 						})
 						.catch((error) => console.error(error));
 				})
@@ -150,26 +145,26 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "../assets/styles/input.scss";
 @import "../assets/styles/text.scss";
+
+.header {
+	min-height: 100px;
+}
+
+.header-text {
+	margin-top: 58px;
+	text-align: center;
+}
 
 .center{
 	text-align: center;
 }
-.left{
-margin-left:20px;
-}
-.right{
-margin-right:20px;
-}
-.top{
-margin-top:40%;
-}
-.logButton {
-	width: 48%;
-}
-.c{
-margin-right:0%;
+
+.buttons {
+	position: absolute;
+	bottom:0%;
+	left:0%;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
-	<Modal 		
+	<Modal
 		v-model="data"
 		@close="$emit('close')">
 		<Header
 			class="header">
 			<h1 class="header-center header-title">
-				Contribution à une œuvre
+				{{ this.$t("contribution.title") }}
 			</h1>
 		</Header>
 		<v-container class="pa-0 contrib-container">
@@ -24,7 +24,7 @@
 				<TextInput
 					v-model="name"
 					class="contrib-input"
-					label-string="Nom de l’œuvre"
+					label-string="contribution.artName"
 					show
 					:input-rules="[null]" />
 			</v-row>
@@ -32,7 +32,7 @@
 				<TextInput
 					v-model="artist"
 					class="contrib-input"
-					label-string="Artiste"
+					label-string="contribution.artist"
 					show
 					:input-rules="[null]" />
 			</v-row>
@@ -42,7 +42,7 @@
 			<v-row class="pa-0 px-3 ma-0 mt-3">
 				<TextArea
 					v-model="description"
-					placeholder="Description de l’œuvre"
+					placeholder="contribution.artDescription"
 					show
 					rows="8"
 					counter="160"
@@ -50,8 +50,8 @@
 			</v-row>
 			<v-row class="pa-0 px-3 ma-0 mt-3">
 				<Button
-					text-button="Placer l’œuvre sur la carte"
-					:outlined="false" 
+					text-button="contribution.artLocalisation"
+					:outlined="false"
 					class="place-button"
 					@click="locationPickerModal = true" />
 			</v-row>
@@ -61,11 +61,11 @@
 				</v-container>
 				<v-container class="pa-0 px-3 ma-0 d-flex justify-space-between">
 					<Button
-						text-button="Annuler"
-						:outlined="true" 
+						text-button="contribution.cancel"
+						:outlined="true"
 						class="footer-button" />
 					<Button
-						text-button="Valider"
+						text-button="contribution.confirm"
 						:outlined="false"
 						class="footer-button"
 						@click="sendContrib" />

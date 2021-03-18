@@ -1,11 +1,11 @@
 <template>
 	<v-dialog
 		:value="data"
-
 		@click:outside="$emit('close')">
-		<div 			
+		<div
 			id="map-locationpicker">
 			<l-map
+				ref="map"
 				:zoom="baseZoom"
 				:center="baseCenter"
 				:options="{zoomControl: false}"
@@ -14,12 +14,11 @@
 				@update:bounds="$emit('boundsUpdate', $event)"
 				@click="updateCoord($event)">
 				<l-tile-layer :url="url" />
-				<l-control-zoom position="topright" />
 				<pin :marker-latlng="coord" />
 			</l-map>
 			<v-container class="d-flex justify-center ma-0 pa-0">
 				<Button
-					text-button="Valider"
+					text-button="contribution.confirm"
 					class="picker-button"
 					:outlined="false"
 					@click="sendCoord" />
@@ -30,7 +29,7 @@
 
 <script>
 import L from 'leaflet';
-import { LMap, LTileLayer, LControlZoom} from 'vue2-leaflet';
+import { LMap, LTileLayer} from 'vue2-leaflet';
 import Pin from '../components/Pin.vue';
 import Button from '../components/Button.vue';
 
@@ -39,7 +38,6 @@ export default {
 	components: {
 		LMap,
 		LTileLayer,
-		LControlZoom,
 		Pin,
 		Button
 	},
@@ -72,6 +70,13 @@ export default {
 			}),
 			coord: [-1,-1]
 		};
+	},
+	mounted() {
+		if(this.$refs.map!=null) {
+			setInterval(function () {
+				this.$refs.map.invalidateSize();
+			}, 100);
+		}
 	},
 	methods: {
 		zoomUpdated(zoom) {

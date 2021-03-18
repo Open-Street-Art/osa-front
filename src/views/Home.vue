@@ -3,7 +3,8 @@
 		<div class="test">
 			<base-wrapper
 				v-model="drawer"
-				:register="registerModal">
+				:register="registerModal"
+				:authenticate="authenticateDisplay">
 				<v-col>
 					<v-row>
 						<Header class="test">
@@ -68,12 +69,6 @@
 		<ArtDisplay
 			:data="artDisplayModal"
 			@close="artDisplayClosed()" />
-		<Contribution
-			:data="contributionModal"
-			@close="contributionClosed()" />
-		<Authenticate 
-			:data="authenticateModal"
-			@close="authenticateClosed()" />
 	</v-main>
 </template>
 
@@ -83,23 +78,20 @@ import BaseWrapper from '../components/BaseWrapper.vue';
 import Pin from '../components/Pin.vue';
 import Card from '../components/Card.vue';
 import ArtDisplay from '../components/ArtDisplay.vue';
-import Contribution from '../components/Contribution.vue';
 import Searchbar from '../components/Searchbar.vue';
 import Header from '../components/Header.vue';
-import Authenticate from '../components/Authenticate.vue';
+import Snackbar from '../components/Snackbar';
 import axios from 'axios';
 import router from '../router';
 
 export default {
 	name: 'Home',
-	components: { 
+	components: {
 		BaseWrapper,
 		ArtMap,
 		Pin,
 		Card,
 		ArtDisplay,
-		Contribution,
-		Authenticate,
 		Searchbar,
 		Header
 	},

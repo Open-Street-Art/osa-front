@@ -15,12 +15,14 @@
 		"modified": "Dernière modification le "
 	},
 	"register":{
+		"title": "Inscription",
 		"email":"Adresse mail",
 		"username":"Nom d'utilisateur",
 	    "password":"Mot de passe",
 		"confirmPassword":"Confirmation de mot de passe",
 		"cancel":"Annuler",
-		"validate":"Valider"
+		"validate":"Valider",
+		"profilType": "Profil artiste"
 	},
 	"authenticate": {
 		"title": "Connexion",
@@ -28,5 +30,17 @@
 		"password": "Mot de passe",
 		"cancel": "Annuler",
 		"login": "Valider"
+	},
+	"contribution": {
+		"title": "Soumettre une œuvre",
+		"artName": "Nom de l’œuvre",
+		"artist": "Artiste",
+		"artDescription": "Description de l’œuvre",
+		"artLocalisation": "Placer l’œuvre sur la carte",
+		"cancel" : "Annuler",
+		"confirm" : "Valider"
+	},
+	"search" : {
+		"bar" : "Rechercher une œuvre, un artiste..."
 	}
 }

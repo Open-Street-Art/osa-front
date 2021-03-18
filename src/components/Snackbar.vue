@@ -5,7 +5,7 @@
 		:color="color"
 		rounded="pill"
 		@input="$emit('update', $event)">
-		{{ content }}
+		{{ this.$t(content) }}
 	</v-snackbar>
 </template>
 
@@ -19,7 +19,7 @@ export default {
 	props: {
 		content: {
 			type: String,
-			default: 'default'
+			default: 'defaultLabel'
 		},
 		color: {
 			type: String,
@@ -37,7 +37,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 	@import "../assets/styles/text.scss";
 
 	.v-snack__content {

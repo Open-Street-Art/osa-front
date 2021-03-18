@@ -11,7 +11,8 @@
 					<Button
 						class="mx-auto my-4 logButton"
 						text-button="home.login"
-						outlined />
+						outlined
+						@click="authenticateClicked" />
 				</v-row>
 				<v-row>
 					<Button
@@ -74,7 +75,7 @@
 				class="logout"
 				fab
 				small
-				flat
+				text
 				@click="logout">
 				<v-icon>mdi-logout</v-icon>
 			</v-btn>
@@ -83,6 +84,9 @@
 		<Register
 			:open="registerModal"
 			@close="registerClosed" />
+		<Authenticate
+			:data="authenticateModal"
+			@close="authenticateClosed" />
 		<Contribution
 			:data="contributionModal"
 			@close="contributionClosed" />
@@ -97,6 +101,7 @@ import ActionsMenuItem from './ActionsMenuItem.vue';
 import Button from './Button.vue';
 import store  from '../store/index.js';
 import Register from './Register.vue';
+import Authenticate from './Authenticate.vue';
 import Contribution from './Contribution.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
@@ -113,7 +118,8 @@ export default {
 		Register,
 		Header,
 		Photo,
-		Contribution
+		Contribution,
+		Authenticate,
 	},
 	model: {
 		prop: 'value',
@@ -131,12 +137,17 @@ export default {
 		contributionDisplay: {
 			default: false,
 			type: Boolean
+		},
+		authenticate: {
+			default: false,
+			type: Boolean
 		}
 	},
 	data() {
 		return {
 			registerModal: false,
 			contributionModal: false,
+			authenticateModal: false,
 			connected: false,
 			admin: false,
 			username: '',
@@ -149,6 +160,9 @@ export default {
 	mounted() {
 		if(this.register) {
 			this.registerModal = true;
+		}
+		if(this.authenticate) {
+			this.authenticateModal = true;
 		}
 		var token = localStorage.getItem('authtoken');
 		if(token!=null) {
@@ -176,6 +190,14 @@ export default {
 		registerClosed() {
 			router.push('/');
 			this.registerModal = !this.registerModal;
+		},
+		authenticateClicked() {
+			this.authenticateModal = !this.authenticateModal;
+			router.push('/authenticate');
+		},
+		authenticateClosed() {
+			router.push('/');
+			this.authenticateModal = !this.authenticateModal;
 		},
 		contributionClicked() {
 			this.contributionModal = !this.contributionModal;
