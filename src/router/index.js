@@ -28,6 +28,14 @@ const routes = [
 		}
 	},
 	{
+		path: '/addart',
+		name: 'AddArt',
+		component: Home,
+		props: {
+			addArtModal: true
+		}
+	},
+	{
 		path: '/register',
 		name: 'Register',
 		component: Home,

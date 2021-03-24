@@ -29,7 +29,8 @@
 					<Button
 						:width="155"
 						text-button="authenticate.cancel"
-						:outlined="true" />
+						:outlined="true"
+						@click="$emit('close')" />
 					<Button
 						:width="155"
 						text-button="authenticate.login"

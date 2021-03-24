@@ -34,7 +34,7 @@
 						{{ username }}
 					</p>
 					<p class="userDisplay emphase">
-						{{ role }}
+						{{ this.$t(role) }}
 					</p>
 				</Header>
 			</div>
@@ -149,6 +149,10 @@ export default {
 			default: false,
 			type: Boolean
 		},
+		addArt: {
+			default: false,
+			type: Boolean
+		},
 		authenticate: {
 			default: false,
 			type: Boolean
@@ -171,6 +175,23 @@ export default {
 		};
 	},
 	mounted() {
+		var token = localStorage.getItem('authtoken');
+		if(token!=null) {
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+			var userInfo = jwt_decode(token);
+			this.connected = true;
+			this.username = userInfo.sub;
+			if(userInfo.roles === 'ROLE_USER') {
+				this.role = 'contributor';
+			}
+			else if (userInfo.roles === 'ROLE_ADMIN') {
+				this.role = 'administrator';
+				this.admin = true;
+			}
+			else {
+				this.role = 'Artiste';
+			}
+		}
 		if(this.register) {
 			this.registerModal = true;
 		}
@@ -180,30 +201,24 @@ export default {
 		if(this.contributionDisplay) {
 			this.contributionModal = true;
 		}
-		var token = localStorage.getItem('authtoken');
-		if(token!=null) {
-			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
-			var userInfo = jwt_decode(token);
-			this.connected = true;
-			this.username = userInfo.sub;
-			if(userInfo.roles === 'ROLE_USER') {
-				this.role = 'Contributeur';
-			}
-			else if (userInfo.roles === 'ROLE_ADMIN') {
-				this.role = 'Adminstrateur';
-				this.admin = true;
+		if(this.addArt) {
+			if(this.role === 'administrator') {
+				this.addArtModal = true;
 			}
 			else {
-				this.role = 'Artiste';
+				router.push('/');
 			}
 		}
+
 	},
 	methods : {
 		addArtClicked() {
 			this.addArtModal = !this.addArtModal;
+			router.push('/addart');
 		},
 		addArtClosed() {
 			this.addArtModal = !this.addArtModal;
+			router.push('/');
 		},
 		registerClicked() {
 			this.registerModal = !this.registerModal;

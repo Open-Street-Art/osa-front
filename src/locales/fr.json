@@ -1,6 +1,8 @@
 {
 	"testMessage": "Bonjour le monde !",
 	"defaultLabel": "Label par défaut",
+	"administrator" : "Administrateur",
+	"contributor" : "Contributeur",
 	"home": {
 		"login": "Se connecter",
 		"signin": "S'inscrire",

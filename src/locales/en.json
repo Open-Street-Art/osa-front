@@ -1,6 +1,8 @@
 {
 	"testMessage": "Hello World !",
 	"defaultLabel": "Default label",
+	"administrator" : "Administrator",
+	"contributor" : "Contributor",
 	"home": {
 		"login": "Log in",
 		"signin": "Sign in",
