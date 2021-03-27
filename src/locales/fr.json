@@ -14,7 +14,11 @@
 	},
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",
-		"modified": "Dernière modification le "
+		"modified": "Dernière modification le ",
+		"addFavourite": "Ajouter à vos favoris",
+		"contribute": "Contribuer à l'oeuvre",
+		"displayRoute": "Afficher l'itinéraire",
+		"reportArt": "Signaler l'oeuvre"
 	},
 	"register":{
 		"title": "Inscription",
@@ -47,5 +51,9 @@
 	},
 	"search" : {
 		"bar" : "Rechercher une œuvre, un artiste..."
+	},
+	"unauthorized": "Vous devez être authentifié pour faire cette action.",
+	"artActionsMenu": {
+		"added": "L'oeuvre a été ajoutée à vos favoris."
 	}
 }

@@ -19,6 +19,24 @@
 				<v-col class="titles">
 					{{ artTitle }}
 				</v-col>
+				<v-col class="text-right">
+					<v-menu offset-y>
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn
+								icon
+								v-bind="attrs"
+								color="black"
+								v-on="on">
+								<v-icon
+									large
+									dark>
+									mdi-dots-horizontal
+								</v-icon>
+							</v-btn>
+						</template>
+						<ArtActionsMenu />
+					</v-menu>
+				</v-col>
 			</v-row>
 			<v-row class="mt-1 mb-1">
 				<v-col class="pt-0 light">
@@ -62,6 +80,25 @@
 					<v-col class="titles">
 						{{ artTitle }}
 					</v-col>
+					<v-col class="text-right mr-5">
+						<v-menu
+							offset-y>
+							<template v-slot:activator="{ on, attrs }">
+								<v-btn
+									icon
+									v-bind="attrs"
+									color="black"
+									v-on="on">
+									<v-icon
+										large
+										dark>
+										mdi-dots-horizontal
+									</v-icon>
+								</v-btn>
+							</template>
+							<ArtActionsMenu />
+						</v-menu>
+					</v-col>
 				</v-row>
 				<v-row class="mt-0">
 					<v-col class="pt-2 light">
@@ -91,12 +128,16 @@
 
 <script>
 import Modal from '../components/Modal.vue';
+import ArtActionsMenu from '../components/ArtActionsMenu.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 
 export default {
 	name: 'ArtDisplay',
-	components: { Modal },
+	components: {
+		Modal,
+		ArtActionsMenu
+	},
 	mixins: [ mobileDetection ],
 	model: {
 		prop: 'artDisplayModel',
