@@ -53,7 +53,8 @@
 		"bar" : "Rechercher une œuvre, un artiste..."
 	},
 	"unauthorized": "Vous devez être authentifié pour faire cette action.",
+	"unknown": "Une erreur inconnue s'est produite.",
 	"artActionsMenu": {
-		"added": "L'oeuvre a été ajoutée à vos favoris."
+		"added": "L'œuvre a été ajoutée à vos favoris."
 	}
 }

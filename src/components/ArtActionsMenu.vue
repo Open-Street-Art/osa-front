@@ -38,6 +38,8 @@ export default {
 				.catch((error) => {
 					if (error.response.status === 401) {
 						EventBus.$emit('error', 'unauthorized');
+					} else {
+						EventBus.$emit('error', 'unknown');
 					}
 				});
 		}

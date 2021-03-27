@@ -52,6 +52,7 @@
 		"bar" : "Search for an art, an artist ..."
 	},
 	"unauthorized": "Your must be authentified to perform this action",
+	"unknown": "Unkown error.",
 	"artActionsMenu": {
 		"added": "The art has been added to your favourites."
 	}

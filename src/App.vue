@@ -4,10 +4,11 @@
 			<router-view />
 		</v-main>
 		<Snackbar
-			:value="snackbar"
+			v-model="snackbar"
+			class="snackbar"
 			:timeout="2000"
 			:content="snackbarMsg"
-			color="error" />
+			:color="snackbarColor" />
 	</v-app>
 </template>
 
@@ -49,7 +50,7 @@ export default {
 
 <style>
 .v-navigation-drawer {
-z-index: 9999 !important;
+	z-index: 9999 !important;
 }
 
 html {
