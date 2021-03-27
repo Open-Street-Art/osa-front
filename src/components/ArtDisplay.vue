@@ -20,7 +20,9 @@
 					{{ artTitle }}
 				</v-col>
 				<v-col class="text-right">
-					<v-menu offset-y>
+					<v-menu
+						offset-y
+						rounded="xl">
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn
 								icon
@@ -82,6 +84,7 @@
 					</v-col>
 					<v-col class="text-right mr-5">
 						<v-menu
+							rounded="xl"
 							offset-y>
 							<template v-slot:activator="{ on, attrs }">
 								<v-btn

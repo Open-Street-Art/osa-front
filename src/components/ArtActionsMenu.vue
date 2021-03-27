@@ -13,14 +13,6 @@
 		<ActionsMenuItem
 			icon="mdi-flag-variant"
 			content="artDisplay.reportArt" />
-		<Snackbar
-			v-model="addedToFavourite"
-			color="success"
-			content="artActionsMenu.added" />
-		<Snackbar
-			v-model="unauthorized"
-			color="error"
-			content="unauthorized" />
 	</ActionsMenu>
 </template>
 
@@ -28,31 +20,24 @@
 import axios from 'axios';
 import ActionsMenu from './ActionsMenu.vue';
 import ActionsMenuItem from './ActionsMenuItem.vue';
-import Snackbar from './Snackbar.vue';
+import { EventBus } from '@/event-bus';
+
 export default {
 	name: 'ArtActionsMenu',
 	components: {
 		ActionsMenu,
-		ActionsMenuItem,
-		Snackbar
-	},
-	data() {
-		return {
-			addedToFavourite: false,
-			unauthorized: false
-		};
+		ActionsMenuItem
 	},
 	methods: {
 		addToFavourite() {
-			console.log('/api/fav/art/' + this.$route.params.id);
 			axios
 				.post('/api/fav/art/' + this.$route.params.id)
 				.then((response) => {
-					this.addedToFavourite = true;
+					EventBus.$emit('success', 'artActionsMenu.added');
 				})
 				.catch((error) => {
 					if (error.response.status === 401) {
-						this.unauthorized = true;
+						EventBus.$emit('error', 'unauthorized');
 					}
 				});
 		}
