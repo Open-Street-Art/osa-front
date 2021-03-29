@@ -1,305 +1,130 @@
 <template>
-	<div id="view">
-		<Menu
-			:value="value"
-			:app="true"
-			@update="$emit('update', $event)">
-			<v-container
-				v-if="!connected"
-				class="text-center">
-				<v-row>
-					<Button
-						class="mx-auto my-4 logButton"
-						text-button="home.login"
-						outlined
-						@click="authenticateClicked" />
-				</v-row>
-				<v-row>
-					<Button
-						class="mx-auto mb-4 logButton"
-						text-button="home.signin"
-						@click="registerClicked" />
-				</v-row>
-				<v-divider class="mx-auto mt-4" />
-			</v-container>
-			<div
-				v-if="connected">
-				<Header style="height: 160px">
+	<div id="id">
+		<base-wrapper v-model="drawer">
+			<Header class="test">
+				<v-btn
+					class="homeButton"
+					left
+					fab
+					text
+					small
+					color="primary"
+					@click.stop="drawer = !drawer">
+					<v-icon color="white">
+						mdi-menu
+					</v-icon>
 					<Photo
-						class="mx-auto picture"
-						:link-photo="placeholder"
-						:forme="forme" />
-					<p
-						class="userDisplay titles mb-0 mt-2 ">
-						{{ username }}
+						class="positionPicture"
+						link-photo="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+						:max-heigth="80"
+						:max-width="80"
+						forme="forme-profile" />
+				</v-btn>
+			</Header>
+			<Header class="test">
+				<v-btn
+					class="homeButton"
+					left
+					fab
+					text
+					small
+					color="primary"
+					@click.stop="drawer = !drawer">
+					<p class="emphase positionUserAccount">
+						Nom d'utilisateur
 					</p>
-					<p class="userDisplay emphase">
-						{{ this.$t(role) }}
-					</p>
-				</Header>
-			</div>
-			<v-container>
-				<ActionsMenu :outlined="true">
-					<ActionsMenuItem
-						v-if="connected"
-						icon="mdi-account"
-						content="home.myProfile" />
-					<v-divider class="mx-auto" />
-					<ActionsMenuItem
-						icon="mdi-account-search"
-						content="home.searchUser" />
-					<v-divider class="mx-auto" />
-					<ActionsMenuItem
-						icon="mdi-palette"
-						content="home.commitArt"
-						@click="contributionClicked" />
-					<v-divider
-						v-if="admin"
-						class="mx-auto" />
-					<ActionsMenuItem
-						v-if="admin"
-						icon="mdi-plus-circle-outline"
-						content="home.addArt"
-						@click="addArtClicked" />
-					<v-divider
-						v-if="admin"
-						class="mx-auto" />
-					<ActionsMenuItem
-						v-if="admin"
-						icon="mdi-account-cog"
-						content="home.adminPanel" />
-				</ActionsMenu>
+				</v-btn>
+			</Header>
+			<p class="base positionAccountType">
+				Type de compte
+			</p>
+			<p class="positionUserAccountText base">
+				Ceci est un texte à propos de moi qui fait moins de 160 caractère.
+			</p>
+			<p class="position button">
+				Contribution
+				<v-icon color="#00baaf">
+					mdi-account-box
+				</v-icon>
+				<v-icon color="#00baaf">
+					mdi-city
+				</v-icon>
+				<v-icon color="#00baaf">
+					mdi-palette
+				</v-icon>
+			</p>
+			<v-container class="pos">
+				<v-divider />
+				<v-container>
+					<Card
+						card-title="Nom de l’œuvre"
+						card-desc="Artiste inconnu, Rouen" />
+				</v-container>
+				<v-divider />
+				<v-container>
+					<Card
+						card-title="Nom de l’œuvre"
+						card-desc="Artiste inconnu, Rouen" />
+				</v-container>
+				<v-divider />
+				<v-container>
+					<Card
+						card-title="Nom de l’œuvre"
+						card-desc="Artiste inconnu, Rouen" />
+				</v-container>
 			</v-container>
-			<v-btn
-				v-model="$i18n.locale"
-				class="localeChanger"
-				fab
-				small
-				@click="switchLocale">
-				{{ $i18n.locale }}
-			</v-btn>
-			<v-btn
-				class="logout"
-				fab
-				small
-				text
-				@click="logout">
-				<v-icon>mdi-logout</v-icon>
-			</v-btn>
-		</Menu>
-		<slot />
-		<Register
-			:open="registerModal"
-			@close="registerClosed" />
-		<Authenticate
-			:data="authenticateModal"
-			@close="authenticateClosed" />
-		<Contribution
-			:data="contributionModal"
-			@close="contributionClosed" />
-		<Contribution
-			:add-art="addingArt"
-			:data="addArtModal"
-			@close="addArtClosed" />
+		</base-wrapper>
 	</div>
 </template>
-
 <script>
-import Menu from './Menu.vue';
-import Header from './Header.vue';
-import ActionsMenu from './ActionsMenu.vue';
-import ActionsMenuItem from './ActionsMenuItem.vue';
-import Button from './Button.vue';
-import store  from '../store/index.js';
-import Register from './Register.vue';
-import Authenticate from './Authenticate.vue';
-import Contribution from './Contribution.vue';
-import router from '../router';
-import jwt_decode from 'jwt-decode';
-import Photo from './Photo.vue';
-import axios from 'axios';
-
+import BaseWrapper from '../components/BaseWrapper.vue';
+import Header from '../components/Header.vue';
+import Photo from '../components/Photo.vue';
+import Card from '../components/Card.vue';
+//import axios from 'axios';
 export default {
-	name: 'BaseWrapper',
+	name: 'Home',
 	components: {
-		Menu,
-		ActionsMenu,
-		ActionsMenuItem,
-		Button,
-		Register,
-		Header,
+		BaseWrapper,
 		Photo,
-		Contribution,
-		Authenticate,
-	},
-	model: {
-		prop: 'value',
-		event: 'update'
-	},
-	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
-		register: {
-			default: false,
-			type: Boolean
-		},
-		contributionDisplay: {
-			default: false,
-			type: Boolean
-		},
-		addArt: {
-			default: false,
-			type: Boolean
-		},
-		authenticate: {
-			default: false,
-			type: Boolean
-		}
-	},
-	data() {
-		return {
-			addingArt: true,
-			registerModal: false,
-			contributionModal: false,
-			authenticateModal: false,
-			addArtModal: false,
-			connected: false,
-			admin: false,
-			username: '',
-			role:'',
-			forme: 'forme-profile',
-			placeholder: require('@/assets/avatarPlaceholder.png'),
-			langs: ['fr', 'en']
-		};
-	},
-	mounted() {
-		var token = localStorage.getItem('authtoken');
-		if(token!=null) {
-			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
-			var userInfo = jwt_decode(token);
-			this.connected = true;
-			this.username = userInfo.sub;
-			if(userInfo.roles === 'ROLE_USER') {
-				this.role = 'contributor';
-			}
-			else if (userInfo.roles === 'ROLE_ADMIN') {
-				this.role = 'administrator';
-				this.admin = true;
-			}
-			else {
-				this.role = 'Artiste';
-			}
-		}
-		if(this.register) {
-			this.registerModal = true;
-		}
-		if(this.authenticate) {
-			this.authenticateModal = true;
-		}
-		if(this.contributionDisplay) {
-			this.contributionModal = true;
-		}
-		if(this.addArt) {
-			if(this.role === 'administrator') {
-				this.addArtModal = true;
-			}
-			else {
-				router.push('/');
-			}
-		}
-
-	},
-	methods : {
-		addArtClicked() {
-			this.addArtModal = !this.addArtModal;
-			router.push('/addart');
-		},
-		addArtClosed() {
-			this.addArtModal = !this.addArtModal;
-			router.push('/');
-		},
-		registerClicked() {
-			this.registerModal = !this.registerModal;
-			router.push('/register');
-		},
-		registerClosed() {
-			router.push('/');
-			this.registerModal = !this.registerModal;
-		},
-		authenticateClicked() {
-			this.authenticateModal = !this.authenticateModal;
-			router.push('/authenticate');
-		},
-		authenticateClosed() {
-			router.push('/');
-			this.authenticateModal = !this.authenticateModal;
-		},
-		contributionClicked() {
-			this.contributionModal = !this.contributionModal;
-			router.push('/contrib');
-		},
-		contributionClosed() {
-			router.push('/');
-			this.contributionModal = false;
-		},
-		switchLocale() {
-			if(this.$i18n.locale == this.langs[1]) {
-				store.commit('setAppLanguage',this.langs[0]);
-				this.$i18n.locale = this.langs[0];
-			}
-			else {
-				this.$i18n.locale = this.langs[1];
-				store.commit('setAppLanguage',this.langs[1]);
-			}
-		},
-		logout() {
-			localStorage.removeItem('authtoken');
-			router.go();
-		}
+		Header,
+		Card
 	}
 };
 </script>
-
-<style lang="scss" scoped>
+<style lang="scss" >
 @import "../assets/styles/text.scss";
 
-div.view {
-	height: 100vh !important;
-}
-
-.v-divider {
-	border-color: $light-color !important;
-	width: 90%
-}
-
-.logButton {
-	width: 297px;
-}
-
-.tempButton {
-	position: fixed
-}
-
-.localeChanger {
+.positionPicture{
 	position: absolute;
-	bottom: 10px;
-	left: 10px;
+	left:10px;
+	top: 60px;
+	border: 4px solid  #00BAAF;
 }
-
-.userDisplay {
-	text-align: center;
-}
-
-.picture {
-	top:10px;
-}
-
-.logout {
+.positionAccountType{
 	position: absolute;
-	bottom: 10px;
-	right: 10px;
+	left:100px;
 }
+.positionUserAccount{
+	position: absolute;
+	left:90px;
+	top: 6px;
+}
+.positionUserAccountText{
+	position: absolute;
+	left:10px;
+	top: 190px;
+}
+.position{
+	position: absolute;
+	left:50px;
+	top: 300px;
+}
+.pos{
+position: absolute;
 
+	top: 320px;	
+}
 </style>
+
+
