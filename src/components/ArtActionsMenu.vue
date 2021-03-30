@@ -1,10 +1,6 @@
 <template>
 	<ActionsMenu>
 		<ActionsMenuItem
-			v-if="isAdmin"
-			icon="mdi-delete"
-			content="artDisplay.removeArt" />
-		<ActionsMenuItem
 			v-if="!isFavourited"
 			icon="mdi-star-outline"
 			content="artDisplay.addFavourite"
@@ -59,8 +55,7 @@ export default {
 				}
 			})
 			.catch((error) => console.error(error));
-	},
-	mounted() {
+		//try
 		var token = localStorage.getItem('authtoken');
 		if(token!=null) {
 			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
