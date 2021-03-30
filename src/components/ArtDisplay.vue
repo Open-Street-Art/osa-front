@@ -160,7 +160,6 @@ export default {
 			artAuthor: '',
 			artImages: [],
 			artCreationDT: new Date(),
-			role: '',
 		};
 	},
 	watch: {
@@ -181,25 +180,6 @@ export default {
 	created() {
 		this.isMobile();
 	},
-	mounted() {
-		var token = localStorage.getItem('authtoken');
-		if(token!=null) {
-			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
-			var userInfo = jwt_decode(token);
-			this.connected = true;
-			this.username = userInfo.sub;
-			if(userInfo.roles === 'ROLE_USER') {
-				this.role = 'contributor';
-			}
-			else if (userInfo.roles === 'ROLE_ADMIN') {
-				this.role = 'administrator';
-				this.admin = true;
-			}
-			else {
-				this.role = 'Artiste';
-			}
-		}
-	}
 };
 </script>
 
