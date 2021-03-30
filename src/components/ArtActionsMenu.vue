@@ -55,7 +55,8 @@ export default {
 				}
 			})
 			.catch((error) => console.error(error));
-		//try
+		
+		//recupere le role d'un utilisateur pour savoir si il est admin ou non
 		var token = localStorage.getItem('authtoken');
 		if(token!=null) {
 			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
