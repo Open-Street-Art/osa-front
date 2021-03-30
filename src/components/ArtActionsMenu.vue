@@ -3,7 +3,8 @@
 		<ActionsMenuItem
 			v-if="isAdmin"
 			icon="mdi-delete"
-			content="artDisplay.removeArt" />
+			content="artDisplay.removeArt" 
+			@click="deleteArt" />
 		<ActionsMenuItem
 			v-if="!isFavourited"
 			icon="mdi-star-outline"
@@ -102,6 +103,23 @@ export default {
 						EventBus.$emit('error', 'unknown');
 					}
 				});
+		},
+		deleteArt() {
+			if (this.isAdmin) {
+				axios
+					.delete('/api/admin/art' + this.artId)
+					.then((response) => {
+						router.push('/');
+						router.go();
+					})
+					.catch((error) => {
+						if (error.response.status === 401) {
+							EventBus.$emit('error', 'unauthorized');
+						} else {
+							EventBus.$emit('error', 'unknown');
+						}
+					});
+			}
 		}
 	}
 };
