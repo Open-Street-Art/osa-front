@@ -1,9 +1,15 @@
 <template>
 	<ActionsMenu>
 		<ActionsMenuItem
+			v-if="!isFavourited"
 			icon="mdi-star-outline"
 			content="artDisplay.addFavourite"
 			@click="addToFavourite" />
+		<ActionsMenuItem
+			v-if="isFavourited"
+			icon="mdi-star"
+			content="artDisplay.removeFavourite"
+			@click="removeFavourite" />
 		<ActionsMenuItem
 			icon="mdi-text-box-plus-outline"
 			content="artDisplay.contribute" />
@@ -28,12 +34,49 @@ export default {
 		ActionsMenu,
 		ActionsMenuItem
 	},
+	data() {
+		return {
+			artId: this.$route.params.id,
+			isFavourited: false
+		};
+	},
+	created() {
+		// On récupère le profile de l'utilisateur pour savoir
+		// si l'oeuvre est deja en favoris
+		axios
+			.get('/api/user/profile')
+			.then((response) => {
+				for (const art of response.data.data.favArts) {
+					if (art.id == this.artId) {
+						this.isFavourited = true;
+						break;
+					}
+				}
+			})
+			.catch((error) => console.error(error));
+	},
 	methods: {
 		addToFavourite() {
 			axios
-				.post('/api/fav/art/' + this.$route.params.id)
+				.post('/api/fav/art/' + this.artId)
 				.then((response) => {
 					EventBus.$emit('success', 'artActionsMenu.added');
+					this.isFavourited = true;
+				})
+				.catch((error) => {
+					if (error.response.status === 401) {
+						EventBus.$emit('error', 'unauthorized');
+					} else {
+						EventBus.$emit('error', 'unknown');
+					}
+				});
+		},
+		removeFavourite() {
+			axios
+				.delete('/api/fav/art/' + this.artId)
+				.then((response) => {
+					EventBus.$emit('success', 'artActionsMenu.deleted');
+					this.isFavourited = false;
 				})
 				.catch((error) => {
 					if (error.response.status === 401) {
