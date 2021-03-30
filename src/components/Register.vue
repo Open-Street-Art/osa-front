@@ -42,7 +42,8 @@
 					<Button
 						:width="155"
 						text-button="register.cancel"
-						:outlined="true" />
+						:outlined="true"
+						@click="$emit('close')" />
 					<Button
 						:width="155"
 						text-button="register.validate"

@@ -5,7 +5,8 @@
 				v-model="drawer"
 				:register="registerModal"
 				:authenticate="authenticateDisplay"
-				:contribution-display="contributionDisplay">
+				:contribution-display="contributionDisplay"
+				:add-art="addArtModal">
 				<v-col>
 					<v-row>
 						<Header class="test">
@@ -105,6 +106,10 @@ export default {
 			type: Boolean
 		},
 		contributionDisplay: {
+			default: false,
+			type: Boolean
+		},
+		addArtModal: {
 			default: false,
 			type: Boolean
 		},

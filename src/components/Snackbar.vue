@@ -1,6 +1,7 @@
 <template>
 	<v-snackbar
-		:value="value"
+		v-model="value"
+		content-class="text-center"
 		:timeout="timeout"
 		:color="color"
 		rounded="pill"

@@ -1,6 +1,8 @@
 {
 	"testMessage": "Hello World !",
 	"defaultLabel": "Default label",
+	"administrator" : "Administrator",
+	"contributor" : "Contributor",
 	"home": {
 		"login": "Log in",
 		"signin": "Sign in",
@@ -12,7 +14,12 @@
 	},
 	"artDisplay": {
 		"created": "Art added on ",
-		"modified": "Last modification on "
+		"modified": "Last modification on ",
+		"addFavourite": "Add to your favourites",
+		"removeFavourite": "Remove from your favourites",
+		"contribute": "Contribute to the art",
+		"displayRoute": "Display the route",
+		"reportArt": "Report the art"
 	},
 	"register":{
 		"title": "Registration",
@@ -44,5 +51,11 @@
 	},
 	"search" : {
 		"bar" : "Search for an art, an artist ..."
+	},
+	"unauthorized": "Your must be authentified to perform this action",
+	"unknown": "Unkown error.",
+	"artActionsMenu": {
+		"added": "The art has been added to your favourites.",
+		"deleted": "The art has been deleted from your favorites."
 	}
 }

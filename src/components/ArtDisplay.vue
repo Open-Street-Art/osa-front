@@ -19,30 +19,25 @@
 				<v-col class="titles">
 					{{ artTitle }}
 				</v-col>
-				<v-col class="test">
-					<v-btn
-						class="homeButton"
-						left
-						fab
-						text
-						small
-						color="primary"
-						@click.stop="drawer = !drawer">
-						<v-icon color="black">
-							mdi-dots-horizontal
-						</v-icon>
-					</v-btn>
-					<v-col class="test">
-						<v-navigation-drawer
-							v-model="drawer">
-							<ActionsMenu 
-								:outlined="true">
-								<ActionsMenuItem
-									icon="mdi-account"
-									content="oui" />
-							</ActionsMenu>
-						</v-navigation-drawer>
-					</v-col>
+				<v-col class="text-right">
+					<v-menu
+						offset-y
+						rounded="xl">
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn
+								icon
+								v-bind="attrs"
+								color="black"
+								v-on="on">
+								<v-icon
+									large
+									dark>
+									mdi-dots-horizontal
+								</v-icon>
+							</v-btn>
+						</template>
+						<ArtActionsMenu />
+					</v-menu>
 				</v-col>
 			</v-row>
 			<v-row class="mt-1 mb-1">
@@ -87,31 +82,25 @@
 					<v-col class="titles">
 						{{ artTitle }}
 					</v-col>
-					<v-col class="test">
-						<v-btn
-							class="homeButton"
-							left
-							fab
-							text
-							small
-							color="primary"
-							@click.stop="drawer = !drawer">
-							<v-icon color="black">
-								mdi-dots-horizontal
-							</v-icon>
-						</v-btn>
-
-						<v-navigation-drawer
-							v-model="drawer">
-							<v-container>
-								<ActionsMenu 
-									:outlined="true">
-									<ActionsMenuItem
-										icon="mdi-account"
-										content="oui" />
-								</ActionsMenu>
-							</v-container>
-						</v-navigation-drawer>
+					<v-col class="text-right mr-5">
+						<v-menu
+							rounded="xl"
+							offset-y>
+							<template v-slot:activator="{ on, attrs }">
+								<v-btn
+									icon
+									v-bind="attrs"
+									color="black"
+									v-on="on">
+									<v-icon
+										large
+										dark>
+										mdi-dots-horizontal
+									</v-icon>
+								</v-btn>
+							</template>
+							<ArtActionsMenu />
+						</v-menu>
 					</v-col>
 				</v-row>
 				<v-row class="mt-0">
@@ -142,6 +131,7 @@
 
 <script>
 import Modal from '../components/Modal.vue';
+import ArtActionsMenu from '../components/ArtActionsMenu.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 import ActionMenu from '../components/ActionsMenu.vue';
@@ -149,7 +139,10 @@ import ActionMenuItem from '../components/ActionsMenuItem.vue';
 
 export default {
 	name: 'ArtDisplay',
-	components: { Modal },
+	components: {
+		Modal,
+		ArtActionsMenu
+	},
 	mixins: [ mobileDetection ],
 	model: {
 		prop: 'artDisplayModel',

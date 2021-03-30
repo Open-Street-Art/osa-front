@@ -67,7 +67,8 @@
 						<Button
 							text-button="contribution.cancel"
 							:outlined="true"
-							class="footer-button" />
+							class="footer-button"
+							@click="$emit('close')" />
 						<Button
 							v-if="!addArt"
 							text-button="contribution.confirm"
@@ -92,7 +93,8 @@
 						<Button
 							text-button="contribution.cancel"
 							:outlined="true"
-							class="footer-button" />
+							class="footer-button"
+							@click="$emit('close')" />
 						<Button
 							v-if="!addArt"
 							text-button="contribution.confirm"
@@ -201,6 +203,7 @@ export default {
 					longitude: this.latlng[1]
 				})
 				.then((response) => {
+					router.push('/');
 					router.go();
 				})
 				.catch((error) => console.error(error));

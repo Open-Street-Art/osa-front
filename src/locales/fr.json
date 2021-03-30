@@ -1,6 +1,8 @@
 {
 	"testMessage": "Bonjour le monde !",
 	"defaultLabel": "Label par défaut",
+	"administrator" : "Administrateur",
+	"contributor" : "Contributeur",
 	"home": {
 		"login": "Se connecter",
 		"signin": "S'inscrire",
@@ -12,7 +14,12 @@
 	},
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",
-		"modified": "Dernière modification le "
+		"modified": "Dernière modification le ",
+		"addFavourite": "Ajouter à vos favoris",
+		"removeFavourite": "Retirer de vos favoris",
+		"contribute": "Contribuer à l'oeuvre",
+		"displayRoute": "Afficher l'itinéraire",
+		"reportArt": "Signaler l'oeuvre"
 	},
 	"register":{
 		"title": "Inscription",
@@ -45,5 +52,11 @@
 	},
 	"search" : {
 		"bar" : "Rechercher une œuvre, un artiste..."
+	},
+	"unauthorized": "Vous devez être authentifié pour faire cette action.",
+	"unknown": "Une erreur inconnue s'est produite.",
+	"artActionsMenu": {
+		"added": "L'œuvre a été ajoutée à vos favoris.",
+		"deleted": "L'œuvre a été supprimé de vos favoris."
 	}
 }
