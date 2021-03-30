@@ -107,7 +107,7 @@ export default {
 		deleteArt() {
 			if (this.isAdmin) {
 				axios
-					.delete('/api/admin/art' + this.artId)
+					.delete('/api/admin/art/' + this.artId)
 					.then((response) => {
 						router.push('/');
 						router.go();
