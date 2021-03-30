@@ -37,7 +37,8 @@ export default {
 	data() {
 		return {
 			artId: this.$route.params.id,
-			isFavourited: false
+			isFavourited: false,
+			isAdmin: false
 		};
 	},
 	created() {
@@ -54,6 +55,15 @@ export default {
 				}
 			})
 			.catch((error) => console.error(error));
+		//try
+		var token = localStorage.getItem('authtoken');
+		if(token!=null) {
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+			var userInfo = jwt_decode(token);
+			if (userInfo.roles === 'ROLE_ADMIN') {
+				this.isAdmin = true;
+			}
+		}
 	},
 	methods: {
 		addToFavourite() {
