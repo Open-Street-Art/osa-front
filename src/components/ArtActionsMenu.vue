@@ -3,7 +3,7 @@
 		<ActionsMenuItem
 			v-if="isAdmin"
 			icon="mdi-delete"
-			content="artDisplay.removeArt" 
+			content="artDisplay.deleteArt" 
 			@click="deleteArt" />
 		<ActionsMenuItem
 			v-if="!isFavourited"

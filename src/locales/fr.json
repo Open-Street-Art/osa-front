@@ -19,7 +19,8 @@
 		"removeFavourite": "Retirer de vos favoris",
 		"contribute": "Contribuer à l'oeuvre",
 		"displayRoute": "Afficher l'itinéraire",
-		"reportArt": "Signaler l'oeuvre"
+		"reportArt": "Signaler l'oeuvre",
+		"deleteArt": "Supprimer l'oeuvre"
 	},
 	"register":{
 		"title": "Inscription",
