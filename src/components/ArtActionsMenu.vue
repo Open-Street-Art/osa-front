@@ -1,6 +1,10 @@
 <template>
 	<ActionsMenu>
 		<ActionsMenuItem
+			v-if="isAdmin"
+			icon="mdi-delete"
+			content="artDisplay.removeArt" />
+		<ActionsMenuItem
 			v-if="!isFavourited"
 			icon="mdi-star-outline"
 			content="artDisplay.addFavourite"
