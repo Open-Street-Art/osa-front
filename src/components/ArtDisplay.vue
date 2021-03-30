@@ -156,7 +156,6 @@ export default {
 		return {
 			artTitle: '',
 			artDesc: '',
-			drawer: false,
 			artAuthor: '',
 			artImages: [],
 			artCreationDT: new Date(),
