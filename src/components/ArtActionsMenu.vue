@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import router from '../router';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import ActionsMenu from './ActionsMenu.vue';
