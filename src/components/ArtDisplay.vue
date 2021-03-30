@@ -19,6 +19,31 @@
 				<v-col class="titles">
 					{{ artTitle }}
 				</v-col>
+				<v-col class="test">
+					<v-btn
+						class="homeButton"
+						left
+						fab
+						text
+						small
+						color="primary"
+						@click.stop="drawer = !drawer">
+						<v-icon color="black">
+							mdi-dots-horizontal
+						</v-icon>
+					</v-btn>
+					<v-col class="test">
+						<v-navigation-drawer
+							v-model="drawer">
+							<ActionsMenu 
+								:outlined="true">
+								<ActionsMenuItem
+									icon="mdi-account"
+									content="oui" />
+							</ActionsMenu>
+						</v-navigation-drawer>
+					</v-col>
+				</v-col>
 			</v-row>
 			<v-row class="mt-1 mb-1">
 				<v-col class="pt-0 light">
@@ -62,6 +87,32 @@
 					<v-col class="titles">
 						{{ artTitle }}
 					</v-col>
+					<v-col class="test">
+						<v-btn
+							class="homeButton"
+							left
+							fab
+							text
+							small
+							color="primary"
+							@click.stop="drawer = !drawer">
+							<v-icon color="black">
+								mdi-dots-horizontal
+							</v-icon>
+						</v-btn>
+
+						<v-navigation-drawer
+							v-model="drawer">
+							<v-container>
+								<ActionsMenu 
+									:outlined="true">
+									<ActionsMenuItem
+										icon="mdi-account"
+										content="oui" />
+								</ActionsMenu>
+							</v-container>
+						</v-navigation-drawer>
+					</v-col>
 				</v-row>
 				<v-row class="mt-0">
 					<v-col class="pt-2 light">
@@ -93,6 +144,8 @@
 import Modal from '../components/Modal.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
+import ActionMenu from '../components/ActionsMenu.vue';
+import ActionMenuItem from '../components/ActionsMenuItem.vue';
 
 export default {
 	name: 'ArtDisplay',
@@ -112,9 +165,11 @@ export default {
 		return {
 			artTitle: '',
 			artDesc: '',
+			drawer: false,
 			artAuthor: '',
 			artImages: [],
-			artCreationDT: new Date()
+			artCreationDT: new Date(),
+			role: '',
 		};
 	},
 	watch: {
@@ -134,6 +189,25 @@ export default {
 	},
 	created() {
 		this.isMobile();
+	},
+	mounted() {
+		var token = localStorage.getItem('authtoken');
+		if(token!=null) {
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+			var userInfo = jwt_decode(token);
+			this.connected = true;
+			this.username = userInfo.sub;
+			if(userInfo.roles === 'ROLE_USER') {
+				this.role = 'contributor';
+			}
+			else if (userInfo.roles === 'ROLE_ADMIN') {
+				this.role = 'administrator';
+				this.admin = true;
+			}
+			else {
+				this.role = 'Artiste';
+			}
+		}
 	}
 };
 </script>
