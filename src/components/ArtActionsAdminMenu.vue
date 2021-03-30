@@ -37,7 +37,8 @@ export default {
 	data() {
 		return {
 			artId: this.$route.params.id,
-			isFavourited: false
+			isFavourited: false,
+			isAdmin: false
 		};
 	},
 	created() {
