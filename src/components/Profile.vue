@@ -41,6 +41,34 @@
 			<p class="positionUserAccountText base">
 				Ceci est un texte à propos de moi qui fait moins de 160 caractère.
 			</p>
+			<p>
+				kzjdkdbvsdkb
+				{{ id }}
+				{{ username }}
+				{{ role }}
+				{{ profilePicture }}
+				{{ description }}
+			</p>
+			<div
+				v-for="{
+					id,
+					username,
+					role,
+					profilePicture,
+					description
+				}
+					in
+						oeuvre"
+				:key="id">
+				<p>
+					kzjdkdbvsdkb
+					{{ id }}
+					{{ username }}
+					{{ role }}
+					{{ profilePicture }}
+					{{ description }}
+				</p>
+			</div>
 			<p class="position button">
 				Contribution
 				<v-icon color="#00baaf">
@@ -89,6 +117,32 @@ export default {
 		Photo,
 		Header,
 		Card
+	},
+	data () {
+		return {
+			gotData: false,
+			oeuvre:[]
+		};
+	},
+	methods:{
+		profile(){
+		
+			var res={
+				user:[],
+			};
+	   this.gotData=false;
+			axios
+				.get('/api/user/-1')
+				.then((response) => {
+					if(response.data.data.length>0){
+						res=response.data.data;
+						this.gotData=true;
+						this.oeuvre=res;
+					}
+	  })
+	  .catch((error) => console.error(error));
+		
+		}
 	}
 };
 </script>
