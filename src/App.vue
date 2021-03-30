@@ -53,6 +53,10 @@ export default {
 	z-index: 9999 !important;
 }
 
+.snackbar {
+	z-index: 12000 !important;
+}
+
 html {
 	overflow: hidden !important;
 }
