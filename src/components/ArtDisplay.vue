@@ -134,8 +134,6 @@ import Modal from '../components/Modal.vue';
 import ArtActionsMenu from '../components/ArtActionsMenu.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
-import ActionMenu from '../components/ActionsMenu.vue';
-import ActionMenuItem from '../components/ActionsMenuItem.vue';
 
 export default {
 	name: 'ArtDisplay',

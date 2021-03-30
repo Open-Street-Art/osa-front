@@ -1,6 +1,10 @@
 <template>
 	<ActionsMenu>
 		<ActionsMenuItem
+			v-if="isAdmin"
+			icon="mdi-delete"
+			content="artDisplay.removeArt" />
+		<ActionsMenuItem
 			v-if="!isFavourited"
 			icon="mdi-star-outline"
 			content="artDisplay.addFavourite"
@@ -37,7 +41,8 @@ export default {
 	data() {
 		return {
 			artId: this.$route.params.id,
-			isFavourited: false
+			isFavourited: false,
+			isAdmin: false
 		};
 	},
 	created() {
@@ -54,6 +59,16 @@ export default {
 				}
 			})
 			.catch((error) => console.error(error));
+	},
+	mounted() {
+		var token = localStorage.getItem('authtoken');
+		if(token!=null) {
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+			var userInfo = jwt_decode(token);
+			if (userInfo.roles === 'ROLE_ADMIN') {
+				this.isAdmin = true;
+			}
+		}
 	},
 	methods: {
 		addToFavourite() {
