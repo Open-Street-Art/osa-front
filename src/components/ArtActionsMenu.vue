@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import ActionsMenu from './ActionsMenu.vue';
 import ActionsMenuItem from './ActionsMenuItem.vue';
@@ -63,6 +64,7 @@ export default {
 		//recupere le role d'un utilisateur pour savoir si il est admin ou non
 		var token = localStorage.getItem('authtoken');
 		if(token!=null) {
+			
 			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
 			var userInfo = jwt_decode(token);
 			if (userInfo.roles === 'ROLE_ADMIN') {
