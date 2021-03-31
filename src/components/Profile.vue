@@ -1,6 +1,7 @@
 <template>
 	<div id="id">
-		<base-wrapper v-model="drawer">
+		<base-wrapper
+			v-model="drawer">
 			<Header class="test">
 				<v-btn
 					class="homeButton"
@@ -28,47 +29,19 @@
 					fab
 					text
 					small
-					color="primary"
-					@click.stop="drawer = !drawer">
+					color="primary">
 					<p class="emphase positionUserAccount">
-						Nom d'utilisateur
+						{{ oeuvre.data.data['username'] }}
 					</p>
 				</v-btn>
 			</Header>
 			<p class="base positionAccountType">
-				Type de compte
+				{{ oeuvre.data.data.roles }}
 			</p>
 			<p class="positionUserAccountText base">
 				Ceci est un texte à propos de moi qui fait moins de 160 caractère.
 			</p>
-			<p>
-				kzjdkdbvsdkb
-				{{ id }}
-				{{ username }}
-				{{ role }}
-				{{ profilePicture }}
-				{{ description }}
-			</p>
-			<div
-				v-for="{
-					id,
-					username,
-					role,
-					profilePicture,
-					description
-				}
-					in
-						oeuvre"
-				:key="id">
-				<p>
-					kzjdkdbvsdkb
-					{{ id }}
-					{{ username }}
-					{{ role }}
-					{{ profilePicture }}
-					{{ description }}
-				</p>
-			</div>
+		
 			<p class="position button">
 				Contribution
 				<v-icon color="#00baaf">
@@ -99,6 +72,12 @@
 					<Card
 						card-title="Nom de l’œuvre"
 						card-desc="Artiste inconnu, Rouen" />
+					<p>
+						{{ oeuvre.data.data }}
+						{{ oeuvre.data.data['description '] }}
+						{{ gotData }}
+					</p>
+					<p>{{ a+b }}</p>
 				</v-container>
 			</v-container>
 		</base-wrapper>
@@ -109,7 +88,7 @@ import BaseWrapper from '../components/BaseWrapper.vue';
 import Header from '../components/Header.vue';
 import Photo from '../components/Photo.vue';
 import Card from '../components/Card.vue';
-//import axios from 'axios';
+import axios from 'axios';
 export default {
 	name: 'Home',
 	components: {
@@ -120,26 +99,64 @@ export default {
 	},
 	data () {
 		return {
+			drawer: false,
 			gotData: false,
-			oeuvre:[]
+			oeuvre:[],
+			a:'!',
+			b:'!',
+			id:1,
+
+			username:'',
+			roles:'',
+			profilePicture:null,
+			description:null,
+			favArtists:[],
+			favArts:[],
+			favCities:[]
 		};
+	},
+	mounted(){
+		this.profile();
 	},
 	methods:{
 		profile(){
 		
 			var res={
-				user:[],
+				id: '',
+				username:'',
+				roles:'',
+				profilePicture:null,
+				description:null,
+				favArtists:[],
+				favArts:[],
+				favCities:[]
 			};
+			
 	   this.gotData=false;
 			axios
-				.get('/api/user/-1')
+				.get('/api/user/'+this.id)
 				.then((response) => {
-					if(response.data.data.length>0){
-						res=response.data.data;
-						this.gotData=true;
-						this.oeuvre=res;
+					
+					res=response;
+					this.gotData=true;
+					this.oeuvre=res;
+					
+					if(!this.gotData) {
+						this.a='pas de donées';
+						this.id=res.data.id,
+						this.username=res.data.data.username,
+						this.roles=res.roles,
+						this.profilePicture=res.profilePicture,
+						this.description=res.description,
+						this.favArtists=res.favArtists,
+						this.favArts=res.favArts,
+						this.favCities=res.favCities;
 					}
-	  })
+					else {
+						this.b='il y a des données';
+					}
+
+				})
 	  .catch((error) => console.error(error));
 		
 		}
