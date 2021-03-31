@@ -1,7 +1,7 @@
 <template>
 	<v-card
 		height="74"
-		width="349"
+		:width="width"
 		class="card"
 		elevation="0"
 		@click="$emit('click')">
@@ -45,6 +45,10 @@ export default {
 		roundImg: {
 			default: false,
 			type: Boolean
+		},
+		width: {
+			default: '349',
+			type: String
 		}
 	}
 };
