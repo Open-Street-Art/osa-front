@@ -50,12 +50,17 @@
 		"confirm" : "Confirm"
 	},
 	"search" : {
-		"bar" : "Search for an art, an artist ..."
+		"bar" : "Search for an art, an artist ...",
+		"sad" : "No results were found for your search :(",
+		"explore" : "Explore the map"
 	},
 	"unauthorized": "Your must be authentified to perform this action",
 	"unknown": "Unkown error.",
 	"artActionsMenu": {
 		"added": "The art has been added to your favourites.",
 		"deleted": "The art has been deleted from your favorites."
+	},
+	"admin-menu" : {
+		"title": "Administrer les contributions"
 	}
 }

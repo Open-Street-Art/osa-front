@@ -51,12 +51,17 @@
 		"confirm" : "Valider"
 	},
 	"search" : {
-		"bar" : "Rechercher une œuvre, un artiste..."
+		"bar" : "Rechercher une œuvre, un artiste...",
+		"sad" : "Aucun résultat ne correspond à votre recherche :(",
+		"explore" : "Explorer la carte"
 	},
 	"unauthorized": "Vous devez être authentifié pour faire cette action.",
 	"unknown": "Une erreur inconnue s'est produite.",
 	"artActionsMenu": {
 		"added": "L'œuvre a été ajoutée à vos favoris.",
 		"deleted": "L'œuvre a été supprimé de vos favoris."
+	},
+	"admin-menu" : {
+		"title": "Administrer les contributions"
 	}
 }
