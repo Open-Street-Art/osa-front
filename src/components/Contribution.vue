@@ -16,7 +16,7 @@
 					{{ this.$t("contribution.addArttitle") }}
 				</h1>
 			</Header>
-			<v-container class="pa-0 contrib-container">
+			<v-container class="pa-0">
 				<v-row class="d-flex justify-start pa-0 ma-0 mt-3">
 					<MediaInput
 						v-model="pic1"
@@ -40,8 +40,8 @@
 						class="contrib-input"
 						label-string="contribution.artist" />
 				</v-row>
-				<v-row>
-					<v-divider class="mb-3" />
+				<v-row class="pa-0 px-3 ma-0 mt-3">
+					<v-divider />
 				</v-row>
 				<v-row class="pa-0 px-3 ma-0 mt-3">
 					<TextArea
@@ -57,57 +57,29 @@
 						class="place-button"
 						@click="locationPickerModal = true" />
 				</v-row>
+			</v-container>
+			<v-container
+				class="buttons">
+				<v-divider />
 				<v-row
-					v-if="isMobile()"
-					class="contrib-footer ma-0">
-					<v-container class="ma-0 pa-0">
-						<v-divider class="mb-3" />
-					</v-container>
-					<v-container class="pa-0 px-3 ma-0 d-flex justify-space-between">
-						<Button
-							text-button="contribution.cancel"
-							:outlined="true"
-							class="footer-button"
-							@click="$emit('close')" />
-						<Button
-							v-if="!addArt"
-							text-button="contribution.confirm"
-							:outlined="false"
-							class="footer-button"
-							@click="sendContrib" />
-						<Button
-							v-if="addArt"
-							text-button="contribution.confirm"
-							:outlined="false"
-							class="footer-button"
-							@click="addingArt" />
-					</v-container>
-				</v-row>
-				<v-row
-					v-if="!isMobile()"
-					class="contrib-footer ma-0 mb-3">
-					<v-container class="ma-0 pa-0">
-						<v-divider class="mb-3" />
-					</v-container>
-					<v-container class="pa-0 px-3 ma-0 d-flex justify-space-between">
-						<Button
-							text-button="contribution.cancel"
-							:outlined="true"
-							class="footer-button"
-							@click="$emit('close')" />
-						<Button
-							v-if="!addArt"
-							text-button="contribution.confirm"
-							:outlined="false"
-							class="footer-button"
-							@click="sendContrib" />
-						<Button
-							v-if="addArt"
-							text-button="contribution.confirm"
-							:outlined="false"
-							class="footer-button"
-							@click="addingArt" />
-					</v-container>
+					class="footer justify-space-around">
+					<Button
+						:width="155"
+						text-button="contribution.cancel"
+						:outlined="true"
+						@click="$emit('close')" />
+					<Button
+						v-if="!addArt"
+						text-button="contribution.confirm"
+						:outlined="false"
+						:width="155"
+						@click="sendContrib" />
+					<Button
+						v-if="addArt"
+						text-button="contribution.confirm"
+						:outlined="false"
+						:width="155"
+						@click="addingArt" />
 				</v-row>
 			</v-container>
 		</Modal>
@@ -231,11 +203,6 @@ export default {
 	text-align: center;
 }
 
-.contrib-container {
-	position: relative;
-	height: calc(100vh - 122px);
-}
-
 .contrib-input {
 	height: 40px;
 }
@@ -244,14 +211,20 @@ export default {
 	width: 100%;
 }
 
-.contrib-footer {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 100%;
+.footer {
+	margin-top: 12px;
+	margin-bottom: 12px;
 }
 
-.footer-button {
-	width: 48%;
+.buttons {
+	position: absolute;
+	bottom:0%;
+	left:0%;
+	padding-bottom:0%;
 }
+
+.v-bottom-sheet .buttons {
+	bottom: 10px;
+}
+
 </style>
