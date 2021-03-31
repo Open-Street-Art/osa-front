@@ -2,17 +2,16 @@
 	<v-card
 		height="74"
 		width="349"
-		class="card rounded-xl"
+		class="card"
 		elevation="0"
 		@click="$emit('click')">
 		<v-row>
 			<v-col
-				cols="3"
-				class="ml-3">
+				class="col-auto ml-3">
 				<img
 					height="48"
 					width="48"
-					:class="roundImg ? 'rounded-xl' : 'rounded-lg'"
+					:class="roundImg ? 'rounded-circle' : 'rounded-img'"
 					:src="imgSrc">
 			</v-col>
 			<v-col>
@@ -51,13 +50,21 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "../assets/styles/text.scss";
 
 .card {
-    height: 74px;
-    width: 349px;
+		border-radius: 20px !important;
     background-color: $white-color !important;
+}
+
+.card::before {
+	content: "";
+	border-radius: 20px !important;
+}
+
+.rounded-img {
+	border-radius: 10px;
 }
 
 </style>
