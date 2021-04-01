@@ -20,6 +20,14 @@ const routes = [
 		}
 	},
 	{
+		path: '/city/:id',
+		name: 'CityDisplay',
+		component: Home,
+		props: {
+			cityDisplay: true
+		}
+	},
+	{
 		path: '/contrib',
 		name: 'Contribution',
 		component: Home,
