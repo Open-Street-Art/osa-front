@@ -16,7 +16,7 @@
 					</v-icon>
 					<Photo
 						class="positionPicture"
-						link-photo="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+						:link-photo="oeuvre.data.data['profilePicture']"
 						:max-heigth="80"
 						:max-width="80"
 						forme="forme-profile" />
@@ -39,45 +39,69 @@
 				{{ oeuvre.data.data.roles }}
 			</p>
 			<p class="positionUserAccountText base">
-				Ceci est un texte à propos de moi qui fait moins de 160 caractère.
+				{{ oeuvre.data.data['description'] }}
 			</p>
 		
-			<p class="position button">
-				Contribution
-				<v-icon color="#00baaf">
-					mdi-account-box
-				</v-icon>
-				<v-icon color="#00baaf">
-					mdi-city
-				</v-icon>
-				<v-icon color="#00baaf">
-					mdi-palette
-				</v-icon>
-			</p>
+			
+			<div class="row position button">
+				<div class="col-1" />
+				<div class="col-5">
+					<p
+						@click="contrib()">
+						Contribution
+					</p>
+				</div>
+				<div class="col-2">
+					<v-icon
+						color="#00baaf"
+						@click="artiste()">
+						mdi-account-box
+					</v-icon>
+				</div>
+				<div class="col-2">
+					<v-icon
+						color="#00baaf"
+						@click="city()">
+						mdi-city
+					</v-icon>
+				</div>
+				<div class="col-2">
+					<v-icon
+						color="#00baaf"
+						@click="oeuvres()">
+						mdi-palette
+					</v-icon>
+				</div>
+			</div>
 			<v-container class="pos">
 				<v-divider />
-				<v-container>
-					<Card
+				<v-container v-if="contribution==true">
+					<Card 
+					
 						card-title="Nom de l’œuvre"
 						card-desc="Artiste inconnu, Rouen" />
 				</v-container>
-				<v-divider />
-				<v-container>
+				
+				<v-container v-else-if="artisteFav==true">
 					<Card
-						card-title="Nom de l’œuvre"
+						card-title="Nom de l’artiste"
 						card-desc="Artiste inconnu, Rouen" />
 				</v-container>
-				<v-divider />
-				<v-container>
+			
+				<v-container v-else-if="cityFav==true">
 					<Card
-						card-title="Nom de l’œuvre"
+						card-title="Nom de la ville"
 						card-desc="Artiste inconnu, Rouen" />
 					<p>
 						{{ oeuvre.data.data }}
 						{{ oeuvre.data.data['description '] }}
 						{{ gotData }}
 					</p>
-					<p>{{ a+b }}</p>
+					<p
+						v-for="value in favArts"
+						:key="value">
+						{{ value }}+efvfdv
+					</p>
 				</v-container>
 			</v-container>
 		</base-wrapper>
@@ -102,17 +126,12 @@ export default {
 			drawer: false,
 			gotData: false,
 			oeuvre:[],
-			a:'!',
-			b:'!',
-			id:1,
+			oeuvreFav:false,
+			contribution:true,
+			cityFav:false,
+			artisteFav:false,
+			id:-1,
 
-			username:'',
-			roles:'',
-			profilePicture:null,
-			description:null,
-			favArtists:[],
-			favArts:[],
-			favCities:[]
 		};
 	},
 	mounted(){
@@ -140,6 +159,7 @@ export default {
 					res=response;
 					this.gotData=true;
 					this.oeuvre=res;
+					this.favArts=oeuvre.data.data['favArts'];
 					
 					if(!this.gotData) {
 						this.a='pas de donées';
@@ -159,6 +179,30 @@ export default {
 				})
 	  .catch((error) => console.error(error));
 		
+		},
+		artiste(){
+			this.artisteFav=true;
+			this.oeuvreFav=false;
+			this.contribution=false;
+			this.cityFav=false;
+		},
+		oeuvres(){
+			this.artisteFav=false;
+			this.oeuvreFav=true;
+			this.contribution=false;
+			this.cityFav=false;
+		},
+		contrib(){
+			this.artisteFav=false;
+			this.contribution=true;
+			this.oeuvreFav=false;
+			this.cityFav=false;
+		},
+		city(){
+			this.artisteFav=false;
+			this.cityFav=true;
+			this.oeuvreFav=false;
+			this.contribution=false;
 		}
 	}
 };
