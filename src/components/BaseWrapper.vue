@@ -47,7 +47,8 @@
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-account-search"
-						content="home.searchUser" />
+						content="home.searchUser"
+						@click="profileClicked" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-palette"
@@ -101,6 +102,9 @@
 			:add-art="addingArt"
 			:data="addArtModal"
 			@close="addArtClosed" />
+		<Profile
+			:open="profileModal"
+			@close="profileClosed" />
 	</div>
 </template>
 
@@ -114,6 +118,7 @@ import store  from '../store/index.js';
 import Register from './Register.vue';
 import Authenticate from './Authenticate.vue';
 import Contribution from './Contribution.vue';
+import Profile from './Profile.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
@@ -131,6 +136,7 @@ export default {
 		Photo,
 		Contribution,
 		Authenticate,
+		Profile
 	},
 	model: {
 		prop: 'value',
@@ -149,6 +155,10 @@ export default {
 			default: false,
 			type: Boolean
 		},
+		profileDisplay: {
+			default: false,
+			type: Boolean
+		},
 		addArt: {
 			default: false,
 			type: Boolean
@@ -163,6 +173,7 @@ export default {
 			addingArt: true,
 			registerModal: false,
 			contributionModal: false,
+			profileModal: false,
 			authenticateModal: false,
 			addArtModal: false,
 			connected: false,
@@ -200,6 +211,9 @@ export default {
 		}
 		if(this.contributionDisplay) {
 			this.contributionModal = true;
+		}
+		if(this.profileDisplay) {
+			this.profileModal = true;
 		}
 		if(this.addArt) {
 			if(this.role === 'administrator') {
@@ -241,6 +255,14 @@ export default {
 			router.push('/contrib');
 		},
 		contributionClosed() {
+			router.push('/');
+			this.contributionModal = false;
+		},
+		profileClicked() {
+			this.profileModal = !this.profileModal;
+			router.push('/profile');
+		},
+		profileClosed() {
 			router.push('/');
 			this.contributionModal = false;
 		},

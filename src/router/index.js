@@ -58,6 +58,12 @@ const routes = [
 		props: {
 			authenticateDisplay: true
 		}
+	},
+	{
+		path: '/profile',
+		name: 'Profile',
+		component: () => import(/* webpackChunkName: "about" */ '../components/Profile.vue')
+		
 	}
 ];
 
