@@ -119,7 +119,8 @@ export default {
 .buttons {
 	position: absolute;
 	bottom:0%;
-	left:0%;
+	left: 50%;
+	transform: translateX(-50%);
 	padding-bottom:0%;
 }
 
