@@ -19,7 +19,8 @@
 		"removeFavourite": "Remove from your favourites",
 		"contribute": "Contribute to the art",
 		"displayRoute": "Display the route",
-		"reportArt": "Report the art"
+		"reportArt": "Report the art",
+		"deleteArt": "Delete the art"
 	},
 	"register":{
 		"title": "Registration",

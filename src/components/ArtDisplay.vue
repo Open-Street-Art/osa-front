@@ -158,7 +158,7 @@ export default {
 			artDesc: '',
 			artAuthor: '',
 			artImages: [],
-			artCreationDT: new Date()
+			artCreationDT: new Date(),
 		};
 	},
 	watch: {
@@ -178,7 +178,7 @@ export default {
 	},
 	created() {
 		this.isMobile();
-	}
+	},
 };
 </script>
 
