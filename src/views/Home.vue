@@ -78,7 +78,8 @@
 			@cityClicked="cityNameClicked" />
 		<CityDisplay
 			:data="cityDisplayModal"
-			@close="cityDisplayClosed()" />
+			@close="cityDisplayClosed()"
+			@art="artDisplayModal = true" />
 	</v-main>
 </template>
 

@@ -195,7 +195,6 @@ export default {
 	},
 	methods: {
 		cityNameClicked() {
-			console.log(this.artCityId);
 			this.$emit('close');
 			this.$emit('cityClicked');
 			router.push('/city/' + this.artCityId);
@@ -209,5 +208,7 @@ export default {
 
 .city-name {
 	display: inline;
+	text-decoration: underline;
+	cursor: pointer;
 }
 </style>

@@ -131,7 +131,6 @@ export default {
 				})
 				// le bloc then est exécuté lorsque le back renvoie la réponse car axios est asynchrone (système de promesse)
 				.then((response) => {
-					console.log(response.data.message);
 					axios
 						.post('/api/authenticate', {
 							username: this.username,

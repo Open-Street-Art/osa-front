@@ -7,9 +7,43 @@
 				<v-img :src="image" />
 			</v-row>
 			<v-row>
-				<v-col class="titles">
+				<v-col
+					cols="9"
+					class="titles city-name">
 					{{ cityName }}
 				</v-col>
+				<v-col class="text-right">
+					<v-menu
+						offset-y
+						rounded="xl">
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn
+								icon
+								v-bind="attrs"
+								color="black"
+								v-on="on">
+								<v-icon
+									large
+									dark>
+									mdi-dots-horizontal
+								</v-icon>
+							</v-btn>
+						</template>
+						<CityActionsMenu />
+					</v-menu>
+				</v-col>
+			</v-row>
+			<v-row>
+				<div
+					v-for="{id, title, desc, img} in artList"
+					:key="id">
+					<Card
+						:card-title="title"
+						:card-desc="desc"
+						:img-src="img"
+						@click="artClicked(id)" />
+					<div class="separator mt-1 mb-4" />
+				</div>
 			</v-row>
 		</v-container>
 		<v-row v-if="!isMobile()">
@@ -20,9 +54,43 @@
 			</v-col>
 			<v-col class="pl-0">
 				<v-row class="mt-2">
-					<v-col class="titles">
+					<v-col
+						cols="9"
+						class="titles city-name">
 						{{ cityName }}
 					</v-col>
+					<v-col class="text-right mr-5">
+						<v-menu
+							offset-y
+							rounded="xl">
+							<template v-slot:activator="{ on, attrs }">
+								<v-btn
+									icon
+									v-bind="attrs"
+									color="black"
+									v-on="on">
+									<v-icon
+										large
+										dark>
+										mdi-dots-horizontal
+									</v-icon>
+								</v-btn>
+							</template>
+							<CityActionsMenu />
+						</v-menu>
+					</v-col>
+				</v-row>
+				<v-row>
+					<div
+						v-for="{id, title, desc, img} in artList"
+						:key="id">
+						<Card
+							:card-title="title"
+							:card-desc="desc"
+							:img-src="img"
+							@click="artClicked(id)" />
+						<div class="separator mt-1 mb-4" />
+					</div>
 				</v-row>
 			</v-col>
 		</v-row>
@@ -31,13 +99,18 @@
 
 <script>
 import Modal from '../components/Modal.vue';
+import Card from '../components/Card.vue';
+import CityActionsMenu from '../components/CityActionsMenu.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
+import router from '../router';
 
 export default {
 	name: 'CityDisplay',
 	components: {
-		Modal
+		Modal,
+		Card,
+		CityActionsMenu
 	},
 	mixins: [ mobileDetection ],
 	model: {
@@ -53,7 +126,8 @@ export default {
 	data() {
 		return {
 			cityName: '',
-			image: ''
+			image: '',
+			artList: []
 		};
 	},
 	watch: {
@@ -64,14 +138,9 @@ export default {
 					.get('/api/city/' + this.$route.params.id)
 					.then((response) => {
 						this.cityName = response.data.data.name;
-						// On recupere l'image de la premiere oeuvre de la recherche
-						// de la ville correspondante
-						axios
-							.get('/api/search/cities/' + this.cityName)
-							.then((resp) => {
-								this.image = resp.data.data[0].pictures[0];
-							})
-							.catch((error) => console.error(error));
+						// On recupere l'image de la premiere oeuvre
+						this.image = response.data.data.arts[0].pictures[0];
+						this.artList = response.data.data.arts;
 					})
 					.catch((error) => console.error(error));
 		}
@@ -80,6 +149,11 @@ export default {
 		this.isMobile();
 	},
 	methods: {
+		artClicked(id) {
+			this.$emit('close');
+			this.$emit('art');
+			router.push('/art/' + id);
+		}
 	}
 };
 </script>
@@ -88,6 +162,8 @@ export default {
 @import "../assets/styles/text.scss";
 
 .city-name {
-	display: inline;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 </style>
