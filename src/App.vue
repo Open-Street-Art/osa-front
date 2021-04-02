@@ -1,9 +1,6 @@
 <template>
 	<v-app>
 		<v-main>
-			<router-link to="/profile">
-				Profile
-			</router-link>
 			<router-view />
 		</v-main>
 	</v-app>

@@ -76,32 +76,52 @@
 			<v-container class="pos">
 				<v-divider />
 				<v-container v-if="contribution==true">
-					<Card 
+					<div
+						v-for="i in cont"
+						:key="i">
+						<Card 
 					
-						card-title="Nom de l’œuvre"
-						card-desc="Artiste inconnu, Rouen" />
+							card-title="Nom de la contribution"
+							+{{i}}
+							card-desc="Artiste inconnu, Rouen" />
+						<v-divider />
+					</div>
 				</v-container>
 				
 				<v-container v-else-if="artisteFav==true">
-					<Card
-						card-title="Nom de l’artiste"
-						card-desc="Artiste inconnu, Rouen" />
+					<div
+						v-for="i in fc"
+						:key="i">
+						<Card
+							card-title=""
+							+i.username
+							card-desc="Artiste inconnu, Rouen" />
+						<v-divider />
+					</div>
 				</v-container>
 			
 				<v-container v-else-if="cityFav==true">
-					<Card
-						card-title="Nom de la ville"
-						card-desc="Artiste inconnu, Rouen" />
-					<p>
-						{{ oeuvre.data.data }}
-						{{ oeuvre.data.data['description '] }}
-						{{ gotData }}
-					</p>
-					<p
-						v-for="value in favArts"
-						:key="value">
-						{{ value }}+efvfdv
-					</p>
+					<div
+						v-for="i in far"
+						:key="i">
+						<Card
+							card-title="Nom de la ville"
+							+i.name
+							card-desc="Artiste inconnu, Rouen" />
+						<v-divider />
+					</div>
+				</v-container>
+				<v-container v-else>
+					<div
+						v-for="i in fa"
+						:key="i">
+						<Card
+							card-title="Nom de l’oeuvre"
+							+i.name
+							card-desc=""
+							+{{i.author_name}} />
+						<v-divider />
+					</div>
 				</v-container>
 			</v-container>
 		</base-wrapper>
@@ -131,6 +151,10 @@ export default {
 			cityFav:false,
 			artisteFav:false,
 			id:-1,
+			fa:[],
+			fc:[],
+			far:[],
+			cont:[]
 
 		};
 	},
@@ -159,22 +183,15 @@ export default {
 					res=response;
 					this.gotData=true;
 					this.oeuvre=res;
-					this.favArts=oeuvre.data.data['favArts'];
+					
 					
 					if(!this.gotData) {
-						this.a='pas de donées';
-						this.id=res.data.id,
-						this.username=res.data.data.username,
-						this.roles=res.roles,
-						this.profilePicture=res.profilePicture,
-						this.description=res.description,
-						this.favArtists=res.favArtists,
-						this.favArts=res.favArts,
-						this.favCities=res.favCities;
+						this.fa=oeuvre.data.data['favArts'];
+						this.far=oeuvre.data.data['favArtists'];
+						this.fc=oeuvre.data.data['favCity'];
+					
 					}
-					else {
-						this.b='il y a des données';
-					}
+					
 
 				})
 	  .catch((error) => console.error(error));
@@ -222,7 +239,7 @@ export default {
 }
 .positionUserAccount{
 	position: absolute;
-	left:90px;
+	left:95px;
 	top: 6px;
 }
 .positionUserAccountText{
@@ -240,6 +257,7 @@ position: absolute;
 
 	top: 320px;	
 }
+
 </style>
 
 
