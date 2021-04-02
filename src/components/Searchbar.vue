@@ -19,13 +19,13 @@
 		<div
 			v-if="resultCount==0"
 			class="sad light-emphase py-5">
-			Aucun résultat ne correspond à votre recherche :(
+			{{ this.$t("search.sad") }}
 		</div>
 		<div
 			v-if="resultCount>0 && showButton"
 			class="explorer button"
 			@click="close">
-			Explorer la carte
+			{{ this.$t("search.explore") }}
 		</div>
 	</div>
 </template>

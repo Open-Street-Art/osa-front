@@ -7,9 +7,9 @@
 		"login": "Se connecter",
 		"signin": "S'inscrire",
 		"searchUser": "Rechercher un utilisateur",
-		"commitArt": "Proposer une oeuvre",
+		"commitArt": "Proposer une œuvre",
 		"myProfile": "Mon profil",
-		"addArt" : "Ajouter une oeuvre",
+		"addArt" : "Ajouter une œuvre",
 		"adminPanel" : "Outils d'administration"
 	},
 	"artDisplay": {
@@ -17,10 +17,16 @@
 		"modified": "Dernière modification le ",
 		"addFavourite": "Ajouter à vos favoris",
 		"removeFavourite": "Retirer de vos favoris",
-		"contribute": "Contribuer à l'oeuvre",
+		"contribute": "Contribuer à l'œuvre",
 		"displayRoute": "Afficher l'itinéraire",
-		"reportArt": "Signaler l'oeuvre",
-		"deleteArt": "Supprimer l'oeuvre"
+		"reportArt": "Signaler l'œuvre",
+		"deleteArt": "Supprimer l'œuvre"
+	},
+	"cityDisplay": {
+		"addFavourite": "Ajouter à vos favoris",
+		"removeFavourite": "Retirer de vos favoris",
+		"exportPDF": "Exporter la liste des œuvres au format PDF",
+		"exportCSV": "Exporter la liste des œuvres au format CSV"
 	},
 	"register":{
 		"title": "Inscription",
@@ -42,7 +48,7 @@
 		"error" : "La connexion a échouée."
 	},
 	"contribution": {
-		"addArttitle": "Ajouter une oeuvre",
+		"addArttitle": "Ajouter une œuvre",
 		"title": "Soumettre une œuvre",
 		"artName": "Nom de l’œuvre",
 		"artist": "Artiste",
@@ -52,12 +58,21 @@
 		"confirm" : "Valider"
 	},
 	"search" : {
-		"bar" : "Rechercher une œuvre, un artiste..."
+		"bar" : "Rechercher une œuvre, un artiste...",
+		"sad" : "Aucun résultat ne correspond à votre recherche :(",
+		"explore" : "Explorer la carte"
 	},
 	"unauthorized": "Vous devez être authentifié pour faire cette action.",
 	"unknown": "Une erreur inconnue s'est produite.",
 	"artActionsMenu": {
 		"added": "L'œuvre a été ajoutée à vos favoris.",
 		"deleted": "L'œuvre a été supprimé de vos favoris."
+	},
+	"cityActionsMenu": {
+		"added": "La ville a été ajoutée à vos favoris.",
+		"deleted": "La ville a été supprimé de vos favoris."
+	},
+	"admin-menu" : {
+		"title": "Administrer les contributions"
 	}
 }

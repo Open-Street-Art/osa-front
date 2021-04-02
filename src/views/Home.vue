@@ -74,7 +74,12 @@
 		</div>
 		<ArtDisplay
 			:data="artDisplayModal"
-			@close="artDisplayClosed()" />
+			@close="artDisplayClosed()"
+			@cityClicked="cityNameClicked" />
+		<CityDisplay
+			:data="cityDisplayModal"
+			@close="cityDisplayClosed()"
+			@art="artDisplayModal = true" />
 	</v-main>
 </template>
 
@@ -84,6 +89,7 @@ import BaseWrapper from '../components/BaseWrapper.vue';
 import Pin from '../components/Pin.vue';
 import Card from '../components/Card.vue';
 import ArtDisplay from '../components/ArtDisplay.vue';
+import CityDisplay from '../components/CityDisplay.vue';
 import Searchbar from '../components/Searchbar.vue';
 import Header from '../components/Header.vue';
 import axios from 'axios';
@@ -97,11 +103,16 @@ export default {
 		Pin,
 		Card,
 		ArtDisplay,
+		CityDisplay,
 		Searchbar,
 		Header
 	},
 	props: {
 		artDisplay: {
+			default: false,
+			type: Boolean
+		},
+		cityDisplay: {
 			default: false,
 			type: Boolean
 		},
@@ -132,6 +143,7 @@ export default {
 			cardDesc: '',
 			imgSrc: '',
 			artDisplayModal: false,
+			cityDisplayModal: false,
 			contributionModal: false,
 			searchValue: '',
 			searchCount: 0,
@@ -144,6 +156,8 @@ export default {
 		this.getMapPins();
 		if (this.artDisplay == true)
 			this.artDisplayModal = true;
+		else if (this.cityDisplay == true)
+			this.cityDisplayModal = true;
 		else if (this.contributionDisplay == true)
 			this.contributionModal = true;
 		else if (this.authenticateDisplay == true)
@@ -151,9 +165,9 @@ export default {
 	},
 	methods: {
 		includeArt(id, array) {
-			for(let i = 0;i < array.length;++i) {
+			for (let i = 0;i < array.length;++i) {
 				var json = JSON.parse(JSON.stringify(array[i]));
-				if(json.id == id) {
+				if (json.id == id) {
 					return true;
 				}
 			}
@@ -224,6 +238,10 @@ export default {
 			router.push('/');
 			this.artDisplayModal = false;
 		},
+		cityDisplayClosed() {
+			router.push('/');
+			this.cityDisplayModal = false;
+		},
 		contributionClosed() {
 			router.push('/');
 			this.contributionModal = false;
@@ -291,6 +309,10 @@ export default {
 					return;
 				}
 			}
+		},
+		cityNameClicked() {
+			this.artDisplayModal = false;
+			this.cityDisplayModal = true;
 		}
 	}
 };

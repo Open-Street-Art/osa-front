@@ -7,7 +7,7 @@
 				{{ this.$t('register.title') }}
 			</h1>
 		</Header>
-		<v-container>
+		<v-container class="container">
 			<TextInput
 				v-model="email"
 				label-string="register.email"
@@ -28,29 +28,29 @@
 				label-string="register.confirmPassword"
 				:show="false"
 				:input-rules="rules.confirmPassword" />
-			<v-row class="align-center d-flex justify-space-between">
+			<v-row class="align-center d-flex justify-space-between pa-0 px-3">
 				<p class="base ml-1">
 					{{ this.$t("register.profilType") }}
 				</p>
 				<CheckBoxInput class="pt-0 pb-1" />
 			</v-row>
-			<v-container
-				class="buttons">
-				<v-divider />
-				<v-row
-					class="mt-2 mb-1 justify-space-around">
-					<Button
-						:width="155"
-						text-button="register.cancel"
-						:outlined="true"
-						@click="$emit('close')" />
-					<Button
-						:width="155"
-						text-button="register.validate"
-						:outlined="false"
-						@click="register" />
-				</v-row>
-			</v-container>
+		</v-container>
+		<v-container
+			class="buttons">
+			<v-divider />
+			<v-row
+				class="footer justify-space-around">
+				<Button
+					:width="155"
+					text-button="register.cancel"
+					:outlined="true"
+					@click="$emit('close')" />
+				<Button
+					:width="155"
+					text-button="register.validate"
+					:outlined="false"
+					@click="register" />
+			</v-row>
 		</v-container>
 		<snackbar
 			v-model="error"
@@ -131,7 +131,6 @@ export default {
 				})
 				// le bloc then est exécuté lorsque le back renvoie la réponse car axios est asynchrone (système de promesse)
 				.then((response) => {
-					console.log(response.data.message);
 					axios
 						.post('/api/authenticate', {
 							username: this.username,
@@ -171,9 +170,20 @@ export default {
 	text-align: center;
 }
 
+.footer {
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
 .buttons {
 	position: absolute;
 	bottom:0%;
 	left:0%;
+	padding-bottom:0%;
 }
+
+.v-bottom-sheet .buttons {
+	bottom: 10px;
+}
+
 </style>
