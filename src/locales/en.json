@@ -20,7 +20,8 @@
 		"contribute": "Contribute to the art",
 		"displayRoute": "Display the route",
 		"reportArt": "Report the art",
-		"deleteArt": "Delete the art"
+		"deleteArt": "Delete the art",
+		"changeArtAdmin": "Change the art"
 	},
 	"cityDisplay": {
 		"addFavourite": "Ajouter à vos favoris",

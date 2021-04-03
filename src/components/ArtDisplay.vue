@@ -36,13 +36,13 @@
 								</v-icon>
 							</v-btn>
 						</template>
-						<ArtActionsMenu />
+						<ArtActionsMenu @changeArtAdmin="changeArtAdmin" />
 					</v-menu>
 				</v-col>
 			</v-row>
 			<v-row class="mt-1 mb-1">
 				<v-col class="pt-0 light">
-					{{ artAuthor }}, 
+					{{ artAuthor }},
 					<div
 						class="city-name"
 						@click="cityNameClicked">
@@ -104,13 +104,13 @@
 									</v-icon>
 								</v-btn>
 							</template>
-							<ArtActionsMenu />
+							<ArtActionsMenu @changeArtAdmin="changeArtAdmin" />
 						</v-menu>
 					</v-col>
 				</v-row>
 				<v-row class="mt-0">
 					<v-col class="pt-2 light">
-						{{ artAuthor }}, 
+						{{ artAuthor }},
 						<div
 							class="city-name"
 							@click="cityNameClicked">
@@ -165,6 +165,7 @@ export default {
 	},
 	data() {
 		return {
+			artId: null,
 			artTitle: '',
 			artDesc: '',
 			artAuthor: '',
@@ -179,6 +180,7 @@ export default {
 				axios
 					.get('/api/art/' + this.$route.params.id)
 					.then((response) => {
+						this.artId = this.$route.params.id;
 						this.artTitle = response.data.data.name;
 						this.artDesc = response.data.data.description;
 						this.artAuthor = response.data.data.authorName;
@@ -198,6 +200,10 @@ export default {
 			this.$emit('close');
 			this.$emit('cityClicked');
 			router.push('/city/' + this.artCityId);
+		},
+		changeArtAdmin() {
+			this.$emit('changeArtAdmin');
+			router.push('/art/' + this.artId + '/change');
 		}
 	}
 };
