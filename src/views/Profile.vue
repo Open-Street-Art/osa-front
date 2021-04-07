@@ -1,6 +1,6 @@
 <template>
 	<div id="id">
-		<base-wrapper
+		<BaseWrapper
 			v-model="drawer">
 			<Header class="test">
 				<v-btn
@@ -35,7 +35,7 @@
 					</p>
 				</v-btn>
 			</Header>
-		</base-wrapper>
+		</BaseWrapper>
 		<div>
 			<p class="base positionAccountType">
 				{{ oeuvre.data.data.roles }}
@@ -145,6 +145,7 @@ export default {
 		return {
 			drawer: false,
 			gotData: false,
+			gotData2:false,
 			oeuvre:[],
 			lescontrib:[],
 			oeuvreFav:false,
@@ -161,6 +162,7 @@ export default {
 	},
 	mounted(){
 		this.profile();
+		this.lescontributions();
 	},
 	methods:{
 		profile(){
@@ -195,24 +197,27 @@ export default {
 					
 
 				})
-	           
-			   .get('/api/contrib/user/contribs')
+	           .catch((error) => console.error(error));
+		
+		},
+		lescontributions(){
+			this.gotData2=false;
+			axios
+			 .get('/api/contrib/user/contribs')
 			   .then((response) => {
 					
 					res=response;
-					this.gotData=true;
+					this.gotData2=true;
 					this.oeuvre=res;
 					
 					
 					
-					if(!this.gotData) {
+					if(!this.gotData2) {
 						this.cont=lescontribs.data.data;
 					}
 					
 
-				})
-	           .catch((error) => console.error(error));
-		
+				});
 		},
 		artiste(){
 			this.artisteFav=true;
