@@ -84,7 +84,7 @@
 						<Card 
 					
 							:card-title="i['name']"
-							card-desc="Nom de l'asrtiste,Ville" />
+							:card-desc=" i['author_name']+ ville" />
 						<v-divider />
 					</div>
 				</v-container>
