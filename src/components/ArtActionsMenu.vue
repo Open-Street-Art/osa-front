@@ -2,8 +2,13 @@
 	<ActionsMenu>
 		<ActionsMenuItem
 			v-if="isAdmin"
+			icon="mdi-pencil"
+			content="artDisplay.changeArtAdmin"
+			@click="changeArtAdmin" />
+		<ActionsMenuItem
+			v-if="isAdmin"
 			icon="mdi-delete"
-			content="artDisplay.deleteArt" 
+			content="artDisplay.deleteArt"
 			@click="deleteArt" />
 		<ActionsMenuItem
 			v-if="!isFavourited"
@@ -39,13 +44,14 @@ export default {
 	name: 'ArtActionsMenu',
 	components: {
 		ActionsMenu,
-		ActionsMenuItem
+		ActionsMenuItem,
 	},
 	data() {
 		return {
 			artId: this.$route.params.id,
 			isFavourited: false,
-			isAdmin: false
+			isAdmin: false,
+			changeArtAdminModal: false
 		};
 	},
 	created() {
@@ -62,11 +68,11 @@ export default {
 				}
 			})
 			.catch((error) => console.error(error));
-		
+
 		//recupere le role d'un utilisateur pour savoir si il est admin ou non
 		var token = localStorage.getItem('authtoken');
 		if(token!=null) {
-			
+
 			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
 			var userInfo = jwt_decode(token);
 			if (userInfo.roles === 'ROLE_ADMIN') {
@@ -121,7 +127,12 @@ export default {
 						}
 					});
 			}
-		}
+		},
+		changeArtAdmin() {
+			if(this.isAdmin) {
+				this.$emit('changeArtAdmin');
+			}
+		},
 	}
 };
 </script>

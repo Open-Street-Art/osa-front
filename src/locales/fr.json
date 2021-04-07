@@ -20,7 +20,8 @@
 		"contribute": "Contribuer à l'œuvre",
 		"displayRoute": "Afficher l'itinéraire",
 		"reportArt": "Signaler l'œuvre",
-		"deleteArt": "Supprimer l'œuvre"
+		"deleteArt": "Supprimer l'œuvre",
+		"changeArtAdmin": "Modifier l'œuvre"
 	},
 	"cityDisplay": {
 		"addFavourite": "Ajouter à vos favoris",
@@ -50,6 +51,7 @@
 	"contribution": {
 		"addArttitle": "Ajouter une œuvre",
 		"title": "Soumettre une œuvre",
+		"changeArtAdminTitle" : "Modifier une œuvre",
 		"artName": "Nom de l’œuvre",
 		"artist": "Artiste",
 		"artDescription": "Description de l’œuvre",

@@ -29,13 +29,12 @@ export default {
 		counter: {
 			default: 160,
 			type: Number
+		},
+		value: {
+			default: '',
+			type: String
 		}
 	},
-	data: function() {
-		return {
-			value: ''
-		};
-	}
 };
 </script>
 

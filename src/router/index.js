@@ -20,6 +20,14 @@ const routes = [
 		}
 	},
 	{
+		path: '/art/:id/change',
+		name: 'ChangeArt',
+		component: Home,
+		props: {
+			changeArtAdminDisplay: true
+		}
+	},
+	{
 		path: '/city/:id',
 		name: 'CityDisplay',
 		component: Home,
@@ -64,6 +72,7 @@ const routes = [
 		name: 'Profile',
 		component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue')
 		
+
 	}
 ];
 

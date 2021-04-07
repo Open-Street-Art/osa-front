@@ -75,11 +75,16 @@
 		<ArtDisplay
 			:data="artDisplayModal"
 			@close="artDisplayClosed()"
-			@cityClicked="cityNameClicked" />
+			@cityClicked="cityNameClicked"
+			@changeArtAdmin="changeArtAdmin" />
 		<CityDisplay
 			:data="cityDisplayModal"
 			@close="cityDisplayClosed()"
 			@art="artDisplayModal = true" />
+		<contribution
+			:data="changeArtAdminModal"
+			:change-art-admin="true"
+			@close="changeArtAdminClosed" />
 	</v-main>
 </template>
 
@@ -92,7 +97,9 @@ import ArtDisplay from '../components/ArtDisplay.vue';
 import CityDisplay from '../components/CityDisplay.vue';
 import Searchbar from '../components/Searchbar.vue';
 import Header from '../components/Header.vue';
+import Contribution from '../components/Contribution.vue';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 import router from '../router';
 
 export default {
@@ -105,7 +112,8 @@ export default {
 		ArtDisplay,
 		CityDisplay,
 		Searchbar,
-		Header
+		Header,
+		Contribution
 	},
 	props: {
 		artDisplay: {
@@ -113,6 +121,10 @@ export default {
 			type: Boolean
 		},
 		cityDisplay: {
+			default: false,
+			type: Boolean
+		},
+		changeArtAdminDisplay : {
 			default: false,
 			type: Boolean
 		},
@@ -145,19 +157,35 @@ export default {
 			artDisplayModal: false,
 			cityDisplayModal: false,
 			contributionModal: false,
+			changeArtAdminModal: false,
 			searchValue: '',
 			searchCount: 0,
 			gotData: false,
 			authenticateModal: false,
+			isAdmin: false,
 			centerTest: [49.386758892241396, 1.0686564445495608]
 		};
 	},
 	mounted() {
+		var token = localStorage.getItem('authtoken');
+		if(token!=null) {
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+			var userInfo = jwt_decode(token);
+			if (userInfo.roles === 'ROLE_ADMIN') {
+				this.isAdmin = true;
+			}
+		}
 		this.getMapPins();
 		if (this.artDisplay == true)
 			this.artDisplayModal = true;
 		else if (this.cityDisplay == true)
 			this.cityDisplayModal = true;
+		else if (this.changeArtAdminDisplay == true) {
+			if(this.isAdmin)
+				this.changeArtAdminModal = true;
+			else
+				 router.push('/');
+		}
 		else if (this.contributionDisplay == true)
 			this.contributionModal = true;
 		else if (this.authenticateDisplay == true)
@@ -246,6 +274,10 @@ export default {
 			router.push('/');
 			this.contributionModal = false;
 		},
+		changeArtAdminClosed() {
+			router.push('/');
+			this.changeArtAdminModal = false;
+		},
 		search() {
 			if(this.searchValue != null && this.searchValue.length > 1 ) {
 				var res = {
@@ -313,6 +345,10 @@ export default {
 		cityNameClicked() {
 			this.artDisplayModal = false;
 			this.cityDisplayModal = true;
+		},
+		changeArtAdmin() {
+			this.artDisplayClosed();
+			this.changeArtAdminModal = true;
 		}
 	}
 };

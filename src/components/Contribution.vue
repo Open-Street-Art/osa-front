@@ -6,7 +6,7 @@
 			<Header
 				class="header">
 				<h1
-					v-if="!addArt"
+					v-if="!addArt && !changeArtAdmin"
 					class="header-center header-title">
 					{{ this.$t("contribution.title") }}
 				</h1>
@@ -14,6 +14,11 @@
 					v-if="addArt"
 					class="header-center header-title">
 					{{ this.$t("contribution.addArttitle") }}
+				</h1>
+				<h1
+					v-if="changeArtAdmin"
+					class="header-center header-title">
+					{{ this.$t("contribution.changeArtAdminTitle") }}
 				</h1>
 			</Header>
 			<v-container class="pa-0">
@@ -52,6 +57,7 @@
 				</v-row>
 				<v-row class="pa-0 px-3 ma-0 mt-3">
 					<Button
+						v-if="!changeArtAdmin"
 						text-button="contribution.artLocalisation"
 						:outlined="false"
 						class="place-button"
@@ -69,7 +75,7 @@
 						:outlined="true"
 						@click="$emit('close')" />
 					<Button
-						v-if="!addArt"
+						v-if="!addArt && !changeArtAdmin"
 						text-button="contribution.confirm"
 						:outlined="false"
 						:width="155"
@@ -80,10 +86,17 @@
 						:outlined="false"
 						:width="155"
 						@click="addingArt" />
+					<Button
+						v-if="changeArtAdmin"
+						text-button="contribution.confirm"
+						:outlined="false"
+						:width="155"
+						@click="changingArtAdmin" />
 				</v-row>
 			</v-container>
 		</Modal>
 		<LocationPicker
+			v-model="latlng"
 			:data="locationPickerModal"
 			@coordupdate="data => coordUpdated(data)"
 			@close="locationPickerClosed" />
@@ -127,6 +140,10 @@ export default {
 		addArt: {
 			type: Boolean,
 			default: false
+		},
+		changeArtAdmin: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -142,6 +159,24 @@ export default {
 			pic3: '',
 			locationPickerModal: false
 		};
+	},
+	watch: {
+		data() {
+			if (this.$route.params.id !== undefined)
+				axios
+					.get('/api/art/' + this.$route.params.id)
+					.then((response) => {
+						this.name = response.data.data.name;
+						this.artist = response.data.data.authorName;
+						this.description = response.data.data.description;
+						this.pic1 = response.data.data.pictures[0];
+						this.pic2 = response.data.data.pictures[1];
+						this.pic3 = response.data.data.pictures[2];
+						this.latlng[0] = response.data.data.latitude;
+						this.latlng[1] = response.data.data.longitude;
+					})
+					.catch((error) => console.error(error));
+		}
 	},
 	methods : {
 		sendContrib() {
@@ -173,6 +208,22 @@ export default {
 					author: this.artist,
 					latitude: this.latlng[0],
 					longitude: this.latlng[1]
+				})
+				.then((response) => {
+					router.push('/');
+					router.go();
+				})
+				.catch((error) => console.error(error));
+		},
+		changingArtAdmin() {
+			axios
+				.patch('/api/admin/art/' + this.$route.params.id, {
+					name: this.name,
+					description: this.description,
+					picture1: this.pic1,
+					picture2: this.pic2,
+					picture3: this.pic3,
+					author: this.artist,
 				})
 				.then((response) => {
 					router.push('/');
