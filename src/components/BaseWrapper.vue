@@ -118,7 +118,7 @@ import store  from '../store/index.js';
 import Register from './Register.vue';
 import Authenticate from './Authenticate.vue';
 import Contribution from './Contribution.vue';
-import Profile from './Profile.vue';
+import Profile from '../views/Profile.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
