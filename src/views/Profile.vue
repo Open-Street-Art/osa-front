@@ -35,6 +35,8 @@
 					</p>
 				</v-btn>
 			</Header>
+		</base-wrapper>
+		<div>
 			<p class="base positionAccountType">
 				{{ oeuvre.data.data.roles }}
 			</p>
@@ -77,22 +79,20 @@
 				<v-divider />
 				<v-container v-if="contribution==true">
 					<div
-						v-for="i in cont"
+						v-for="i in lescontribs"
 						:key="i">
 						<Card 
 					
-							card-title="Nom de la contribution"
-							+{{i}}
-							card-desc="Artiste inconnu, Rouen" />
+							:card-title="i['name']"
+							card-desc="Nom de l'asrtiste,Ville" />
 						<v-divider />
 					</div>
 				</v-container>
-				
 				<v-container v-else-if="artisteFav==true">
 					<div
 						v-for="i in fc"
 						:key="i">
-						<Card
+						<Card 
 							card-title=""
 							+i.username
 							card-desc="Artiste inconnu, Rouen" />
@@ -124,7 +124,7 @@
 					</div>
 				</v-container>
 			</v-container>
-		</base-wrapper>
+		</div>
 	</div>
 </template>
 <script>
@@ -146,6 +146,7 @@ export default {
 			drawer: false,
 			gotData: false,
 			oeuvre:[],
+			lescontrib:[],
 			oeuvreFav:false,
 			contribution:true,
 			cityFav:false,
@@ -194,7 +195,23 @@ export default {
 					
 
 				})
-	  .catch((error) => console.error(error));
+	           
+			   .get('/api/contrib/user/contribs')
+			   .then((response) => {
+					
+					res=response;
+					this.gotData=true;
+					this.oeuvre=res;
+					
+					
+					
+					if(!this.gotData) {
+						this.cont=lescontribs.data.data;
+					}
+					
+
+				})
+	           .catch((error) => console.error(error));
 		
 		},
 		artiste(){
