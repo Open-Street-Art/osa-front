@@ -43,7 +43,8 @@
 					<ActionsMenuItem
 						v-if="connected"
 						icon="mdi-account"
-						content="home.myProfile" />
+						content="home.myProfile" 
+						@click="editprofileClicked" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-account-search"
@@ -105,6 +106,9 @@
 		<Profile
 			:open="profileModal"
 			@close="profileClosed" />
+		<EditProfile
+			:open="editprofileModal"
+			@close="editprofileClosed" />
 	</div>
 </template>
 
@@ -119,6 +123,7 @@ import Register from './Register.vue';
 import Authenticate from './Authenticate.vue';
 import Contribution from './Contribution.vue';
 import Profile from '../views/Profile.vue';
+import EditProfile from './EditProfile.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
@@ -136,7 +141,8 @@ export default {
 		Photo,
 		Contribution,
 		Authenticate,
-		Profile
+		Profile,
+		EditProfile
 	},
 	model: {
 		prop: 'value',
@@ -174,6 +180,7 @@ export default {
 			registerModal: false,
 			contributionModal: false,
 			profileModal: false,
+			editprofileModal: false,
 			authenticateModal: false,
 			addArtModal: false,
 			connected: false,
@@ -263,6 +270,14 @@ export default {
 			router.push('/profile');
 		},
 		profileClosed() {
+			router.push('/');
+			this.contributionModal = false;
+		},
+		editprofileClicked() {
+			this.editprofileModal = !this.editprofileModal;
+			router.push('/editprofile');
+		},
+		editprofileClosed() {
 			router.push('/');
 			this.contributionModal = false;
 		},
