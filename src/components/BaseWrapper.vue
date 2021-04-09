@@ -41,7 +41,7 @@
 			<v-container>
 				<ActionsMenu :outlined="true">
 					<ActionsMenuItem
-						v-if="connected"
+						
 						icon="mdi-account"
 						content="home.myProfile" 
 						@click="editprofileClicked" />
@@ -165,6 +165,10 @@ export default {
 			default: false,
 			type: Boolean
 		},
+		editProfileDisplay: {
+			default: false,
+			type: Boolean
+		},
 		addArt: {
 			default: false,
 			type: Boolean
@@ -218,6 +222,9 @@ export default {
 		}
 		if(this.contributionDisplay) {
 			this.contributionModal = true;
+		}
+		if(this.editProfileDisplay) {
+			this.editProfileModal = true;
 		}
 		if(this.profileDisplay) {
 			this.profileModal = true;
@@ -279,7 +286,7 @@ export default {
 		},
 		editprofileClosed() {
 			router.push('/');
-			this.contributionModal = false;
+			this.editProfileModal = false;
 		},
 		switchLocale() {
 			if(this.$i18n.locale == this.langs[1]) {

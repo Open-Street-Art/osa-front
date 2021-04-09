@@ -79,7 +79,7 @@ const routes = [
 		name: 'EditProfile',
 		component: Home,
 		props: {
-			contributionDisplay: true
+			editProfileDisplay: true
 		}
 	}
 ];
