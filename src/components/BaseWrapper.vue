@@ -41,10 +41,10 @@
 			<v-container>
 				<ActionsMenu :outlined="true">
 					<ActionsMenuItem
-						
+						v-if="connected"
 						icon="mdi-account"
 						content="home.myProfile" 
-						@click="editprofileClicked" />
+						@click="editProfileClicked" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-account-search"
@@ -107,8 +107,12 @@
 			:open="profileModal"
 			@close="profileClosed" />
 		<EditProfile
-			:open="editprofileModal"
-			@close="editprofileClosed" />
+			:data="editProfileModal"
+			@close="editProfileClosed" />
+		<EditProfile
+			:add-art="addingArt"
+			:data="addArtModal"
+			@close="addArtClosed" />
 	</div>
 </template>
 
@@ -122,8 +126,8 @@ import store  from '../store/index.js';
 import Register from './Register.vue';
 import Authenticate from './Authenticate.vue';
 import Contribution from './Contribution.vue';
-import Profile from '../views/Profile.vue';
 import EditProfile from './EditProfile.vue';
+import Profile from '../views/Profile.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
@@ -140,9 +144,9 @@ export default {
 		Header,
 		Photo,
 		Contribution,
+		EditProfile,
 		Authenticate,
-		Profile,
-		EditProfile
+		Profile
 	},
 	model: {
 		prop: 'value',
@@ -165,10 +169,6 @@ export default {
 			default: false,
 			type: Boolean
 		},
-		editProfileDisplay: {
-			default: false,
-			type: Boolean
-		},
 		addArt: {
 			default: false,
 			type: Boolean
@@ -183,8 +183,8 @@ export default {
 			addingArt: true,
 			registerModal: false,
 			contributionModal: false,
+			editProfileModal:false,
 			profileModal: false,
-			editprofileModal: false,
 			authenticateModal: false,
 			addArtModal: false,
 			connected: false,
@@ -272,6 +272,14 @@ export default {
 			router.push('/');
 			this.contributionModal = false;
 		},
+		editProfileClicked() {
+			this.editProfileModal = !this.editProfileModal;
+			router.push('/editprofile');
+		},
+		editProfileClosed() {
+			router.push('/');
+			this.editProfileModal = false;
+		},
 		profileClicked() {
 			this.profileModal = !this.profileModal;
 			router.push('/profile');
@@ -279,14 +287,6 @@ export default {
 		profileClosed() {
 			router.push('/');
 			this.contributionModal = false;
-		},
-		editprofileClicked() {
-			this.editprofileModal = !this.editprofileModal;
-			router.push('/editprofile');
-		},
-		editprofileClosed() {
-			router.push('/');
-			this.editProfileModal = false;
 		},
 		switchLocale() {
 			if(this.$i18n.locale == this.langs[1]) {

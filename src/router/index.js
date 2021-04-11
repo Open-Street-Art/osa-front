@@ -44,6 +44,14 @@ const routes = [
 		}
 	},
 	{
+		path: '/editprofile',
+		name: 'EditProfile',
+		component: Home,
+		props: {
+			editProfileDisplay: true
+		}
+	},
+	{
 		path: '/addart',
 		name: 'AddArt',
 		component: Home,
@@ -73,14 +81,6 @@ const routes = [
 		component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue')
 		
 
-	},
-	{
-		path: '/editprofile',
-		name: 'EditProfile',
-		component: Home,
-		props: {
-			editProfileDisplay: true
-		}
 	}
 ];
 
