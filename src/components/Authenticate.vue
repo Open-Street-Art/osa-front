@@ -22,21 +22,21 @@
 						:show="false" />
 				</v-row>
 			</v-container>
-			<v-container
-				class="buttons">
-				<v-divider />
-				<v-row class="mt-2 mb-1 justify-space-around">
-					<Button
-						:width="155"
-						text-button="authenticate.cancel"
-						:outlined="true"
-						@click="$emit('close')" />
-					<Button
-						:width="155"
-						text-button="authenticate.login"
-						@click="sendAuthentication" />
-				</v-row>
-			</v-container>
+		</v-container>
+		<v-container
+			class="buttons">
+			<v-divider />
+			<v-row class="footer justify-space-around">
+				<Button
+					:width="155"
+					text-button="authenticate.cancel"
+					:outlined="true"
+					@click="$emit('close')" />
+				<Button
+					:width="155"
+					text-button="authenticate.login"
+					@click="sendAuthentication" />
+			</v-row>
 		</v-container>
 		<snackbar
 			v-model="error"
@@ -111,10 +111,20 @@ export default {
 	text-align: center;
 }
 
+.footer {
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
 .buttons {
 	position: absolute;
 	bottom:0%;
 	left:0%;
-	padding-bottom:0%px
+	padding-bottom:0%;
 }
+
+.v-bottom-sheet .buttons {
+	bottom: 10px;
+}
+
 </style>

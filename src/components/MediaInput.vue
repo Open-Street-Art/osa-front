@@ -27,20 +27,31 @@
 export default {
 	name: 'MediaInput',
 	model: {
-		prop: 'imageData',
+		prop: 'imageDataProp',
 		event: 'onFileInput'
 	},
 	props: {
 		round: {
 			default: false,
 			type: Boolean
+		},
+		imageDataProp: {
+			default: '',
+			type: String
 		}
 	},
 	data: function() {
 		return {
-			imageData: '',
-			imageStyle: ''
+			imageStyle: '',
+			imageData: ''
 		};
+	},
+	watch: {
+		imageDataProp() {
+			if(this.imageDataProp != '') {
+				this.imageStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url("' + this.imageDataProp + '")';
+			}
+		}
 	},
 	methods: {
 		previewImage(event) {

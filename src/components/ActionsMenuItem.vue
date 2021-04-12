@@ -39,6 +39,10 @@ export default {
     color: $light-color !important;
   }
 
+  .v-list-item__title {
+	  white-space: initial;
+  }
+
   .v-list-item {
     height: 60px !important;
     margin-bottom:0px !important;

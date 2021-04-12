@@ -2,9 +2,8 @@
 	<div>
 		<v-bottom-sheet
 			v-if="isMobile()"
-			style="z-index:99999"
+			style="z-index:10000"
 			transition="dialog-bottom-transition"
-			max-width="98%"
 			scrollable
 			:value="value"
 			@click:outside="$emit('close')">
@@ -24,9 +23,10 @@
 				<slot />
 			</v-card>
 		</v-bottom-sheet>
+
 		<v-dialog
 			v-if="!isMobile()"
-			style="z-index:99999"
+			style="z-index:10000"
 			transition="dialog-bottom-transition"
 			max-width="120vh"
 			content-class="rounded-xl"
@@ -74,15 +74,15 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "../assets/styles/_variables.scss";
 .mobile-content {
-	margin-top: 0px;
-    background-color: $white-color;
-    width: 90%;
-    min-height: 100vh;
-    overflow: hidden;
-	margin-top: -9vh;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: $white-color;
+	max-width: calc(100% - 20px) !important;
+	min-height: 100vh;
+	overflow: hidden;
 }
 
 .desktop-content {
@@ -110,5 +110,9 @@ export default {
 
 .round {
   border-radius: 30px;
+}
+
+.v-dialog {
+	max-height: 100% !important;
 }
 </style>

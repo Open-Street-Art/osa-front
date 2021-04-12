@@ -5,6 +5,7 @@
 		color="primary"
 		:width="width"
 		:outlined="outlined"
+		depressed
 		@click="$emit('click', $event)">
 		{{ this.$t(textButton) }}
 	</v-btn>
@@ -35,13 +36,16 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "../assets/styles/text.scss";
+
 .v-btn__content {
-  font: $em-font ;
-  text-transform: none;
+  font: $em-font;
 }
 
 .v-btn {
 	border-radius: 20px !important;
-	box-shadow: none;
+  text-transform: none !important;
+	letter-spacing: 0 !important;
+	border-width: 2px !important;
+  font: $em-font;
 }
 </style>

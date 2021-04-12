@@ -6,7 +6,7 @@
 			<Header
 				class="header">
 				<h1
-					v-if="!addArt"
+					v-if="!addArt && !changeArtAdmin"
 					class="header-center header-title">
 					{{ this.$t("contribution.title") }}
 				</h1>
@@ -15,8 +15,13 @@
 					class="header-center header-title">
 					{{ this.$t("contribution.addArttitle") }}
 				</h1>
+				<h1
+					v-if="changeArtAdmin"
+					class="header-center header-title">
+					{{ this.$t("contribution.changeArtAdminTitle") }}
+				</h1>
 			</Header>
-			<v-container class="pa-0 contrib-container">
+			<v-container class="pa-0">
 				<v-row class="d-flex justify-start pa-0 ma-0 mt-3">
 					<MediaInput
 						v-model="pic1"
@@ -40,8 +45,8 @@
 						class="contrib-input"
 						label-string="contribution.artist" />
 				</v-row>
-				<v-row>
-					<v-divider class="mb-3" />
+				<v-row class="pa-0 px-3 ma-0 mt-3">
+					<v-divider />
 				</v-row>
 				<v-row class="pa-0 px-3 ma-0 mt-3">
 					<TextArea
@@ -52,66 +57,46 @@
 				</v-row>
 				<v-row class="pa-0 px-3 ma-0 mt-3">
 					<Button
+						v-if="!changeArtAdmin"
 						text-button="contribution.artLocalisation"
 						:outlined="false"
 						class="place-button"
 						@click="locationPickerModal = true" />
 				</v-row>
+			</v-container>
+			<v-container
+				class="buttons">
+				<v-divider />
 				<v-row
-					v-if="isMobile()"
-					class="contrib-footer ma-0">
-					<v-container class="ma-0 pa-0">
-						<v-divider class="mb-3" />
-					</v-container>
-					<v-container class="pa-0 px-3 ma-0 d-flex justify-space-between">
-						<Button
-							text-button="contribution.cancel"
-							:outlined="true"
-							class="footer-button"
-							@click="$emit('close')" />
-						<Button
-							v-if="!addArt"
-							text-button="contribution.confirm"
-							:outlined="false"
-							class="footer-button"
-							@click="sendContrib" />
-						<Button
-							v-if="addArt"
-							text-button="contribution.confirm"
-							:outlined="false"
-							class="footer-button"
-							@click="addingArt" />
-					</v-container>
-				</v-row>
-				<v-row
-					v-if="!isMobile()"
-					class="contrib-footer ma-0 mb-3">
-					<v-container class="ma-0 pa-0">
-						<v-divider class="mb-3" />
-					</v-container>
-					<v-container class="pa-0 px-3 ma-0 d-flex justify-space-between">
-						<Button
-							text-button="contribution.cancel"
-							:outlined="true"
-							class="footer-button"
-							@click="$emit('close')" />
-						<Button
-							v-if="!addArt"
-							text-button="contribution.confirm"
-							:outlined="false"
-							class="footer-button"
-							@click="sendContrib" />
-						<Button
-							v-if="addArt"
-							text-button="contribution.confirm"
-							:outlined="false"
-							class="footer-button"
-							@click="addingArt" />
-					</v-container>
+					class="footer justify-space-around">
+					<Button
+						:width="155"
+						text-button="contribution.cancel"
+						:outlined="true"
+						@click="$emit('close')" />
+					<Button
+						v-if="!addArt && !changeArtAdmin"
+						text-button="contribution.confirm"
+						:outlined="false"
+						:width="155"
+						@click="sendContrib" />
+					<Button
+						v-if="addArt"
+						text-button="contribution.confirm"
+						:outlined="false"
+						:width="155"
+						@click="addingArt" />
+					<Button
+						v-if="changeArtAdmin"
+						text-button="contribution.confirm"
+						:outlined="false"
+						:width="155"
+						@click="changingArtAdmin" />
 				</v-row>
 			</v-container>
 		</Modal>
 		<LocationPicker
+			v-model="latlng"
 			:data="locationPickerModal"
 			@coordupdate="data => coordUpdated(data)"
 			@close="locationPickerClosed" />
@@ -155,6 +140,10 @@ export default {
 		addArt: {
 			type: Boolean,
 			default: false
+		},
+		changeArtAdmin: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -170,6 +159,24 @@ export default {
 			pic3: '',
 			locationPickerModal: false
 		};
+	},
+	watch: {
+		data() {
+			if (this.$route.params.id !== undefined)
+				axios
+					.get('/api/art/' + this.$route.params.id)
+					.then((response) => {
+						this.name = response.data.data.name;
+						this.artist = response.data.data.authorName;
+						this.description = response.data.data.description;
+						this.pic1 = response.data.data.pictures[0];
+						this.pic2 = response.data.data.pictures[1];
+						this.pic3 = response.data.data.pictures[2];
+						this.latlng[0] = response.data.data.latitude;
+						this.latlng[1] = response.data.data.longitude;
+					})
+					.catch((error) => console.error(error));
+		}
 	},
 	methods : {
 		sendContrib() {
@@ -208,6 +215,22 @@ export default {
 				})
 				.catch((error) => console.error(error));
 		},
+		changingArtAdmin() {
+			axios
+				.patch('/api/admin/art/' + this.$route.params.id, {
+					name: this.name,
+					description: this.description,
+					picture1: this.pic1,
+					picture2: this.pic2,
+					picture3: this.pic3,
+					author: this.artist,
+				})
+				.then((response) => {
+					router.push('/');
+					router.go();
+				})
+				.catch((error) => console.error(error));
+		},
 		locationPickerClosed() {
 			this.locationPickerModal = false;
 		},
@@ -231,11 +254,6 @@ export default {
 	text-align: center;
 }
 
-.contrib-container {
-	position: relative;
-	height: calc(100vh - 122px);
-}
-
 .contrib-input {
 	height: 40px;
 }
@@ -244,14 +262,20 @@ export default {
 	width: 100%;
 }
 
-.contrib-footer {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 100%;
+.footer {
+	margin-top: 12px;
+	margin-bottom: 12px;
 }
 
-.footer-button {
-	width: 48%;
+.buttons {
+	position: absolute;
+	bottom:0%;
+	left:0%;
+	padding-bottom:0%;
 }
+
+.v-bottom-sheet .buttons {
+	bottom: 10px;
+}
+
 </style>
