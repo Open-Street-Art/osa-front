@@ -16,7 +16,8 @@
 				<v-row class="d-flex justify-start pa-0 ma-0 mt-3">
 					<MediaInput 
 						v-model="pic"
-						:round="mi" />
+						:round="mi" 
+						class="positionMediaInput" />
 				</v-row>
 				<v-row class="pa-0 px-3 ma-0 mt-3" />
 				<v-row class="pa-0 px-3 ma-0 mt-3" />
@@ -24,13 +25,15 @@
 				<v-row class="pa-0 px-3 ma-0 mt-3">
 					<TextArea
 						v-model="description"
-						placeholder="contribution.artDescription"
+						placeholder="myprofile.description"
 						:rows="descRows"
 						:counter="descLimit" />
 				</v-row>
 				<v-row class="pa-0 px-3 ma-0 mt-3 align-center d-flex justify-space-between">
-					<p>Afficher les favoris</p>
-					<CheckBoxInput class="pt-0 pb-1" />
+					<p>{{ this.$t("myprofile.favoris") }}</p>
+					<CheckBoxInput
+						v-model="fav"
+						class="pt-0 pb-1" />
 				</v-row>
 			</v-container>
 			<v-container
@@ -40,27 +43,27 @@
 					class="footer justify-space-around">
 					<Button
 						:width="155"
-						text-button="contribution.cancel"
+						text-button="myprofile.cancel"
 						:outlined="true"
 						@click="$emit('close')" />
 					<Button
 						v-if="!addArt && !changeArtAdmin"
-						text-button="contribution.confirm"
+						text-button="myprofile.confirm"
 						:outlined="false"
 						:width="155"
 						@click="sendContrib" />
 					<Button
 						v-if="addArt"
-						text-button="contribution.confirm"
+						text-button="myprofile.confirm"
 						:outlined="false"
 						:width="155"
 						@click="addingArt" />
 					<Button
 						v-if="changeArtAdmin"
-						text-button="contribution.confirm"
+						text-button="myprofile.confirm"
 						:outlined="false"
 						:width="155"
-						@click="changingArtAdmin" />
+						@click="changingProfile" />
 				</v-row>
 			</v-container>
 		</Modal>
@@ -169,17 +172,13 @@ export default {
 				})
 				.catch((error) => console.error(error));
 		},
-		addingArt() {
+		changingProfile() {
 			axios
-				.post('/api/admin/art', {
-					name: this.name,
-					description: this.description,
-					picture1: this.pic1,
-					picture2: this.pic2,
-					picture3: this.pic3,
-					author: this.artist,
-					latitude: this.latlng[0],
-					longitude: this.latlng[1]
+				.patch('/api/user/profile', {
+					newDesc: this.description,
+					newProfilePic:this.pic,
+					newIsPublic:this.fav  
+
 				})
 				.then((response) => {
 					router.push('/');
@@ -187,28 +186,7 @@ export default {
 				})
 				.catch((error) => console.error(error));
 		},
-		changingArtAdmin() {
-			axios
-				.patch('/api/admin/art/' + this.$route.params.id, {
-					name: this.name,
-					description: this.description,
-					picture1: this.pic1,
-					picture2: this.pic2,
-					picture3: this.pic3,
-					author: this.artist,
-				})
-				.then((response) => {
-					router.push('/');
-					router.go();
-				})
-				.catch((error) => console.error(error));
-		},
-		locationPickerClosed() {
-			this.locationPickerModal = false;
-		},
-		coordUpdated(coord) {
-			this.latlng = coord;
-		},
+		
 	}
 };
 </script>
@@ -259,19 +237,8 @@ export default {
 }
  .positionMediaInput{
 	position: absolute;
-	left:45%;
-	top: 78px;
+	left:40%;
+	top: 60px;
 }
-
-.MediaInputAp{
-border-radius: 0px !important;	
-border: none;
-}
-/*	<v-icon
-						large
-						class="positionMediaInput"
-						color="#C4C4C4">
-						mdi-camera-plus
-					</v-icon> */
 
 </style>
