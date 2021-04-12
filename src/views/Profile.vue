@@ -72,6 +72,20 @@
 						mdi-palette
 					</v-icon>
 				</div>
+				<div 
+					v-if="canAddProfileFavorite"
+					class="col-2">
+					<v-icon 
+						v-if="!isFavorited"
+						color="#00baaf">
+						mdi-star-outline
+					</v-icon>
+					<v-icon
+						v-if="isFavorited"
+						color="#00baaf">
+						mdi-star
+					</v-icon>
+				</div>
 			</div>
 			<v-container class="pos">
 				<v-divider />
@@ -128,6 +142,7 @@
 	</div>
 </template>
 <script>
+import jwt_decode from 'jwt-decode';
 import BaseWrapper from '../components/BaseWrapper.vue';
 import Header from '../components/Header.vue';
 import Photo from '../components/Photo.vue';
@@ -154,9 +169,23 @@ export default {
 			fa:[],
 			fc:[],
 			far:[],
-			cont:[]
-
+			cont:[],
+			role:'',
+			isFavorited: false
 		};
+	},
+	created() {
+		axios
+			.get('/api/user/profile')
+			.then((response) => {
+				for(const artiste of  response.data.data.favArtists) {
+					if (artiste.id == this.id) {
+						this.isFavorited = true;
+						break;
+					}
+				}
+			})
+			.catch((error) => console.error(error));
 	},
 	mounted(){
 		this.profile();
@@ -172,7 +201,8 @@ export default {
 				description:null,
 				favArtists:[],
 				favArts:[],
-				favCities:[]
+				favCities:[],
+				isFavorited: false
 			};
 			
 	   this.gotData=false;
@@ -183,7 +213,7 @@ export default {
 					res=response;
 					this.gotData=true;
 					this.oeuvre=res;
-					
+					this.role=res.data.data.role;
 					
 					if(!this.gotData) {
 						this.fa=oeuvre.data.data['favArts'];
@@ -220,7 +250,49 @@ export default {
 			this.cityFav=true;
 			this.oeuvreFav=false;
 			this.contribution=false;
+		},
+		showButton() {
+			var token = localStorage.getItem('authtoken');
+			var userCheck = '';
+			if(token != null) {
+				axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+				var userInfo = jwt_decode(token);
+				userCheck = userInfo.sub;
+			}
+
+			return this.username !== userCheck && this.role === 'ROLE_ARTIST';
+		},
+		addToFavorite() {
+			axios
+				.post('/api/fav/artist/' + this.id)
+				.then((response) => {
+					EventBus.$emit('success', 'profile.added');
+					this.isFavourited = true;
+				})
+				.catch((error) => {
+					if (error.response.status === 401) {
+						EventBus.$emit('error', 'unauthorized');
+					} else {
+						EventBus.$emit('error', 'unknown');
+					}
+				});
+		},
+		removeToFavorite() {
+			axios
+				.delete('/api/fav/artist/' + this.id)
+				.then((response) => {
+					EventBus.$emit('success', 'profile.deleted');
+					this.isFavourited = false;
+				})
+				.catch((error) => {
+					if (error.response.status === 401) {
+						EventBus.$emit('error', 'unauthorized');
+					} else {
+						EventBus.$emit('error', 'unknown');
+					}
+				});
 		}
+
 	}
 };
 </script>
