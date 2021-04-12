@@ -47,19 +47,6 @@
 						:outlined="true"
 						@click="$emit('close')" />
 					<Button
-						v-if="!addArt && !changeArtAdmin"
-						text-button="myprofile.confirm"
-						:outlined="false"
-						:width="155"
-						@click="sendContrib" />
-					<Button
-						v-if="addArt"
-						text-button="myprofile.confirm"
-						:outlined="false"
-						:width="155"
-						@click="addingArt" />
-					<Button
-						v-if="changeArtAdmin"
 						text-button="myprofile.confirm"
 						:outlined="false"
 						:width="155"
@@ -67,11 +54,6 @@
 				</v-row>
 			</v-container>
 		</Modal>
-		<LocationPicker
-			v-model="latlng"
-			:data="locationPickerModal"
-			@coordupdate="data => coordUpdated(data)"
-			@close="locationPickerClosed" />
 	</div>
 </template>
 
@@ -83,14 +65,13 @@ import Button from '../components/Button.vue';
 import Modal from '../components/Modal.vue';
 import Header from '../components/Header.vue';
 import MediaInput from '../components/MediaInput.vue';
-import LocationPicker from '../components/LocationPicker.vue';
 import axios from 'axios';
 import router from '../router';
 import mobileDetection from './mixins/mobileDetection';
 
 
 export default {
-	name: 'Contribution',
+	name: 'EditProfile',
 	components: {
 		CheckBoxInput,
 		Photo,
@@ -98,12 +79,11 @@ export default {
 		Button,
 		Modal,
 		Header,
-		MediaInput,
-		LocationPicker
+		MediaInput
 	},
 	mixins: [ mobileDetection ],
 	model: {
-		prop: 'contributionModel',
+		prop: 'editProfileModel',
 		event: 'update'
 	},
 	props: {
@@ -111,74 +91,39 @@ export default {
 			type: Boolean,
 			required: true
 		},
-		addArt: {
-			type: Boolean,
-			default: false
-		},
-		changeArtAdmin: {
-			type: Boolean,
-			default: false
-		}
 	},
 	data() {
 		return {
 			descLimit: 160,
 			descRows: 8,
-			name: '',
-			artist: '',
 			description: '',
-			latlng: [],
-			pic1: '',
-			pic2: '',
-			pic3: '',
-			locationPickerModal: false,
+			pic: '',
+			fav:false,
 			mi:true
 		};
 	},
 	watch: {
 		data() {
-			if (this.$route.params.id !== undefined)
-				axios
-					.get('/api/art/' + this.$route.params.id)
-					.then((response) => {
-						this.name = response.data.data.name;
-						this.artist = response.data.data.authorName;
-						this.description = response.data.data.description;
-						this.pic1 = response.data.data.pictures[0];
-						this.pic2 = response.data.data.pictures[1];
-						this.pic3 = response.data.data.pictures[2];
-						this.latlng[0] = response.data.data.latitude;
-						this.latlng[1] = response.data.data.longitude;
-					})
-					.catch((error) => console.error(error));
+			axios
+				.get('/api/user/' + this.$route.params.user_id)
+				.then((response) => {
+
+					this.description = response.data.data.description;
+					this.pic = response.data.data.profilePicture;
+					
+				})
+				.catch((error) => console.error(error));
 		}
 	},
 	methods : {
-		sendContrib() {
-			axios
-				.post('/api/contrib', {
-					name: this.name,
-					description: this.description,
-					picture1: this.pic1,
-					picture2: this.pic2,
-					picture3: this.pic3,
-					author: this.artist,
-					latitude: this.latlng[0],
-					longitude: this.latlng[1]
-				})
-				.then((response) => {
-					router.push('/');
-					router.go();
-				})
-				.catch((error) => console.error(error));
-		},
+		
 		changingProfile() {
 			axios
 				.patch('/api/user/profile', {
 					newDesc: this.description,
-					newProfilePic:this.pic,
-					newIsPublic:this.fav  
-
+					newIsPublic:this.fav ,
+					newProfilePic:this.pic
+					 
 				})
 				.then((response) => {
 					router.push('/');
