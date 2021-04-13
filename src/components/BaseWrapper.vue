@@ -44,7 +44,7 @@
 						v-if="connected"
 						icon="mdi-account"
 						content="home.myProfile" 
-						@click="editProfileClicked" />
+						@click="profileClicked" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-account-search"
@@ -103,16 +103,6 @@
 			:add-art="addingArt"
 			:data="addArtModal"
 			@close="addArtClosed" />
-		<Profile
-			:open="profileModal"
-			@close="profileClosed" />
-		<EditProfile
-			:data="editProfileModal"
-			@close="editProfileClosed" />
-		<EditProfile
-			:add-art="addingArt"
-			:data="addArtModal"
-			@close="addArtClosed" />
 	</div>
 </template>
 
@@ -126,8 +116,6 @@ import store  from '../store/index.js';
 import Register from './Register.vue';
 import Authenticate from './Authenticate.vue';
 import Contribution from './Contribution.vue';
-import EditProfile from './EditProfile.vue';
-import Profile from '../views/Profile.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
@@ -144,9 +132,7 @@ export default {
 		Header,
 		Photo,
 		Contribution,
-		EditProfile,
 		Authenticate,
-		Profile
 	},
 	model: {
 		prop: 'value',
@@ -183,7 +169,6 @@ export default {
 			addingArt: true,
 			registerModal: false,
 			contributionModal: false,
-			editProfileModal:false,
 			profileModal: false,
 			authenticateModal: false,
 			addArtModal: false,
@@ -222,9 +207,6 @@ export default {
 		}
 		if(this.contributionDisplay) {
 			this.contributionModal = true;
-		}
-		if(this.editProfileDisplay) {
-			this.editProfileModal = true;
 		}
 		if(this.profileDisplay) {
 			this.profileModal = true;
@@ -272,21 +254,8 @@ export default {
 			router.push('/');
 			this.contributionModal = false;
 		},
-		editProfileClicked() {
-			this.editProfileModal = !this.editProfileModal;
-			router.push('/editprofile');
-		},
-		editProfileClosed() {
-			router.push('/');
-			this.editProfileModal = false;
-		},
 		profileClicked() {
-			this.profileModal = !this.profileModal;
 			router.push('/profile');
-		},
-		profileClosed() {
-			router.push('/');
-			this.contributionModal = false;
 		},
 		switchLocale() {
 			if(this.$i18n.locale == this.langs[1]) {

@@ -1,28 +1,25 @@
 <template>
 	<v-switch
+		v-model="switched"
 		color="primary"
 		inset
-		:value="value"
 		@change="$emit('update', $event)" />
 </template>
 
 <script>
 export default {
 	name: 'CheckBoxInput',
-	model: {
-		prop: 'value',
-		event: 'update'
+	props: {
+		switched: {
+			default: false,
+			type: Boolean
+		}
 	},
-	data: function() {
-		return {
-			value: ''
-		};
-	}
 };
 </script>
 
 <style lang="scss">
-			@import "../assets/styles/text.scss";
+@import "../assets/styles/text.scss";
       .v-input--switch__track {
         color: $light-color;
         opacity: 1 !important;

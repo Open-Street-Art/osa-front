@@ -59,11 +59,11 @@
 		"cancel" : "Annuler",
 		"confirm" : "Valider"
 	},
-	"myprofile": {
+	"editProfile": {
 		"favoris": "Afficher les favoris",
 		"description": "Description",
 		"cancel" : "Annuler",
-		"confirm" : "Valider"
+		"confirm" : "Enregistrer"
 	},
 	"search" : {
 		"bar" : "Rechercher une œuvre, un artiste...",

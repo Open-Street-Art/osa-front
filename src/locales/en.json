@@ -57,11 +57,11 @@
 		"cancel" : "Cancel",
 		"confirm" : "Confirm"
 	},
-	"myprofile": {
+	"editProfile": {
 		"favoris": "Show favorites",
 		"description": "Description",
 		"cancel" : "Cancel",
-		"confirm" : "Confirm"
+		"confirm" : "Save"
 	},
 	"search" : {
 		"bar" : "Search for an art, an artist ...",

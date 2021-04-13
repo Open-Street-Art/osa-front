@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import Profile from '../views/Profile.vue';
 
 Vue.use(VueRouter);
 
@@ -44,14 +45,6 @@ const routes = [
 		}
 	},
 	{
-		path: '/editprofile',
-		name: 'EditProfile',
-		component: Home,
-		props: {
-			editProfileDisplay: true
-		}
-	},
-	{
 		path: '/addart',
 		name: 'AddArt',
 		component: Home,
@@ -78,10 +71,16 @@ const routes = [
 	{
 		path: '/profile',
 		name: 'Profile',
-		component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue')
-		
-
-	}
+		component: Profile
+	},
+	{
+		path: '/editprofile',
+		name: 'EditProfile',
+		component: Profile,
+		props: {
+			editProfileDisplay: true
+		}
+	},
 ];
 
 const router = new VueRouter({
