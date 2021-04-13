@@ -9,7 +9,8 @@
 					<MediaInput
 						v-model="profilePic"
 						class="media-border"
-						:round="true" />
+						:round="true"
+						:colored="true" />
 				</v-row>
 				<v-row>
 					<TextArea
@@ -155,5 +156,6 @@ export default {
 .media-header {
 	margin-top: -37px;
 }
+
 
 </style>

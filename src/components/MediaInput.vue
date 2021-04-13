@@ -9,7 +9,7 @@
 			style="display: none"
 			@change="previewImage">
 		<v-btn
-			:class="round ? 'rounded-circle' : 'stdBorder'"
+			:class="(round ? 'rounded-circle' : 'stdBorder' ) + (colored ? ' color-border' : '')"
 			elevation="0"
 			outlined
 			height="80"
@@ -32,6 +32,10 @@ export default {
 	},
 	props: {
 		round: {
+			default: false,
+			type: Boolean
+		},
+		colored: {
 			default: false,
 			type: Boolean
 		},
@@ -71,14 +75,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-			@import "../assets/styles/text.scss";
+@import "../assets/styles/text.scss";
 
-			.v-btn {
-				color: $light-color !important;
-				background-size: cover !important;
-			}
+.v-btn {
+	color: $light-color !important;
+	background-size: cover !important;
+}
 
-			.stdBorder {
-				border-radius: 20px !important;
-			}
+.stdBorder {
+	border-radius: 20px !important;
+}
+
+.color-border{
+	border: 4px solid  #00BAAF;
+}
 </style>

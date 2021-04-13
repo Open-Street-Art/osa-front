@@ -61,9 +61,11 @@
 			<v-tabs
 				v-model="tab"
 				class="tabs"
-				grow>
+				hide-slider
+				centered>
 				<v-tab
-					:key="1">
+					:key="1"
+					class="tabIcon">
 					<p v-if="tab==0">
 						Contributions
 					</p>
@@ -74,34 +76,40 @@
 					</v-icon>
 				</v-tab>
 				<v-tab
-					:key="2">
+					:key="2"
+					class="tabIcon">
 					<p v-if="tab==1">
 						Artistes favoris
 					</p>
 					<v-icon
 						v-else
+						class="tabIcon"
 						color="#00baaf">
 						mdi-account-box
 					</v-icon>
 				</v-tab>
 				<v-tab
-					:key="3">
+					:key="3"
+					class="tabIcon">
 					<p v-if="tab==2">
 						Villes favorites
 					</p>
 					<v-icon
 						v-else
+						class="tabIcon"
 						color="#00baaf">
 						mdi-city
 					</v-icon>
 				</v-tab>
 				<v-tab
-					:key="4">
+					:key="4"
+					class="tabIcon">
 					<p v-if="tab==3">
 						Oeuvre favorites
 					</p>
 					<v-icon
 						v-else
+						class="tabIcon"
 						color="#00baaf">
 						mdi-palette
 					</v-icon>
@@ -357,5 +365,11 @@ position: absolute;
 	margin:auto
 }
 
-[v-cloak] > * {display: none;}
+.tabIcon {
+	min-width:20px !important;
+}
+
+.v-slide-group__prev--disabled {
+	display: none !important;
+}
 </style>
