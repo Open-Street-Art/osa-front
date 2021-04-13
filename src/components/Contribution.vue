@@ -187,7 +187,7 @@ export default {
 					picture1: this.pic1,
 					picture2: this.pic2,
 					picture3: this.pic3,
-					author: this.artist,
+					authorName: this.artist,
 					latitude: this.latlng[0],
 					longitude: this.latlng[1]
 				})
