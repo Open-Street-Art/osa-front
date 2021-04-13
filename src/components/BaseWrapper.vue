@@ -27,7 +27,7 @@
 				<Header style="height: 160px">
 					<Photo
 						class="mx-auto picture"
-						:link-photo="placeholder"
+						:link-photo="(profilePicture != null) ? profilePicture : placeholder"
 						:forme="forme" />
 					<p
 						class="userDisplay titles mb-0 mt-2 ">
@@ -176,6 +176,7 @@ export default {
 			role:'',
 			forme: 'forme-profile',
 			placeholder: require('@/assets/avatarPlaceholder.png'),
+			profilePicture: null,
 			langs: ['fr', 'en']
 		};
 	},
@@ -197,6 +198,13 @@ export default {
 				this.role = 'Artiste';
 			}
 		}
+		axios
+			.get('/api/user/profile')
+			.then((response) => {
+				var array = response.data.data;
+				this.profilePicture = array.profilePicture;
+			})
+	      .catch((error) => console.error(error));
 		if(this.register) {
 			this.registerModal = true;
 		}

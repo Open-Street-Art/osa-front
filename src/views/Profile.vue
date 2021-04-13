@@ -1,5 +1,7 @@
 <template>
-	<div id="id">
+	<div
+		v-if="profileInfoLoaded && contributionsLoaded"
+		id="id">
 		<BaseWrapper
 			v-model="drawer">
 			<Header class="test">
@@ -14,13 +16,26 @@
 					<v-icon color="white">
 						mdi-menu
 					</v-icon>
-					<Photo
-						class="positionPicture"
-						:link-photo="(profilePicture != null) ? profilePicture :placeholder"
-						:max-heigth="80"
-						:max-width="80"
-						forme="forme-profile" />
 				</v-btn>
+				<v-btn
+					v-if="userProfile"
+					class="editButton"
+					right
+					fab
+					text
+					small
+					color="primary"
+					@click.stop="EditProfileClicked">
+					<v-icon color="white">
+						mdi-pencil
+					</v-icon>
+				</v-btn>
+				<Photo
+					class="positionPicture"
+					:link-photo="(profilePicture != null) ? profilePicture :placeholder"
+					:max-heigth="80"
+					:max-width="80"
+					forme="forme-profile" />
 			</Header>
 			<Header class="test">
 				<v-btn
@@ -108,50 +123,69 @@
 				<v-tab-item
 					:key="2">
 					<div
-						v-for="{id, name} in favArtists"
+						v-for="{id, name, authorName, pictures} in favArtists"
 						:key="id">
 						<card
-							:card-title="name" />
+							:card-title="name"
+							:card-desc="authorName"
+							:img-src="pictures[0]" />
 						<div class="separator mt-1 mb-4" />
 					</div>
 				</v-tab-item>
 				<v-tab-item
 					:key="3">
 					<div
-						v-for="{id, name} in favCities"
+						v-for="{id, name, authorName, pictures} in favCities"
 						:key="id">
 						<card
-							:card-title="name" />
+							:card-title="name"
+							:card-desc="authorName"
+							:img-src="pictures[0]" />
 						<div class="separator mt-1 mb-4" />
 					</div>
 				</v-tab-item>
 				<v-tab-item
 					:key="4">
 					<div
-						v-for="{id, name} in favArts"
+						v-for="{id, name, authorName, pictures} in favArts"
 						:key="id">
 						<card
-							:card-title="name" />
+							:card-title="name"
+							:card-desc="authorName"
+							:img-src="pictures[0]" />
 						<div class="separator mt-1 mb-4" />
 					</div>
 				</v-tab-item>
 			</v-tabs-items>
 		</div>
+		<edit-profile
+			:data="profileModal"
+			@close="editProfileClosed" />
 	</div>
 </template>
 <script>
 import BaseWrapper from '../components/BaseWrapper.vue';
+import EditProfile from '../components/EditProfile.vue';
 import Header from '../components/Header.vue';
 import Photo from '../components/Photo.vue';
 import Card from '../components/Card.vue';
 import axios from 'axios';
+import router from '../router';
+
 export default {
 	name: 'Profile',
 	components: {
 		BaseWrapper,
-		Photo,
+		EditProfile,
 		Header,
+		Photo,
 		Card
+	},
+	props: {
+		editProfileDisplay: {
+			default: false,
+			type: Boolean
+		}
 	},
 	data () {
 		return {
@@ -164,37 +198,75 @@ export default {
 			favArtists:[],
 			favArts:[],
 			favCities:[],
-			cont:[],
+			userProfile: false,
+			profileModal: false,
+			profileInfoLoaded: false,
+			contributionsLoaded: false,
 			placeholder: require('@/assets/avatarPlaceholder.png'),
 			tab: 'contrib',
 		};
 	},
 	mounted(){
-		this.getProfileInfo();
-		this.getContrib();
+		var token = localStorage.getItem('authtoken');
+		axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+		console.log(token);
+		if(this.$route.params.id == undefined) {
+			this.userProfile = true;
+			this.getProfileInfo(null);
+			this.getContrib(null);
+		}
+		else {
+			this.getProfileInfo(this.$route.params.id);
+			this.getContrib(this.$route.params.id);
+		}
+		if(this.editProfileDisplay) {
+			this.profileModal = true;
+		}
 	},
 	methods:{
-		getProfileInfo(){
-			axios
-				.get('/api/user/profile')
-				.then((response) => {
-					var array = response.data.data;
-					this.username = array.username;
-					if(array.description != null)
-						this.description = array.description;
-					if(array.roles[0] == 'ROLE_ADMIN')
-						this.role = 'administrator';
-					this.favArtists = array.favArtists;
-					this.favArts = array.favArts;
-					this.favCities = array.favCities;
-					this.profilePicture = array.profilePicture;
-				})
+		getProfileInfo(id){
+			if(id == null) {
+				axios
+					.get('/api/user/profile')
+					.then((response) => {
+						var array = response.data.data;
+						this.username = array.username;
+						if(array.description != null)
+							this.description = array.description;
+						if(array.roles[0] == 'ROLE_ADMIN')
+							this.role = 'administrator';
+						this.favArtists = array.favArtists;
+						this.favArts = array.favArts;
+						this.favCities = array.favCities;
+						this.profilePicture = array.profilePicture;
+						this.profileInfoLoaded = true;
+						this.userId= array.id;
+					})
 	      .catch((error) => console.error(error));
+			}
+			else {
+				axios
+					.get('/api/user/' + id)
+					.then((response) => {
+						var array = response.data.data;
+						this.username = array.username;
+						if(array.description != null)
+							this.description = array.description;
+						if(array.roles[0] == 'ROLE_ADMIN')
+							this.role = 'administrator';
+						this.favArtists = array.favArtists;
+						this.favArts = array.favArts;
+						this.favCities = array.favCities;
+						this.profilePicture = array.profilePicture;
+						this.profileInfoLoaded = true;
+					})
+	      .catch((error) => console.error(error));
+			}
 
 		},
-		getContrib(){
+		getContrib(id){
 			axios
-			 .get('/api/contrib/user/contribs')
+			 .get('/api/contrib/personnal')
 			   .then((response) => {
 					 var array = response.data.data;
 					 var result= [];
@@ -204,8 +276,17 @@ export default {
 						result.push({contribId, title});
 					 }
 					 this.contribList = result;
+					 this.contributionsLoaded = true;
 				})
 				.catch((error) => console.error(error));
+		},
+		EditProfileClicked() {
+			this.profileModal = true;
+			router.push('/editprofile');
+		},
+		editProfileClosed() {
+			this.profileModal = false;
+			router.push('/profile');
 		}
 	}
 };
@@ -220,10 +301,18 @@ export default {
 	width:24px;
 }
 
+.editButton {
+	position: absolute;
+	top:10px;
+	right:5px;
+	height:16px;
+	width:24px;
+}
+
 .positionPicture{
 	position: absolute;
-	left:10px;
-	top: 60px;
+	left:15px;
+	top: 75px;
 	border: 4px solid  #00BAAF;
 }
 .positionAccountType{
@@ -268,7 +357,5 @@ position: absolute;
 	margin:auto
 }
 
-
+[v-cloak] > * {display: none;}
 </style>
-
-

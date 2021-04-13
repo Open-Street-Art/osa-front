@@ -57,6 +57,12 @@
 		"cancel" : "Cancel",
 		"confirm" : "Confirm"
 	},
+	"editProfile": {
+		"favoris": "Show favorites",
+		"description": "Description",
+		"cancel" : "Cancel",
+		"confirm" : "Save"
+	},
 	"search" : {
 		"bar" : "Search for an art, an artist ...",
 		"sad" : "No results were found for your search :(",

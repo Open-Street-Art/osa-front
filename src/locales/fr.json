@@ -59,6 +59,12 @@
 		"cancel" : "Annuler",
 		"confirm" : "Valider"
 	},
+	"editProfile": {
+		"favoris": "Afficher les favoris",
+		"description": "Description",
+		"cancel" : "Annuler",
+		"confirm" : "Enregistrer"
+	},
 	"search" : {
 		"bar" : "Rechercher une œuvre, un artiste...",
 		"sad" : "Aucun résultat ne correspond à votre recherche :(",
