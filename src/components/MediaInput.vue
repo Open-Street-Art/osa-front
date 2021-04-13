@@ -9,7 +9,7 @@
 			style="display: none"
 			@change="previewImage">
 		<v-btn
-			:class="round ? 'rounded-circle' : ''"
+			:class="round ? 'rounded-circle' : 'stdBorder'"
 			elevation="0"
 			outlined
 			height="80"
@@ -75,7 +75,10 @@ export default {
 
 			.v-btn {
 				color: $light-color !important;
-				border-radius: 20px !important;
 				background-size: cover !important;
+			}
+
+			.stdBorder {
+				border-radius: 20px !important;
 			}
 </style>
