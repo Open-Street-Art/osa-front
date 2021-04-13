@@ -25,9 +25,29 @@
 					text
 					small
 					color="primary"
-					@click.stop="EditProfileClicked">
+					@click.stop="editProfileClicked">
 					<v-icon color="white">
 						mdi-pencil
+					</v-icon>
+				</v-btn>
+				<v-btn
+					v-if="!userProfile"
+					class="editButton"
+					right
+					fab
+					text
+					small
+					color="primary"
+					@click.stop="favouriteClicked">
+					<v-icon
+						v-if="isFavourited"
+						color="white">
+						mdi-star
+					</v-icon>
+					<v-icon
+						v-if="!isFavourited"
+						color="white">
+						mdi-star-outline
 					</v-icon>
 				</v-btn>
 				<Photo
@@ -195,7 +215,7 @@ export default {
 			type: Boolean
 		}
 	},
-	data () {
+	data() {
 		return {
 			drawer: false,
 			username: '',
@@ -210,24 +230,27 @@ export default {
 			profileModal: false,
 			profileInfoLoaded: false,
 			contributionsLoaded: false,
+			isFavourited: false,
 			placeholder: require('@/assets/avatarPlaceholder.png'),
 			tab: 'contrib',
 		};
 	},
-	mounted(){
+	mounted() {
 		var token = localStorage.getItem('authtoken');
 		axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
-		console.log(token);
-		if(this.$route.params.id == undefined) {
-			this.userProfile = true;
-			this.getProfileInfo(null);
-			this.getContrib(null);
-		}
-		else {
+		// On charge notre profil pour savoir si ce profil est dans nos favoris ou que ce profil
+		// est le notre
+		this.getProfileInfo(null);
+		if (this.$route.params.id != undefined) {
 			this.getProfileInfo(this.$route.params.id);
 			this.getContrib(this.$route.params.id);
 		}
-		if(this.editProfileDisplay) {
+		else {
+			this.userProfile = true;
+			this.getContrib(null);
+		}
+		// On vérifie si on doit ouvrire la modale d'édition du profil
+		if (this.editProfileDisplay) {
 			this.profileModal = true;
 		}
 	},
@@ -248,9 +271,17 @@ export default {
 						this.favCities = array.favCities;
 						this.profilePicture = array.profilePicture;
 						this.profileInfoLoaded = true;
-						this.userId= array.id;
+						this.userId = array.id;
+						if (this.userId == this.$route.params.id) {
+							router.push('/profile');
+							this.userProfile = true;
+						}
+						for (let artist of this.favArtists) {
+							if (artist.id == this.$route.params.id)
+								this.isFavourited = true;
+						}
 					})
-	      .catch((error) => console.error(error));
+	      			.catch((error) => console.error(error));
 			}
 			else {
 				axios
@@ -268,9 +299,8 @@ export default {
 						this.profilePicture = array.profilePicture;
 						this.profileInfoLoaded = true;
 					})
-	      .catch((error) => console.error(error));
+	      			.catch((error) => console.error(error));
 			}
-
 		},
 		getContrib(id){
 			axios
@@ -288,13 +318,29 @@ export default {
 				})
 				.catch((error) => console.error(error));
 		},
-		EditProfileClicked() {
+		editProfileClicked() {
 			this.profileModal = true;
 			router.push('/editprofile');
 		},
 		editProfileClosed() {
 			this.profileModal = false;
 			router.push('/profile');
+		},
+		favouriteClicked() {
+			if (!this.isFavourited)
+				axios
+					.post('/api/fav/artist/' + this.$route.params.id)
+					.then((response) => {
+						this.isFavourited = true;
+					})
+					.catch((error) => console.error(error));
+			else
+				axios
+					.delete('/api/fav/artist/' + this.$route.params.id)
+					.then((response) => {
+						this.isFavourited = false;
+					})
+					.catch((error) => console.error(error));
 		}
 	}
 };
