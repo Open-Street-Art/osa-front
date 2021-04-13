@@ -43,12 +43,12 @@
 					<ActionsMenuItem
 						v-if="connected"
 						icon="mdi-account"
-						content="home.myProfile" />
+						content="home.myProfile"
+						@click="profileClicked" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-account-search"
-						content="home.searchUser"
-						@click="profileClicked" />
+						content="home.searchUser" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-palette"
@@ -102,9 +102,6 @@
 			:add-art="addingArt"
 			:data="addArtModal"
 			@close="addArtClosed" />
-		<Profile
-			:open="profileModal"
-			@close="profileClosed" />
 	</div>
 </template>
 
@@ -118,7 +115,6 @@ import store  from '../store/index.js';
 import Register from './Register.vue';
 import Authenticate from './Authenticate.vue';
 import Contribution from './Contribution.vue';
-import Profile from '../views/Profile.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
@@ -136,7 +132,6 @@ export default {
 		Photo,
 		Contribution,
 		Authenticate,
-		Profile
 	},
 	model: {
 		prop: 'value',
@@ -173,7 +168,6 @@ export default {
 			addingArt: true,
 			registerModal: false,
 			contributionModal: false,
-			profileModal: false,
 			authenticateModal: false,
 			addArtModal: false,
 			connected: false,
@@ -259,12 +253,7 @@ export default {
 			this.contributionModal = false;
 		},
 		profileClicked() {
-			this.profileModal = !this.profileModal;
 			router.push('/profile');
-		},
-		profileClosed() {
-			router.push('/');
-			this.contributionModal = false;
 		},
 		switchLocale() {
 			if(this.$i18n.locale == this.langs[1]) {

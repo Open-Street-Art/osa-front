@@ -16,7 +16,7 @@
 					</v-icon>
 					<Photo
 						class="positionPicture"
-						:link-photo="oeuvre.data.data['profilePicture']"
+						:link-photo="(profilePicture != null) ? profilePicture :placeholder"
 						:max-heigth="80"
 						:max-width="80"
 						forme="forme-profile" />
@@ -31,99 +31,111 @@
 					small
 					color="primary">
 					<p class="emphase positionUserAccount">
-						{{ oeuvre.data.data['username'] }}
+						{{ username }}
 					</p>
 				</v-btn>
 			</Header>
 		</BaseWrapper>
 		<div>
 			<p class="base positionAccountType">
-				{{ oeuvre.data.data.roles }}
+				{{ this.$t(role) }}
 			</p>
 			<p class="positionUserAccountText base">
-				{{ oeuvre.data.data['description'] }}
+				{{ description }}
 			</p>
-		
-			
-			<div class="row position button">
-				<div class="col-1" />
-				<div class="col-5">
-					<p
-						@click="contrib()">
-						Contribution
+			<v-tabs
+				v-model="tab"
+				class="tabs"
+				grow>
+				<v-tab
+					:key="1">
+					<p v-if="tab==0">
+						Contributions
 					</p>
-				</div>
-				<div class="col-2">
 					<v-icon
-						color="#00baaf"
-						@click="artiste()">
+						v-else
+						color="#00baaf">
+						mdi-format-list-text
+					</v-icon>
+				</v-tab>
+				<v-tab
+					:key="2">
+					<p v-if="tab==1">
+						Artistes favoris
+					</p>
+					<v-icon
+						v-else
+						color="#00baaf">
 						mdi-account-box
 					</v-icon>
-				</div>
-				<div class="col-2">
+				</v-tab>
+				<v-tab
+					:key="3">
+					<p v-if="tab==2">
+						Villes favorites
+					</p>
 					<v-icon
-						color="#00baaf"
-						@click="city()">
+						v-else
+						color="#00baaf">
 						mdi-city
 					</v-icon>
-				</div>
-				<div class="col-2">
+				</v-tab>
+				<v-tab
+					:key="4">
+					<p v-if="tab==3">
+						Oeuvre favorites
+					</p>
 					<v-icon
-						color="#00baaf"
-						@click="oeuvres()">
+						v-else
+						color="#00baaf">
 						mdi-palette
 					</v-icon>
-				</div>
-			</div>
-			<v-container class="pos">
-				<v-divider />
-				<v-container v-if="contribution==true">
+				</v-tab>
+			</v-tabs>
+			<v-tabs-items
+				v-model="tab"
+				class="tabsItem">
+				<v-tab-item
+					:key="1">
 					<div
-						v-for="i in lescontribs"
-						:key="i">
-						<Card 
-					
-							:card-title="i['name']"
-							:card-desc=" i['author_name']+ ville" />
-						<v-divider />
+						v-for="{contribId, title} in contribList"
+						:key="contribId">
+						<card
+							:card-title="title" />
+						<div class="separator mt-1 mb-4" />
 					</div>
-				</v-container>
-				<v-container v-else-if="artisteFav==true">
+				</v-tab-item>
+				<v-tab-item
+					:key="2">
 					<div
-						v-for="i in fc"
-						:key="i">
-						<Card 
-							card-title=""
-							+i.username
-							card-desc="Artiste inconnu, Rouen" />
-						<v-divider />
+						v-for="{id, name} in favArtists"
+						:key="id">
+						<card
+							:card-title="name" />
+						<div class="separator mt-1 mb-4" />
 					</div>
-				</v-container>
-			
-				<v-container v-else-if="cityFav==true">
+				</v-tab-item>
+				<v-tab-item
+					:key="3">
 					<div
-						v-for="i in far"
-						:key="i">
-						<Card
-							card-title="Nom de la ville"
-							+i.name
-							card-desc="Artiste inconnu, Rouen" />
-						<v-divider />
+						v-for="{id, name} in favCities"
+						:key="id">
+						<card
+							:card-title="name" />
+						<div class="separator mt-1 mb-4" />
 					</div>
-				</v-container>
-				<v-container v-else>
+				</v-tab-item>
+				<v-tab-item
+					:key="4">
 					<div
-						v-for="i in fa"
-						:key="i">
-						<Card
-							card-title="Nom de l’oeuvre"
-							+i.name
-							card-desc=""
-							+{{i.author_name}} />
-						<v-divider />
+						v-for="{id, name} in favArts"
+						:key="id">
+						<card
+							:card-title="name" />
+						<div class="separator mt-1 mb-4" />
 					</div>
-				</v-container>
-			</v-container>
+				</v-tab-item>
+			</v-tabs-items>
 		</div>
 	</div>
 </template>
@@ -134,7 +146,7 @@ import Photo from '../components/Photo.vue';
 import Card from '../components/Card.vue';
 import axios from 'axios';
 export default {
-	name: 'Home',
+	name: 'Profile',
 	components: {
 		BaseWrapper,
 		Photo,
@@ -144,110 +156,69 @@ export default {
 	data () {
 		return {
 			drawer: false,
-			gotData: false,
-			gotData2:false,
-			oeuvre:[],
-			lescontrib:[],
-			oeuvreFav:false,
-			contribution:true,
-			cityFav:false,
-			artisteFav:false,
-			id:-1,
-			fa:[],
-			fc:[],
-			far:[],
-			cont:[]
-
+			username: '',
+			description: '',
+			role:'',
+			profilePicture: null,
+			contribList:[],
+			favArtists:[],
+			favArts:[],
+			favCities:[],
+			cont:[],
+			placeholder: require('@/assets/avatarPlaceholder.png'),
+			tab: 'contrib',
 		};
 	},
 	mounted(){
-		this.profile();
-		this.lescontributions();
+		this.getProfileInfo();
+		this.getContrib();
 	},
 	methods:{
-		profile(){
-		
-			var res={
-				id: '',
-				username:'',
-				roles:'',
-				profilePicture:null,
-				description:null,
-				favArtists:[],
-				favArts:[],
-				favCities:[]
-			};
-			
-	   this.gotData=false;
+		getProfileInfo(){
 			axios
-				.get('/api/user/'+this.id)
+				.get('/api/user/profile')
 				.then((response) => {
-					
-					res=response;
-					this.gotData=true;
-					this.oeuvre=res;
-					
-					
-					if(!this.gotData) {
-						this.fa=oeuvre.data.data['favArts'];
-						this.far=oeuvre.data.data['favArtists'];
-						this.fc=oeuvre.data.data['favCity'];
-					
-					}
-					
-
+					var array = response.data.data;
+					this.username = array.username;
+					if(array.description != null)
+						this.description = array.description;
+					if(array.roles[0] == 'ROLE_ADMIN')
+						this.role = 'administrator';
+					this.favArtists = array.favArtists;
+					this.favArts = array.favArts;
+					this.favCities = array.favCities;
+					this.profilePicture = array.profilePicture;
 				})
-	           .catch((error) => console.error(error));
-		
+	      .catch((error) => console.error(error));
+
 		},
-		lescontributions(){
-			this.gotData2=false;
+		getContrib(){
 			axios
 			 .get('/api/contrib/user/contribs')
 			   .then((response) => {
-					
-					res=response;
-					this.gotData2=true;
-					this.oeuvre=res;
-					
-					
-					
-					if(!this.gotData2) {
-						this.cont=lescontribs.data.data;
-					}
-					
-
-				});
-		},
-		artiste(){
-			this.artisteFav=true;
-			this.oeuvreFav=false;
-			this.contribution=false;
-			this.cityFav=false;
-		},
-		oeuvres(){
-			this.artisteFav=false;
-			this.oeuvreFav=true;
-			this.contribution=false;
-			this.cityFav=false;
-		},
-		contrib(){
-			this.artisteFav=false;
-			this.contribution=true;
-			this.oeuvreFav=false;
-			this.cityFav=false;
-		},
-		city(){
-			this.artisteFav=false;
-			this.cityFav=true;
-			this.oeuvreFav=false;
-			this.contribution=false;
+					 var array = response.data.data;
+					 var result= [];
+					 for(let i = 0; i < array.length;++i) {
+						var contribId = array[i].id;
+						var title =array[i].name;
+						result.push({contribId, title});
+					 }
+					 this.contribList = result;
+				})
+				.catch((error) => console.error(error));
 		}
 	}
 };
 </script>
 <style lang="scss" >
 @import "../assets/styles/text.scss";
+
+.homeButton {
+	top:10px;
+	left:5px;
+	height:16px;
+	width:24px;
+}
 
 .positionPicture{
 	position: absolute;
@@ -277,8 +248,26 @@ export default {
 .pos{
 position: absolute;
 
-	top: 320px;	
+	top: 320px;
 }
+
+.tabs {
+	position: absolute;
+	top:320px;
+}
+
+.tabsItem {
+	position: absolute;
+	top:400px;
+}
+
+.separator {
+	height: 1px;
+	background-color: $light-color;
+	width: 90%;
+	margin:auto
+}
+
 
 </style>
 
