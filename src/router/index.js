@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Administration from '../views/Administration.vue';
+import Profile from '../views/Profile.vue';
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,22 @@ const routes = [
 		component: Home,
 		props: {
 			artDisplay: true
+		}
+	},
+	{
+		path: '/art/:id/change',
+		name: 'ChangeArt',
+		component: Home,
+		props: {
+			changeArtAdminDisplay: true
+		}
+	},
+	{
+		path: '/city/:id',
+		name: 'CityDisplay',
+		component: Home,
+		props: {
+			cityDisplay: true
 		}
 	},
 	{
@@ -59,12 +76,23 @@ const routes = [
 		props: true 
 	},
 	{
-		path: '/contrib/:id',
-		name: 'Admin',
-		component: Administration,
+		path: '/profile',
+		name: 'Profile',
+		component: Profile
+	},
+	{
+		path: '/profile/:id',
+		name: 'UserProfile',
+		component: Profile,
+
+	},
+	{
+		path: '/editprofile',
+		name: 'EditProfile',
+		component: Profile,
 		props: {
-			contribDisplayModal: true
-		} 
+			editProfileDisplay: true
+		}
 	},
 ];
 

@@ -21,18 +21,20 @@
 			</Header>
 			<div class="content">
 				<div
-					v-for="{id, name} in contribList"
+					v-for="{id, name, author, picture1} in contribList"
 					:key="id">
 					<Card
 						:card-title="name"
-						card-desc="Artiste inconnu, Rouen"
+						:card-desc="author"
+						:img-src="picture1"
 						width="100%"
 						@click="contribDisplayOpened(id)" />
 					<v-divider class="mb-3" />
 				</div>
 			</div>
 		</base-wrapper>
-		<ContribDisplay
+		<ContributionDisplay
+			:contrib-id="selectedContribId"
 			:data="contribDisplayModal"
 			@close="contribDisplayClosed()" />
 	</v-main>
@@ -42,9 +44,8 @@
 import BaseWrapper from '../components/BaseWrapper.vue';
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
-import ContribDisplay from '../components/ContribDisplay.vue';
+import ContributionDisplay from '../components/ContributionDisplay.vue';
 import axios from 'axios';
-import router from '../router';
 
 export default {
 	name: 'Administration',
@@ -52,13 +53,14 @@ export default {
 		BaseWrapper,
 		Header,
 		Card,
-		ContribDisplay
+		ContributionDisplay
 	},
 	data() {
 		return {
 			drawer: false,
 			contribList: [],
-			contribDisplayModal: false
+			contribDisplayModal: false,
+			selectedContribId: null
 		};
 	},
 	mounted() {
@@ -78,10 +80,11 @@ export default {
 		},
 		contribDisplayOpened(id) {
 			this.contribDisplayModal = true;
-			router.push('/contrib/' + id);
+			this.selectedContribId = id;
 		},
 		contribDisplayClosed() {
-			router.push('/admin');
+			//router.push('/admin');
+			this.selectedContribId = null;
 			this.contribDisplayModal = false;
 		}
 	}

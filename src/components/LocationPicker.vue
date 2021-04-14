@@ -42,6 +42,10 @@ export default {
 		Pin,
 		Button
 	},
+	model: {
+		prop: 'coordProp',
+		event: 'click'
+	},
 	props: {
 		baseCenter: {
 			type: Array,
@@ -59,6 +63,10 @@ export default {
 			type: Boolean,
 			required: true
 		},
+		coordProp: {
+			type: Array,
+			default: () => [-1,-1]
+		}
 	},
 	data () {
 		return {
@@ -91,6 +99,9 @@ export default {
 		},
 		fixSize() {
 			this.$refs.map.mapObject.invalidateSize();
+			if(this.coordProp != [-1,-1]) {
+				this.coord = this.coordProp;
+			}
 		}
 	}
 };

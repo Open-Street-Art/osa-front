@@ -27,7 +27,7 @@
 				<Header style="height: 160px">
 					<Photo
 						class="mx-auto picture"
-						:link-photo="placeholder"
+						:link-photo="(profilePicture != null) ? profilePicture : placeholder"
 						:forme="forme" />
 					<p
 						class="userDisplay titles mb-0 mt-2 ">
@@ -41,9 +41,15 @@
 			<v-container>
 				<ActionsMenu :outlined="true">
 					<ActionsMenuItem
+						icon="mdi-home"
+						content="home.home"
+						@click="homeClicked" />
+					<v-divider class="mx-auto" />
+					<ActionsMenuItem
 						v-if="connected"
 						icon="mdi-account"
-						content="home.myProfile" />
+						content="home.myProfile"
+						@click="profileClicked" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-account-search"
@@ -149,6 +155,10 @@ export default {
 			default: false,
 			type: Boolean
 		},
+		profileDisplay: {
+			default: false,
+			type: Boolean
+		},
 		addArt: {
 			default: false,
 			type: Boolean
@@ -171,27 +181,44 @@ export default {
 			role:'',
 			forme: 'forme-profile',
 			placeholder: require('@/assets/avatarPlaceholder.png'),
+			profilePicture: null,
 			langs: ['fr', 'en']
 		};
 	},
 	mounted() {
 		var token = localStorage.getItem('authtoken');
-		if(token!=null) {
-			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+		if (token != null) {
+			var currentTime = new Date().getTime() / 1000;
 			var userInfo = jwt_decode(token);
-			this.connected = true;
-			this.username = userInfo.sub;
-			if(userInfo.roles === 'ROLE_USER') {
-				this.role = 'contributor';
-			}
-			else if (userInfo.roles === 'ROLE_ADMIN') {
-				this.role = 'administrator';
-				this.admin = true;
-			}
-			else {
-				this.role = 'Artiste';
+			// On vérifie si le token est expiré
+			if (currentTime < userInfo.exp) {
+				axios.defaults.headers.common = {
+					'Authorization': `Bearer ${token}`
+				};
+				this.connected = true;
+				this.username = userInfo.sub;
+				if (userInfo.roles === 'ROLE_USER') {
+					this.role = 'contributor';
+				}
+				else if (userInfo.roles === 'ROLE_ADMIN') {
+					this.role = 'administrator';
+					this.admin = true;
+				}
+				else {
+					this.role = 'Artiste';
+				}
+			} else {
+				// Le token est expiré
+				localStorage.removeItem('authtoken');
 			}
 		}
+		axios
+			.get('/api/user/profile')
+			.then((response) => {
+				var array = response.data.data;
+				this.profilePicture = array.profilePicture;
+			})
+	      .catch((error) => console.error(error));
 		if(this.register) {
 			this.registerModal = true;
 		}
@@ -200,6 +227,9 @@ export default {
 		}
 		if(this.contributionDisplay) {
 			this.contributionModal = true;
+		}
+		if(this.profileDisplay) {
+			this.profileModal = true;
 		}
 		if(this.addArt) {
 			if(this.role === 'administrator') {
@@ -244,6 +274,9 @@ export default {
 			router.push('/');
 			this.contributionModal = false;
 		},
+		profileClicked() {
+			router.push('/profile');
+		},
 		switchLocale() {
 			if(this.$i18n.locale == this.langs[1]) {
 				store.commit('setAppLanguage',this.langs[0]);
@@ -257,6 +290,10 @@ export default {
 		logout() {
 			localStorage.removeItem('authtoken');
 			router.go();
+		},
+		homeClicked() {
+			router.push('/');
+			this.value = false;
 		}
 	}
 };

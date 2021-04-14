@@ -1,6 +1,16 @@
 <template>
 	<ActionsMenu>
 		<ActionsMenuItem
+			v-if="isAdmin"
+			icon="mdi-pencil"
+			content="artDisplay.changeArtAdmin"
+			@click="changeArtAdmin" />
+		<ActionsMenuItem
+			v-if="isAdmin"
+			icon="mdi-delete"
+			content="artDisplay.deleteArt"
+			@click="deleteArt" />
+		<ActionsMenuItem
 			v-if="!isFavourited"
 			icon="mdi-star-outline"
 			content="artDisplay.addFavourite"
@@ -23,6 +33,8 @@
 </template>
 
 <script>
+import router from '../router';
+import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import ActionsMenu from './ActionsMenu.vue';
 import ActionsMenuItem from './ActionsMenuItem.vue';
@@ -32,12 +44,14 @@ export default {
 	name: 'ArtActionsMenu',
 	components: {
 		ActionsMenu,
-		ActionsMenuItem
+		ActionsMenuItem,
 	},
 	data() {
 		return {
 			artId: this.$route.params.id,
-			isFavourited: false
+			isFavourited: false,
+			isAdmin: false,
+			changeArtAdminModal: false
 		};
 	},
 	created() {
@@ -54,6 +68,17 @@ export default {
 				}
 			})
 			.catch((error) => console.error(error));
+
+		//recupere le role d'un utilisateur pour savoir si il est admin ou non
+		var token = localStorage.getItem('authtoken');
+		if(token!=null) {
+
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+			var userInfo = jwt_decode(token);
+			if (userInfo.roles === 'ROLE_ADMIN') {
+				this.isAdmin = true;
+			}
+		}
 	},
 	methods: {
 		addToFavourite() {
@@ -85,7 +110,29 @@ export default {
 						EventBus.$emit('error', 'unknown');
 					}
 				});
-		}
+		},
+		deleteArt() {
+			if (this.isAdmin) {
+				axios
+					.delete('/api/admin/art/' + this.artId)
+					.then((response) => {
+						router.push('/');
+						router.go();
+					})
+					.catch((error) => {
+						if (error.response.status === 401) {
+							EventBus.$emit('error', 'unauthorized');
+						} else {
+							EventBus.$emit('error', 'unknown');
+						}
+					});
+			}
+		},
+		changeArtAdmin() {
+			if(this.isAdmin) {
+				this.$emit('changeArtAdmin');
+			}
+		},
 	}
 };
 </script>

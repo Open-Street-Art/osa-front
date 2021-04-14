@@ -5,6 +5,7 @@
 		:src="linkPhoto"
 		:class="forme" />
 </template>
+
 <script>
 export default {
 	name: 'Photo',

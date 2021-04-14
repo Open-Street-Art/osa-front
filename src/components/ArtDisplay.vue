@@ -36,13 +36,18 @@
 								</v-icon>
 							</v-btn>
 						</template>
-						<ArtActionsMenu />
+						<ArtActionsMenu @changeArtAdmin="changeArtAdmin" />
 					</v-menu>
 				</v-col>
 			</v-row>
 			<v-row class="mt-1 mb-1">
 				<v-col class="pt-0 light">
-					{{ artAuthor }}
+					{{ artAuthor }},
+					<div
+						class="city-name"
+						@click="cityNameClicked">
+						{{ artCity }}
+					</div>
 				</v-col>
 			</v-row>
 			<v-divider />
@@ -99,13 +104,18 @@
 									</v-icon>
 								</v-btn>
 							</template>
-							<ArtActionsMenu />
+							<ArtActionsMenu @changeArtAdmin="changeArtAdmin" />
 						</v-menu>
 					</v-col>
 				</v-row>
 				<v-row class="mt-0">
 					<v-col class="pt-2 light">
-						{{ artAuthor }}
+						{{ artAuthor }},
+						<div
+							class="city-name"
+							@click="cityNameClicked">
+							{{ artCity }}
+						</div>
 					</v-col>
 				</v-row>
 				<v-divider class="mt-5 mr-5" />
@@ -134,6 +144,7 @@ import Modal from '../components/Modal.vue';
 import ArtActionsMenu from '../components/ArtActionsMenu.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
+import router from '../router';
 
 export default {
 	name: 'ArtDisplay',
@@ -152,13 +163,15 @@ export default {
 			required: true
 		}
 	},
-	data () {
+	data() {
 		return {
+			artId: null,
 			artTitle: '',
 			artDesc: '',
 			artAuthor: '',
+			artCity: '',
 			artImages: [],
-			artCreationDT: new Date()
+			artCreationDT: new Date(),
 		};
 	},
 	watch: {
@@ -167,10 +180,13 @@ export default {
 				axios
 					.get('/api/art/' + this.$route.params.id)
 					.then((response) => {
+						this.artId = this.$route.params.id;
 						this.artTitle = response.data.data.name;
 						this.artDesc = response.data.data.description;
 						this.artAuthor = response.data.data.authorName;
 						this.artImages = response.data.data.pictures;
+						this.artCity = response.data.data.city.name;
+						this.artCityId = response.data.data.city.id;
 						this.artCreationDT = new Date(response.data.data.creationDateTime);
 					})
 					.catch((error) => console.error(error));
@@ -178,10 +194,27 @@ export default {
 	},
 	created() {
 		this.isMobile();
+	},
+	methods: {
+		cityNameClicked() {
+			this.$emit('close');
+			this.$emit('cityClicked');
+			router.push('/city/' + this.artCityId);
+		},
+		changeArtAdmin() {
+			this.$emit('changeArtAdmin');
+			router.push('/art/' + this.artId + '/change');
+		}
 	}
 };
 </script>
 
 <style scoped lang="scss">
 @import "../assets/styles/text.scss";
+
+.city-name {
+	display: inline;
+	text-decoration: underline;
+	cursor: pointer;
+}
 </style>

@@ -9,7 +9,7 @@ export default {
 const Template = (args, { argTypes }) => ({
 	components: { MediaInput },
 	props: Object.keys(argTypes),
-	template: '<MediaInput :round="round" @onFileInput="action"></MediaInput>',
+	template: '<MediaInput :round="round" :colored="colored" @onFileInput="action"></MediaInput>',
 	methods: {
 		action: action('onFileInput')
 	}
@@ -17,4 +17,4 @@ const Template = (args, { argTypes }) => ({
 
 export const MediaInputSample = Template.bind({});
 
-MediaInputSample.args = {round: false};
+MediaInputSample.args = {round: false, colored: false};
