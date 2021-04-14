@@ -77,11 +77,13 @@
 					class="col-2">
 					<v-icon 
 						v-if="!isFavorited"
+						@click="addToFavorite"
 						color="#00baaf">
 						mdi-star-outline
 					</v-icon>
 					<v-icon
 						v-if="isFavorited"
+						@click="removeToFavorite"
 						color="#00baaf">
 						mdi-star
 					</v-icon>
