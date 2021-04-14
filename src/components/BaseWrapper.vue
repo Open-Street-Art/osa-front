@@ -182,20 +182,29 @@ export default {
 	},
 	mounted() {
 		var token = localStorage.getItem('authtoken');
-		if(token!=null) {
-			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+		if (token != null) {
+			var currentTime = new Date().getTime() / 1000;
 			var userInfo = jwt_decode(token);
-			this.connected = true;
-			this.username = userInfo.sub;
-			if(userInfo.roles === 'ROLE_USER') {
-				this.role = 'contributor';
-			}
-			else if (userInfo.roles === 'ROLE_ADMIN') {
-				this.role = 'administrator';
-				this.admin = true;
-			}
-			else {
-				this.role = 'Artiste';
+			// On vérifie si le token est expiré
+			if (currentTime < userInfo.exp) {
+				axios.defaults.headers.common = {
+					'Authorization': `Bearer ${token}`
+				};
+				this.connected = true;
+				this.username = userInfo.sub;
+				if (userInfo.roles === 'ROLE_USER') {
+					this.role = 'contributor';
+				}
+				else if (userInfo.roles === 'ROLE_ADMIN') {
+					this.role = 'administrator';
+					this.admin = true;
+				}
+				else {
+					this.role = 'Artiste';
+				}
+			} else {
+				// Le token est expiré
+				localStorage.removeItem('authtoken');
 			}
 		}
 		axios
