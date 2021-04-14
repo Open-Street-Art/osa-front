@@ -10,7 +10,8 @@
 		"commitArt": "Proposer une œuvre",
 		"myProfile": "Mon profil",
 		"addArt" : "Ajouter une œuvre",
-		"adminPanel" : "Outils d'administration"
+		"adminPanel" : "Outils d'administration",
+		"home": "Accueil"
 	},
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",

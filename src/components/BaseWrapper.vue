@@ -41,6 +41,11 @@
 			<v-container>
 				<ActionsMenu :outlined="true">
 					<ActionsMenuItem
+						icon="mdi-home"
+						content="home.home"
+						@click="homeClicked" />
+					<v-divider class="mx-auto" />
+					<ActionsMenuItem
 						v-if="connected"
 						icon="mdi-account"
 						content="home.myProfile"
@@ -285,6 +290,10 @@ export default {
 		logout() {
 			localStorage.removeItem('authtoken');
 			router.go();
+		},
+		homeClicked() {
+			router.push('/');
+			this.value = false;
 		}
 	}
 };

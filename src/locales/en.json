@@ -10,7 +10,8 @@
 		"commitArt": "Suggest an art ",
 		"myProfile": "My profile",
 		"addArt" : "Add an art",
-		"adminPanel" : "Administration tools"
+		"adminPanel" : "Administration tools",
+		"home": "Home"
 	},
 	"artDisplay": {
 		"created": "Art added on ",
