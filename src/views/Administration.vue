@@ -19,96 +19,22 @@
 					</v-icon>
 				</v-btn>
 			</Header>
-			<v-flex class="content">
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-				<v-divider class="mb-3" />
-				<Card
-					card-title="Nom de l’œuvre"
-					card-desc="Artiste inconnu, Rouen" />
-			</v-flex>
+			<div class="content">
+				<div
+					v-for="{id, name} in contribList"
+					:key="id">
+					<Card
+						:card-title="name"
+						card-desc="Artiste inconnu, Rouen"
+						width="100%"
+						@click="contribDisplayOpened(id)" />
+					<v-divider class="mb-3" />
+				</div>
+			</div>
 		</base-wrapper>
+		<ContribDisplay
+			:data="contribDisplayModal"
+			@close="contribDisplayClosed()" />
 	</v-main>
 </template>
 
@@ -116,34 +42,47 @@
 import BaseWrapper from '../components/BaseWrapper.vue';
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
+import ContribDisplay from '../components/ContribDisplay.vue';
+import axios from 'axios';
+import router from '../router';
 
 export default {
-	name: 'Home',
+	name: 'Administration',
 	components: {
 		BaseWrapper,
 		Header,
-		Card
+		Card,
+		ContribDisplay
 	},
 	data() {
 		return {
 			drawer: false,
-			contribList: []
+			contribList: [],
+			contribDisplayModal: false
 		};
+	},
+	mounted() {
+		this.loadContrib();
 	},
 	methods: {
 		loadContrib() {
 			var tempContribList = [];
 
 			axios
-				.get('/api/contrib/???')
-				/*.then((response) => {
-					var array = response.data.data;
-					for(let i = 0;i < array.length;++i) {
-						tempPinList.push(array[i]);
-					}
-					this.pinList = tempPinList;
-				})*/
+				.get('/api/contrib/unapproved')
+				.then((response) => {
+					this.contribList = response.data.data;
+					console.log(this.contribList);
+				})
 				.catch((error) => console.error(error));
+		},
+		contribDisplayOpened(id) {
+			this.contribDisplayModal = true;
+			router.push('/contrib/' + id);
+		},
+		contribDisplayClosed() {
+			router.push('/admin');
+			this.contribDisplayModal = false;
 		}
 	}
 };
@@ -168,6 +107,7 @@ export default {
 
 .content {
   position: relative !important;
+	height: calc(100vh - 60px);
   overflow: auto !important;
   padding: 12px;
 }

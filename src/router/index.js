@@ -57,7 +57,15 @@ const routes = [
 		name: 'Admin',
 		component: Administration,
 		props: true 
-	}
+	},
+	{
+		path: '/contrib/:id',
+		name: 'Admin',
+		component: Administration,
+		props: {
+			contribDisplayModal: true
+		} 
+	},
 ];
 
 const router = new VueRouter({
