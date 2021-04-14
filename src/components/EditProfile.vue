@@ -95,29 +95,36 @@ export default {
 			placeholder: require('@/assets/avatarPlaceholder.png'),
 		};
 	},
-	watch: {
-		data() {
+	mounted() {
+		var token = localStorage.getItem('authtoken');
+		if(token != null) {
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+		}
+		this.loadInfo();
+	},
+	methods : {
+		loadInfo() {
 			axios
 				.get('/api/user/profile')
 				.then(response => {
 					console.log(response);
 					this.description = response.data.data.description;
-					if(response.data.data.profilePicture != null)
+					if(response.data.data.profilePicture != null) {
 						this.profilePic = response.data.data.profilePicture;
+					}
 					else
+					 {
 						this.profilePic = this.placeholder;
+					 }
 					this.isPublic = response.data.data.isPublic;
+					if(this.isPublic == null)
+						this.isPublic = false;
 					console.log(this.isPublic);
 				})
 				.catch((error) => console.error(error));
-		}
-	},
-	mounted() {
-		var token = localStorage.getItem('authtoken');
-		axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
-	},
-	methods : {
+		},
 		updateProfile() {
+			console.log(this.isPublic);
 			axios
 				.patch('/api/user/profile', {
 					description: this.description,

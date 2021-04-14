@@ -52,7 +52,7 @@
 				</v-btn>
 				<Photo
 					class="positionPicture"
-					:link-photo="(profilePicture != null) ? profilePicture :placeholder"
+					:link-photo="(userPicture != null) ? userPicture :placeholder"
 					:max-heigth="80"
 					:max-width="80"
 					forme="forme-profile" />
@@ -66,7 +66,7 @@
 					small
 					color="primary">
 					<p class="emphase positionUserAccount">
-						{{ username }}
+						{{ profileUsername }}
 					</p>
 				</v-btn>
 			</Header>
@@ -141,34 +141,38 @@
 				<v-tab-item
 					:key="1">
 					<div
-						v-for="{contribId, title} in contribList"
+						v-for="{contribId, title, author, picture} in contribList"
 						:key="contribId">
 						<card
-							:card-title="title" />
+							:card-title="title"
+							:card-desc="author"
+							:img-src="picture" />
 						<div class="separator mt-1 mb-4" />
 					</div>
 				</v-tab-item>
 				<v-tab-item
 					:key="2">
 					<div
-						v-for="{id, name, authorName, pictures} in favArtists"
+						v-for="{id, username, profilePicture} in favArtists"
 						:key="id">
 						<card
-							:card-title="name"
-							:card-desc="authorName"
-							:img-src="pictures[0]" />
+							:card-title="username"
+							:round-img="true"
+							card-desc=""
+							:img-src="(profilePicture != null) ? profilePicture : placeholder"
+							@click="goToProfile(id)" />
 						<div class="separator mt-1 mb-4" />
 					</div>
 				</v-tab-item>
 				<v-tab-item
 					:key="3">
 					<div
-						v-for="{id, name, authorName, pictures} in favCities"
+						v-for="{id, name} in favCities"
 						:key="id">
 						<card
 							:card-title="name"
-							:card-desc="authorName"
-							:img-src="pictures[0]" />
+							card-desc=""
+							@click="goToCity(id)" />
 						<div class="separator mt-1 mb-4" />
 					</div>
 				</v-tab-item>
@@ -180,7 +184,8 @@
 						<card
 							:card-title="name"
 							:card-desc="authorName"
-							:img-src="pictures[0]" />
+							:img-src="pictures[0]"
+							@click="goToArt(id)" />
 						<div class="separator mt-1 mb-4" />
 					</div>
 				</v-tab-item>
@@ -194,6 +199,7 @@
 <script>
 import BaseWrapper from '../components/BaseWrapper.vue';
 import EditProfile from '../components/EditProfile.vue';
+import ArtDisplay from '../components/ArtDisplay.vue';
 import Header from '../components/Header.vue';
 import Photo from '../components/Photo.vue';
 import Card from '../components/Card.vue';
@@ -218,16 +224,17 @@ export default {
 	data() {
 		return {
 			drawer: false,
-			username: '',
+			profileUsername: '',
 			description: '',
 			role:'',
-			profilePicture: null,
+			userPicture: null,
 			contribList:[],
 			favArtists:[],
 			favArts:[],
 			favCities:[],
 			userProfile: false,
 			profileModal: false,
+			artDisplayModal: false,
 			profileInfoLoaded: false,
 			contributionsLoaded: false,
 			isFavourited: false,
@@ -237,16 +244,18 @@ export default {
 	},
 	mounted() {
 		var token = localStorage.getItem('authtoken');
-		axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+		if(token != null) {
+			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+		}
 		// On charge notre profil pour savoir si ce profil est dans nos favoris ou que ce profil
 		// est le notre
-		this.getProfileInfo(null);
 		if (this.$route.params.id != undefined) {
 			this.getProfileInfo(this.$route.params.id);
 			this.getContrib(this.$route.params.id);
 		}
 		else {
 			this.userProfile = true;
+			this.getProfileInfo(null);
 			this.getContrib(null);
 		}
 		// On vérifie si on doit ouvrire la modale d'édition du profil
@@ -261,7 +270,7 @@ export default {
 					.get('/api/user/profile')
 					.then((response) => {
 						var array = response.data.data;
-						this.username = array.username;
+						this.profileUsername = array.username;
 						if(array.description != null)
 							this.description = array.description;
 						if(array.roles[0] == 'ROLE_ADMIN')
@@ -269,7 +278,7 @@ export default {
 						this.favArtists = array.favArtists;
 						this.favArts = array.favArts;
 						this.favCities = array.favCities;
-						this.profilePicture = array.profilePicture;
+						this.userPicture = array.profilePicture;
 						this.profileInfoLoaded = true;
 						this.userId = array.id;
 						if (this.userId == this.$route.params.id) {
@@ -288,7 +297,7 @@ export default {
 					.get('/api/user/' + id)
 					.then((response) => {
 						var array = response.data.data;
-						this.username = array.username;
+						this.profileUsername = array.username;
 						if(array.description != null)
 							this.description = array.description;
 						if(array.roles[0] == 'ROLE_ADMIN')
@@ -296,27 +305,48 @@ export default {
 						this.favArtists = array.favArtists;
 						this.favArts = array.favArts;
 						this.favCities = array.favCities;
-						this.profilePicture = array.profilePicture;
+						this.userPicture = array.profilePicture;
 						this.profileInfoLoaded = true;
 					})
 	      			.catch((error) => console.error(error));
 			}
 		},
 		getContrib(id){
-			axios
-			 .get('/api/contrib/personnal')
-			   .then((response) => {
-					 var array = response.data.data;
-					 var result= [];
-					 for(let i = 0; i < array.length;++i) {
-						var contribId = array[i].id;
-						var title =array[i].name;
-						result.push({contribId, title});
-					 }
-					 this.contribList = result;
-					 this.contributionsLoaded = true;
-				})
-				.catch((error) => console.error(error));
+			if(id == null) {
+				axios
+					.get('/api/contrib/personnal')
+					.then((response) => {
+						var array = response.data.data;
+						var result= [];
+						for(let i = 0; i < array.length;++i) {
+							var contribId = array[i].id;
+							var title = array[i].name;
+							var author = array[i].author;
+							var picture = array[i].picture1;
+							console.log(array);
+							result.push({contribId, title, author, picture});
+						}
+						this.contribList = result;
+						this.contributionsLoaded = true;
+					})
+					.catch((error) => console.error(error));
+			}
+			else {
+				axios
+					.get('/api/contrib/user/' + id)
+					.then((response) => {
+						var array = response.data.data;
+						var result= [];
+						for(let i = 0; i < array.length;++i) {
+							var contribId = array[i].id;
+							var title =array[i].name;
+							result.push({contribId, title});
+						}
+						this.contribList = result;
+						this.contributionsLoaded = true;
+					})
+					.catch((error) => console.error(error));
+			}
 		},
 		editProfileClicked() {
 			this.profileModal = true;
@@ -341,7 +371,19 @@ export default {
 						this.isFavourited = false;
 					})
 					.catch((error) => console.error(error));
-		}
+		},
+		goToProfile(id) {
+			router.push('/profile/' + id);
+			router.go();
+		},
+		goToCity(id) {
+			router.push('/city/' + id);
+			router.go();
+		},
+		goToArt(id) {
+			router.push('/art/' + id);
+			router.go();
+		},
 	}
 };
 </script>
