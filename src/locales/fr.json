@@ -83,5 +83,10 @@
 	},
 	"admin-menu" : {
 		"title": "Administrer les contributions"
+	},
+	"contributionDisplay": {
+		"contributor": "Contributeur",
+		"author": "Auteur",
+		"contributionAdded": "Contribution ajoutée le "
 	}
 }
