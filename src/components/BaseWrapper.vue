@@ -293,6 +293,7 @@ export default {
 		},
 		logout() {
 			localStorage.removeItem('authtoken');
+			router.push('/');
 			router.go();
 		},
 		homeClicked() {
