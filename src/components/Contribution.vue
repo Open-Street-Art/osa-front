@@ -57,7 +57,7 @@
 				</v-row>
 				<v-row class="pa-0 px-3 ma-0 mt-3">
 					<Button
-						v-if="!changeArtAdmin"
+						v-if="!changeArtAdmin && !modifyContrib"
 						text-button="contribution.artLocalisation"
 						:outlined="false"
 						class="place-button"
@@ -75,23 +75,10 @@
 						:outlined="true"
 						@click="$emit('close')" />
 					<Button
-						v-if="!addArt && !changeArtAdmin"
 						text-button="contribution.confirm"
 						:outlined="false"
 						:width="155"
 						@click="sendContrib" />
-					<Button
-						v-if="addArt"
-						text-button="contribution.confirm"
-						:outlined="false"
-						:width="155"
-						@click="addingArt" />
-					<Button
-						v-if="changeArtAdmin"
-						text-button="contribution.confirm"
-						:outlined="false"
-						:width="155"
-						@click="changingArtAdmin" />
 				</v-row>
 			</v-container>
 		</Modal>
@@ -144,6 +131,10 @@ export default {
 		changeArtAdmin: {
 			type: Boolean,
 			default: false
+		},
+		modifyContrib: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -180,22 +171,30 @@ export default {
 	},
 	methods : {
 		sendContrib() {
-			axios
-				.post('/api/contrib', {
-					name: this.name,
-					description: this.description,
-					picture1: this.pic1,
-					picture2: this.pic2,
-					picture3: this.pic3,
-					authorName: this.artist,
-					latitude: this.latlng[0],
-					longitude: this.latlng[1]
-				})
-				.then((response) => {
-					router.push('/');
-					router.go();
-				})
-				.catch((error) => console.error(error));
+			if (this.addArt) {
+				this.addingArt();
+			} else if (this.changeArtAdmin) {
+				this.changeArtAdmin();
+			} else if (this.modifyContrib) {
+				this.sendContribOfArt();
+			} else {
+				axios
+					.post('/api/contrib', {
+						name: this.name,
+						description: this.description,
+						picture1: this.pic1,
+						picture2: this.pic2,
+						picture3: this.pic3,
+						authorName: this.artist,
+						latitude: this.latlng[0],
+						longitude: this.latlng[1]
+					})
+					.then((response) => {
+						router.push('/');
+						router.go();
+					})
+					.catch((error) => console.error(error));
+			}
 		},
 		addingArt() {
 			axios
@@ -237,6 +236,22 @@ export default {
 		coordUpdated(coord) {
 			this.latlng = coord;
 		},
+		sendContribOfArt() {
+			axios
+				.post('/api/contrib/' + this.$route.params.id, {
+					name: this.name,
+					description: this.description,
+					picture1: this.pic1,
+					picture2: this.pic2,
+					picture3: this.pic3,
+					authorName: this.artist,
+				})
+				.then((response) => {
+					router.push('/');
+					router.go();
+				})
+				.catch((error) => console.error(error));
+		}
 	}
 };
 </script>

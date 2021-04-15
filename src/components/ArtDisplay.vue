@@ -1,96 +1,29 @@
 <template>
-	<Modal
-		v-model="data"
-		@close="$emit('close')">
-		<v-container v-if="isMobile()">
-			<v-row>
-				<v-carousel
-					height="50%"
-					:show-arrows="false"
-					hide-delimiter-background>
-					<v-carousel-item
-						v-for="(image, i) in artImages"
-						:key="i">
-						<v-img :src="image" />
-					</v-carousel-item>
-				</v-carousel>
-			</v-row>
-			<v-row>
-				<v-col class="titles">
-					{{ artTitle }}
-				</v-col>
-				<v-col class="text-right">
-					<v-menu
-						offset-y
-						rounded="xl">
-						<template v-slot:activator="{ on, attrs }">
-							<v-btn
-								icon
-								v-bind="attrs"
-								color="black"
-								v-on="on">
-								<v-icon
-									large
-									dark>
-									mdi-dots-horizontal
-								</v-icon>
-							</v-btn>
-						</template>
-						<ArtActionsMenu @changeArtAdmin="changeArtAdmin" />
-					</v-menu>
-				</v-col>
-			</v-row>
-			<v-row class="mt-1 mb-1">
-				<v-col class="pt-0 light">
-					{{ artAuthor }},
-					<div
-						class="city-name"
-						@click="cityNameClicked">
-						{{ artCity }}
-					</div>
-				</v-col>
-			</v-row>
-			<v-divider />
-			<v-row class="mt-1">
-				<v-col class="base">
-					{{ artDesc }}
-				</v-col>
-			</v-row>
-			<v-row class="mt-1">
-				<v-col class="light">
-					{{ this.$t("artDisplay.created") + artCreationDT.toLocaleDateString() }}
-				</v-col>
-			</v-row>
-			<v-row class="mt-0">
-				<v-col class="pt-0 light">
-					{{ this.$t("artDisplay.modified") + artCreationDT.toLocaleDateString() }}
-				</v-col>
-			</v-row>
-		</v-container>
-		<v-row v-if="!isMobile()">
-			<v-col cols="8">
-				<v-carousel
-					height="100%"
-					:show-arrows="false"
-					hide-delimiter-background>
-					<v-carousel-item
-						v-for="(image, i) in artImages"
-						:key="i">
-						<v-img
-							min-height="100%"
-							:src="image" />
-					</v-carousel-item>
-				</v-carousel>
-			</v-col>
-			<v-col class="pl-0">
-				<v-row class="mt-2">
+	<div>
+		<Modal
+			v-model="data"
+			@close="$emit('close')">
+			<v-container v-if="isMobile()">
+				<v-row>
+					<v-carousel
+						height="50%"
+						:show-arrows="false"
+						hide-delimiter-background>
+						<v-carousel-item
+							v-for="(image, i) in artImages"
+							:key="i">
+							<v-img :src="image" />
+						</v-carousel-item>
+					</v-carousel>
+				</v-row>
+				<v-row>
 					<v-col class="titles">
 						{{ artTitle }}
 					</v-col>
-					<v-col class="text-right mr-5">
+					<v-col class="text-right">
 						<v-menu
-							rounded="xl"
-							offset-y>
+							offset-y
+							rounded="xl">
 							<template v-slot:activator="{ on, attrs }">
 								<v-btn
 									icon
@@ -104,12 +37,14 @@
 									</v-icon>
 								</v-btn>
 							</template>
-							<ArtActionsMenu @changeArtAdmin="changeArtAdmin" />
+							<ArtActionsMenu 
+								@changeArtAdmin="changeArtAdmin"
+								@modifyContrib="modifyContrib" />
 						</v-menu>
 					</v-col>
 				</v-row>
-				<v-row class="mt-0">
-					<v-col class="pt-2 light">
+				<v-row class="mt-1 mb-1">
+					<v-col class="pt-0 light">
 						{{ artAuthor }},
 						<div
 							class="city-name"
@@ -118,25 +53,100 @@
 						</div>
 					</v-col>
 				</v-row>
-				<v-divider class="mt-5 mr-5" />
+				<v-divider />
 				<v-row class="mt-1">
 					<v-col class="base">
 						{{ artDesc }}
 					</v-col>
 				</v-row>
-				<v-row>
-					<v-col class="pt-0 light">
+				<v-row class="mt-1">
+					<v-col class="light">
 						{{ this.$t("artDisplay.created") + artCreationDT.toLocaleDateString() }}
 					</v-col>
 				</v-row>
-				<v-row class="mt-1">
+				<v-row class="mt-0">
 					<v-col class="pt-0 light">
 						{{ this.$t("artDisplay.modified") + artCreationDT.toLocaleDateString() }}
 					</v-col>
 				</v-row>
-			</v-col>
-		</v-row>
-	</Modal>
+			</v-container>
+			<v-row v-if="!isMobile()">
+				<v-col cols="8">
+					<v-carousel
+						height="100%"
+						:show-arrows="false"
+						hide-delimiter-background>
+						<v-carousel-item
+							v-for="(image, i) in artImages"
+							:key="i">
+							<v-img
+								min-height="100%"
+								:src="image" />
+						</v-carousel-item>
+					</v-carousel>
+				</v-col>
+				<v-col class="pl-0">
+					<v-row class="mt-2">
+						<v-col class="titles">
+							{{ artTitle }}
+						</v-col>
+						<v-col class="text-right mr-5">
+							<v-menu
+								rounded="xl"
+								offset-y>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn
+										icon
+										v-bind="attrs"
+										color="black"
+										v-on="on">
+										<v-icon
+											large
+											dark>
+											mdi-dots-horizontal
+										</v-icon>
+									</v-btn>
+								</template>
+								<ArtActionsMenu 
+									@changeArtAdmin="changeArtAdmin"
+									@modifyContrib="modifyContrib" />
+							</v-menu>
+						</v-col>
+					</v-row>
+					<v-row class="mt-0">
+						<v-col class="pt-2 light">
+							{{ artAuthor }},
+							<div
+								class="city-name"
+								@click="cityNameClicked">
+								{{ artCity }}
+							</div>
+						</v-col>
+					</v-row>
+					<v-divider class="mt-5 mr-5" />
+					<v-row class="mt-1">
+						<v-col class="base">
+							{{ artDesc }}
+						</v-col>
+					</v-row>
+					<v-row>
+						<v-col class="pt-0 light">
+							{{ this.$t("artDisplay.created") + artCreationDT.toLocaleDateString() }}
+						</v-col>
+					</v-row>
+					<v-row class="mt-1">
+						<v-col class="pt-0 light">
+							{{ this.$t("artDisplay.modified") + artCreationDT.toLocaleDateString() }}
+						</v-col>
+					</v-row>
+				</v-col>
+			</v-row>
+		</Modal>
+		<Contribution
+			:modify-contrib="true"
+			:data="contributionModal"
+			@close="contributionModal = false" />
+	</div>
 </template>
 
 <script>
@@ -145,12 +155,14 @@ import ArtActionsMenu from '../components/ArtActionsMenu.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 import router from '../router';
+import Contribution from './Contribution.vue';
 
 export default {
 	name: 'ArtDisplay',
 	components: {
 		Modal,
-		ArtActionsMenu
+		ArtActionsMenu,
+		Contribution
 	},
 	mixins: [ mobileDetection ],
 	model: {
@@ -172,6 +184,7 @@ export default {
 			artCity: '',
 			artImages: [],
 			artCreationDT: new Date(),
+			contributionModal: false
 		};
 	},
 	watch: {
@@ -204,6 +217,9 @@ export default {
 		changeArtAdmin() {
 			this.$emit('changeArtAdmin');
 			router.push('/art/' + this.artId + '/change');
+		},
+		modifyContrib() {
+			this.contributionModal = true;
 		}
 	}
 };

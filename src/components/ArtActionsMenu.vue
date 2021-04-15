@@ -22,7 +22,8 @@
 			@click="removeFavourite" />
 		<ActionsMenuItem
 			icon="mdi-text-box-plus-outline"
-			content="artDisplay.contribute" />
+			content="artDisplay.contribute"
+			@click="contribute" />
 		<ActionsMenuItem
 			icon="mdi-map"
 			content="artDisplay.displayRoute" />
@@ -133,6 +134,9 @@ export default {
 				this.$emit('changeArtAdmin');
 			}
 		},
+		contribute() {
+			this.$emit('modifyContrib');
+		}
 	}
 };
 </script>
