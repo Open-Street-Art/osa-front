@@ -36,6 +36,9 @@
 								</v-icon>
 							</v-btn>
 						</template>
+						<ContributionActionsMenu 
+							:contrib-id="contribId" 
+							@close="$emit('close')" />
 					</v-menu>
 				</v-col>
 			</v-row>
@@ -104,6 +107,9 @@
 									</v-icon>
 								</v-btn>
 							</template>
+							<ContributionActionsMenu 
+								:contrib-id="contribId"
+								@close="$emit('close')" />
 						</v-menu>
 					</v-col>
 				</v-row>
@@ -143,17 +149,15 @@
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 import Modal from './Modal.vue';
+import ContributionActionsMenu from './ContributionActionsMenu.vue';
 
 export default {
 	name: 'ContributionDisplay',
 	components: {
-		Modal
+		Modal,
+		ContributionActionsMenu
 	},
 	mixins: [ mobileDetection ],
-	model: {
-		prop: 'contribDisplayModel',
-		event: 'update'
-	},
 	props: {
 		contribId: {
 			type: Number,
@@ -174,31 +178,33 @@ export default {
 			artAuthor: '',
 			contribCreationDT: new Date(),
 			artLongitude: null,
-			artLatitude: null,
+			artLatitude: null
 		};
 	},
 	watch: {
-		contribId() {
-			axios
-				.get('/api/contrib/' + this.contribId)
-				.then((response) => {
-					this.contribTitle = response.data.data.name;
-					this.contribDesc = response.data.data.description;
-					this.artId = response.data.data.art;
-					this.contribImages = response.data.data.pictures;
-					this.artAuthor = response.data.data.authorName;
-					this.contribCreationDT = new Date(response.data.data.creationDateTime);
-					this.artLongitude = response.data.data.longitude;
-					this.artLatitude = response.data.data.latitude;
-					this.contributorName = response.data.data.contributor.username;
-					// Filtre le tableau d'images
-					this.contribImages = this.contribImages.filter((elem) => {
-						return elem != ''; 
-					});
-				})
-				.catch((error) => console.error(error));
+		contribId: {
+			immediate: true,
+			handler(old, ne) {
+				axios
+					.get('/api/contrib/' + this.contribId)
+					.then((response) => {
+						this.contribTitle = response.data.data.name;
+						this.contribDesc = response.data.data.description;
+						this.artId = response.data.data.art;
+						this.contribImages = response.data.data.pictures;
+						this.artAuthor = response.data.data.authorName;
+						this.contribCreationDT = new Date(response.data.data.creationDateTime);
+						this.artLongitude = response.data.data.longitude;
+						this.artLatitude = response.data.data.latitude;
+						this.contributorName = response.data.data.contributor.username;
+						// Filtre le tableau d'images
+						this.contribImages = this.contribImages.filter((elem) => {
+							return elem != ''; 
+						});
+					})
+					.catch((error) => console.error(error));
+			}
 		}
-
 	}
 };
 </script>

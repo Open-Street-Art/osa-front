@@ -34,6 +34,7 @@
 			</div>
 		</base-wrapper>
 		<ContributionDisplay
+			v-if="selectedContribId != null"
 			:contrib-id="selectedContribId"
 			:data="contribDisplayModal"
 			@close="contribDisplayClosed()" />
@@ -46,6 +47,7 @@ import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ContributionDisplay from '../components/ContributionDisplay.vue';
 import axios from 'axios';
+import router from '../router';
 
 export default {
 	name: 'Administration',
@@ -68,13 +70,10 @@ export default {
 	},
 	methods: {
 		loadContrib() {
-			var tempContribList = [];
-
 			axios
 				.get('/api/contrib/unapproved')
 				.then((response) => {
 					this.contribList = response.data.data;
-					console.log(this.contribList);
 				})
 				.catch((error) => console.error(error));
 		},
@@ -83,7 +82,7 @@ export default {
 			this.selectedContribId = id;
 		},
 		contribDisplayClosed() {
-			//router.push('/admin');
+			router.go(this.$router.currentRoute);
 			this.selectedContribId = null;
 			this.contribDisplayModal = false;
 		}

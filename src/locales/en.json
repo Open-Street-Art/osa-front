@@ -86,5 +86,10 @@
 		"contributor": "Contributor",
 		"author": "Author",
 		"contributionAdded": "Contribution added the "
+	},
+	"contributionActionsMenu": {
+		"accept": "Accept the contribution",
+		"deny": "Deny the contribution",
+		"delete": "Delete the contribution"
 	}
 }
