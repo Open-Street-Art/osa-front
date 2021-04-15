@@ -64,7 +64,7 @@ import Header from '../components/Header.vue';
 import MediaInput from '../components/MediaInput.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
-
+import router from '../router';
 
 export default {
 	name: 'EditProfile',
@@ -106,11 +106,11 @@ export default {
 		loadInfo() {
 			axios
 				.get('/api/user/profile')
-				.then(response => {
-					console.log(response);
+				.then((response) => {
 					this.description = response.data.data.description;
 					if(response.data.data.profilePicture != null) {
 						this.profilePic = response.data.data.profilePicture;
+						console.log(this.profilePic);
 					}
 					else
 					 {
@@ -131,8 +131,10 @@ export default {
 					profilePicture:this.profilePic,
 					isPublic: this.isPublic,
 				})
-				.then(response => {
-					console.log(response);
+				.then((response) => {
+					router.push('/profile');
+					router.go();
+
 				})
 				.catch((error) => console.error(error));
 		},

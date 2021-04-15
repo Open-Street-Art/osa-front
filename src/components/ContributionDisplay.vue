@@ -41,7 +41,7 @@
 			</v-row>
 			<v-row class="mt-1 mb-1">
 				<v-col class="pt-0 light">
-					{{ this.$t("contributionDisplay.contributor") + " : " + contributorName }}, 
+					{{ this.$t("contributionDisplay.contributor") + " : " + contributorName }},
 					{{ this.$t("contributionDisplay.author") + " : " + artAuthor }}
 				</v-col>
 			</v-row>
@@ -109,7 +109,7 @@
 				</v-row>
 				<v-row class="mt-0">
 					<v-col class="pt-2 light">
-						{{ this.$t("contributionDisplay.contributor") + " : " + contributorName }}, 
+						{{ this.$t("contributionDisplay.contributor") + " : " + contributorName }},
 						{{ this.$t("contributionDisplay.author") + " : " + artAuthor }}
 					</v-col>
 				</v-row>
@@ -193,13 +193,12 @@ export default {
 					this.contributorName = response.data.data.contributor.username;
 					// Filtre le tableau d'images
 					this.contribImages = this.contribImages.filter((elem) => {
-						return elem != ''; 
+						return elem != '';
 					});
 				})
 				.catch((error) => console.error(error));
-		}
-
-	}
+		},
+	},
 };
 </script>
 

@@ -51,10 +51,13 @@ export default {
 		};
 	},
 	watch: {
-		imageDataProp() {
-			if(this.imageDataProp != '') {
-				this.imageStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url("' + this.imageDataProp + '")';
-			}
+		imageDataProp: {
+			 immediate: true ,
+			 handler(old, ne) {
+				if(this.imageDataProp != '') {
+					this.imageStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url("' + this.imageDataProp + '")';
+				}
+			 }
 		}
 	},
 	methods: {

@@ -3,6 +3,7 @@
 	"defaultLabel": "Label par défaut",
 	"administrator" : "Administrateur",
 	"contributor" : "Contributeur",
+	"artist" : "Artiste",
 	"home": {
 		"login": "Se connecter",
 		"signin": "S'inscrire",

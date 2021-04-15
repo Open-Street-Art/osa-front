@@ -35,12 +35,12 @@
 			</v-row>
 			<v-row>
 				<div
-					v-for="{id, title, desc, img} in artList"
+					v-for="{id, name, authorName, pictures} in artList"
 					:key="id">
 					<Card
-						:card-title="title"
-						:card-desc="desc"
-						:img-src="img"
+						:card-title="name"
+						:card-desc="authorName"
+						:img-src="pictures[0]"
 						@click="artClicked(id)" />
 					<div class="separator mt-1 mb-4" />
 				</div>
@@ -82,12 +82,12 @@
 				</v-row>
 				<v-row>
 					<div
-						v-for="{id, title, desc, img} in artList"
+						v-for="{id, name, authorName, pictures} in artList"
 						:key="id">
 						<Card
-							:card-title="title"
-							:card-desc="desc"
-							:img-src="img"
+							:card-title="name"
+							:card-desc="authorName"
+							:img-src="pictures[0]"
 							@click="artClicked(id)" />
 						<div class="separator mt-1 mb-4" />
 					</div>
@@ -139,8 +139,13 @@ export default {
 					.then((response) => {
 						this.cityName = response.data.data.name;
 						// On recupere l'image de la premiere oeuvre
-						this.image = response.data.data.arts[0].pictures[0];
-						this.artList = response.data.data.arts;
+						axios
+							.get('/api/city/arts/' + this.$route.params.id)
+							.then((response) => {
+								this.image = response.data.data[0].pictures[0];
+								this.artList = response.data.data;
+							})
+							.catch((error) => console.error(error));
 					})
 					.catch((error) => console.error(error));
 		}

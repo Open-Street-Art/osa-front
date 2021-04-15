@@ -4,202 +4,217 @@
 		id="id">
 		<BaseWrapper
 			v-model="drawer">
-			<Header class="test">
-				<v-btn
-					class="homeButton"
-					left
-					fab
-					text
-					small
-					color="primary"
-					@click.stop="drawer = !drawer">
-					<v-icon color="white">
-						mdi-menu
-					</v-icon>
-				</v-btn>
-				<v-btn
-					v-if="userProfile"
-					class="editButton"
-					right
-					fab
-					text
-					small
-					color="primary"
-					@click.stop="editProfileClicked">
-					<v-icon color="white">
-						mdi-pencil
-					</v-icon>
-				</v-btn>
-				<v-btn
-					v-if="!userProfile"
-					class="editButton"
-					right
-					fab
-					text
-					small
-					color="primary"
-					@click.stop="favouriteClicked">
-					<v-icon
-						v-if="isFavourited"
-						color="white">
-						mdi-star
-					</v-icon>
-					<v-icon
-						v-if="!isFavourited"
-						color="white">
-						mdi-star-outline
-					</v-icon>
-				</v-btn>
-				<Photo
-					class="positionPicture"
-					:link-photo="(userPicture != null) ? userPicture :placeholder"
-					:max-heigth="80"
-					:max-width="80"
-					forme="forme-profile" />
+			<Header class="profile-header">
+				<v-row
+					dense
+					class="pt-1 px-1"
+					justify="space-between">
+					<v-btn
+						left
+						fab
+						text
+						small
+						color="primary"
+						@click.stop="drawer = !drawer">
+						<v-icon color="white">
+							mdi-menu
+						</v-icon>
+					</v-btn>
+					<v-btn
+						v-if="userProfile"
+						right
+						fab
+						text
+						small
+						color="primary"
+						@click.stop="editProfileClicked">
+						<v-icon color="white">
+							mdi-pencil
+						</v-icon>
+					</v-btn>
+					<v-btn
+						v-if="!userProfile"
+						class="editButton"
+						right
+						fab
+						text
+						small
+						color="primary"
+						@click.stop="favouriteClicked">
+						<v-icon
+							v-if="isFavourited"
+							color="white">
+							mdi-star
+						</v-icon>
+						<v-icon
+							v-if="!isFavourited"
+							color="white">
+							mdi-star-outline
+						</v-icon>
+					</v-btn>
+				</v-row>
+				<v-row
+					class="emphase pt-2 pl-8 header-row"
+					align="center">
+					<Photo
+						class="positionPicture"
+						:link-photo="(userPicture != null) ? userPicture :placeholder"
+						:max-heigth="80"
+						:max-width="80"
+						forme="forme-profile" />
+					<div class="pl-2">
+						<span>
+							{{ profileUsername }}
+						</span>
+						<br>
+						<span class="base">
+							{{ this.$t(role) }}
+						</span>
+					</div>
+				</v-row>
 			</Header>
-			<Header class="test">
-				<v-btn
-					class="homeButton"
-					left
-					fab
-					text
-					small
-					color="primary">
-					<p class="emphase positionUserAccount">
-						{{ profileUsername }}
-					</p>
-				</v-btn>
-			</Header>
-		</BaseWrapper>
-		<div>
-			<p class="base positionAccountType">
-				{{ this.$t(role) }}
-			</p>
-			<p class="positionUserAccountText base">
+			<v-container
+				class="base mt-10">
 				{{ description }}
-			</p>
-			<v-tabs
-				v-model="tab"
-				class="tabs"
-				hide-slider
-				centered>
-				<v-tab
-					:key="1"
-					class="tabIcon">
-					<p v-if="tab==0">
-						Contributions
-					</p>
-					<v-icon
-						v-else
-						color="#00baaf">
-						mdi-format-list-text
-					</v-icon>
-				</v-tab>
-				<v-tab
-					:key="2"
-					class="tabIcon">
-					<p v-if="tab==1">
-						Artistes favoris
-					</p>
-					<v-icon
-						v-else
-						class="tabIcon"
-						color="#00baaf">
-						mdi-account-box
-					</v-icon>
-				</v-tab>
-				<v-tab
-					:key="3"
-					class="tabIcon">
-					<p v-if="tab==2">
-						Villes favorites
-					</p>
-					<v-icon
-						v-else
-						class="tabIcon"
-						color="#00baaf">
-						mdi-city
-					</v-icon>
-				</v-tab>
-				<v-tab
-					:key="4"
-					class="tabIcon">
-					<p v-if="tab==3">
-						Oeuvre favorites
-					</p>
-					<v-icon
-						v-else
-						class="tabIcon"
-						color="#00baaf">
-						mdi-palette
-					</v-icon>
-				</v-tab>
-			</v-tabs>
-			<v-tabs-items
-				v-model="tab"
-				class="tabsItem">
-				<v-tab-item
-					:key="1">
-					<div
-						v-for="{contribId, title, author, picture} in contribList"
-						:key="contribId">
-						<card
-							:card-title="title"
-							:card-desc="author"
-							:img-src="picture" />
-						<div class="separator mt-1 mb-4" />
-					</div>
-				</v-tab-item>
-				<v-tab-item
-					:key="2">
-					<div
-						v-for="{id, username, profilePicture} in favArtists"
-						:key="id">
-						<card
-							:card-title="username"
-							:round-img="true"
-							card-desc=""
-							:img-src="(profilePicture != null) ? profilePicture : placeholder"
-							@click="goToProfile(id)" />
-						<div class="separator mt-1 mb-4" />
-					</div>
-				</v-tab-item>
-				<v-tab-item
-					:key="3">
-					<div
-						v-for="{id, name} in favCities"
-						:key="id">
-						<card
-							:card-title="name"
-							card-desc=""
-							@click="goToCity(id)" />
-						<div class="separator mt-1 mb-4" />
-					</div>
-				</v-tab-item>
-				<v-tab-item
-					:key="4">
-					<div
-						v-for="{id, name, authorName, pictures} in favArts"
-						:key="id">
-						<card
-							:card-title="name"
-							:card-desc="authorName"
-							:img-src="pictures[0]"
-							@click="goToArt(id)" />
-						<div class="separator mt-1 mb-4" />
-					</div>
-				</v-tab-item>
-			</v-tabs-items>
-		</div>
-		<edit-profile
-			:data="profileModal"
-			@close="editProfileClosed" />
+			</v-container>
+			<div class="mt-16">
+				<v-tabs
+					v-model="tab"
+					class="tabs"
+					hide-slider
+					centered>
+					<v-tab
+						:key="1"
+						class="tabIcon">
+						<v-row v-if="tab==0">
+							Contributions
+						</v-row>
+						<v-icon
+							v-else
+							color="#00baaf">
+							mdi-format-list-text
+						</v-icon>
+					</v-tab>
+					<v-tab
+						:key="2"
+						class="tabIcon">
+						<v-row v-if="tab==1">
+							Artistes favoris
+						</v-row>
+						<v-icon
+							v-else
+							class="tabIcon"
+							color="#00baaf">
+							mdi-account-box
+						</v-icon>
+					</v-tab>
+					<v-tab
+						:key="3"
+						class="tabIcon">
+						<v-row v-if="tab==2">
+							Villes favorites
+						</v-row>
+						<v-icon
+							v-else
+							class="tabIcon"
+							color="#00baaf">
+							mdi-city
+						</v-icon>
+					</v-tab>
+					<v-tab
+						:key="4"
+						class="tabIcon">
+						<v-row v-if="tab==3">
+							Oeuvre favorites
+						</v-row>
+						<v-icon
+							v-else
+							class="tabIcon"
+							color="#00baaf">
+							mdi-palette
+						</v-icon>
+					</v-tab>
+				</v-tabs>
+				<div class="separator mt-1" />
+				<v-tabs-items
+					v-model="tab"
+					continuous
+					class="tabsItem">
+					<v-tab-item
+						:key="1">
+						<div
+							v-for="{contribId, title, author, picture} in contribList"
+							:key="contribId"
+							class="mt-3">
+							<card
+								:card-title="title"
+								:card-desc="author"
+								:img-src="picture"
+								width="100%"
+								@click="goToContrib(contribId)" />
+							<div class="separator mb-4" />
+						</div>
+					</v-tab-item>
+					<v-tab-item
+						:key="2">
+						<div
+							v-for="{id, username, profilePicture} in favArtists"
+							:key="id"
+							class="mt-3">
+							<card
+								:card-title="username"
+								:round-img="true"
+								card-desc=""
+								:img-src="(profilePicture != null) ? profilePicture : placeholder"
+								@click="goToProfile(id)" />
+							<div class="separator mb-4" />
+						</div>
+					</v-tab-item>
+					<v-tab-item
+						:key="3">
+						<div
+							v-for="{id, name, picture, length} in favCities"
+							:key="id"
+							class="mt-3">
+							<card
+								class="toto"
+								:card-title="name"
+								:img-src="picture"
+								:card-desc="length + ' oeuvre(s)'"
+								@click="goToCity(id)" />
+							<div class="separator mb-4" />
+						</div>
+					</v-tab-item>
+					<v-tab-item
+						:key="4">
+						<div
+							v-for="{id, name, authorName, pictures} in favArts"
+							:key="id"
+							class="mt-3">
+							<card
+								:card-title="name"
+								:card-desc="authorName"
+								:img-src="pictures[0]"
+								@click="goToArt(id)" />
+							<div class="separator mb-4" />
+						</div>
+					</v-tab-item>
+				</v-tabs-items>
+			</div>
+			<edit-profile
+				:data="profileModal"
+				@close="editProfileClosed" />
+			<contribution-display
+				:contrib-id="contributionId"
+				:data="contributionModal"
+				@close="contributionClosed" />
+		</BaseWrapper>
 	</div>
 </template>
 <script>
 import BaseWrapper from '../components/BaseWrapper.vue';
 import EditProfile from '../components/EditProfile.vue';
-import ArtDisplay from '../components/ArtDisplay.vue';
+import ContributionDisplay from '../components/ContributionDisplay.vue';
 import Header from '../components/Header.vue';
 import Photo from '../components/Photo.vue';
 import Card from '../components/Card.vue';
@@ -211,6 +226,7 @@ export default {
 	components: {
 		BaseWrapper,
 		EditProfile,
+		ContributionDisplay,
 		Header,
 		Photo,
 		Card
@@ -224,6 +240,7 @@ export default {
 	data() {
 		return {
 			drawer: false,
+			contributionId: -1,
 			profileUsername: '',
 			description: '',
 			role:'',
@@ -234,7 +251,7 @@ export default {
 			favCities:[],
 			userProfile: false,
 			profileModal: false,
-			artDisplayModal: false,
+			contributionModal: false,
 			profileInfoLoaded: false,
 			contributionsLoaded: false,
 			isFavourited: false,
@@ -275,9 +292,25 @@ export default {
 							this.description = array.description;
 						if(array.roles[0] == 'ROLE_ADMIN')
 							this.role = 'administrator';
+						else if(array.roles[0] == 'ROLE_ARTIST')
+							this.role = 'artist';
+						else if((array.roles[0] == 'ROLE_USER'))
+							this.role = 'contributor';
 						this.favArtists = array.favArtists;
 						this.favArts = array.favArts;
-						this.favCities = array.favCities;
+						this.favCities = [];
+						for (let i = 0 ; i < array.favCities.length;++i) {
+							axios
+								.get('api/city/arts/' +  array.favCities[i].id)
+								.then((response) => {
+									var id = array.favCities[i].id;
+									var name = array.favCities[i].name;
+									var picture = response.data.data[0].pictures[0];
+									var length = response.data.data.length;
+									this.favCities.push({id, name, picture, length});
+								})
+								.catch((error) => console.error(error));
+						}
 						this.userPicture = array.profilePicture;
 						this.profileInfoLoaded = true;
 						this.userId = array.id;
@@ -302,9 +335,25 @@ export default {
 							this.description = array.description;
 						if(array.roles[0] == 'ROLE_ADMIN')
 							this.role = 'administrator';
+						else if(array.roles[0] == 'ROLE_ARTIST')
+							this.role = 'artist';
+						else if((array.roles[0] == 'ROLE_USER'))
+							this.role = 'contributor';
 						this.favArtists = array.favArtists;
 						this.favArts = array.favArts;
-						this.favCities = array.favCities;
+						this.favCities = [];
+						for (let i = 0 ; i < array.favCities.length;++i) {
+							axios
+								.get('api/city/arts/' +  array.favCities[i].id)
+								.then((response) => {
+									var id = array.favCities[i].id;
+									var name = array.favCities[i].name;
+									var picture = response.data.data[0].pictures[0];
+									var length = response.data.data.length;
+									this.favCities.push({id, name, picture, length});
+								})
+								.catch((error) => console.error(error));
+						}
 						this.userPicture = array.profilePicture;
 						this.profileInfoLoaded = true;
 					})
@@ -323,7 +372,6 @@ export default {
 							var title = array[i].name;
 							var author = array[i].author;
 							var picture = array[i].picture1;
-							console.log(array);
 							result.push({contribId, title, author, picture});
 						}
 						this.contribList = result;
@@ -356,6 +404,9 @@ export default {
 			this.profileModal = false;
 			router.push('/profile');
 		},
+		contributionClosed() {
+			this.contributionModal = false;
+		},
 		favouriteClicked() {
 			if (!this.isFavourited)
 				axios
@@ -372,6 +423,10 @@ export default {
 					})
 					.catch((error) => console.error(error));
 		},
+		goToContrib(id) {
+			this.contributionId = id;
+			this.contributionModal = true;
+		},
 		goToProfile(id) {
 			router.push('/profile/' + id);
 			router.go();
@@ -387,63 +442,15 @@ export default {
 	}
 };
 </script>
-<style lang="scss" >
+<style scoped lang="scss" >
 @import "../assets/styles/text.scss";
 
-.homeButton {
-	top:10px;
-	left:5px;
-	height:16px;
-	width:24px;
-}
-
-.editButton {
-	position: absolute;
-	top:10px;
-	right:5px;
-	height:16px;
-	width:24px;
+.profile-header {
+	min-height: 100px;
 }
 
 .positionPicture{
-	position: absolute;
-	left:15px;
-	top: 75px;
 	border: 4px solid  #00BAAF;
-}
-.positionAccountType{
-	position: absolute;
-	left:100px;
-}
-.positionUserAccount{
-	position: absolute;
-	left:95px;
-	top: 6px;
-}
-.positionUserAccountText{
-	position: absolute;
-	left:10px;
-	top: 190px;
-}
-.position{
-	position: absolute;
-	left:50px;
-	top: 300px;
-}
-.pos{
-position: absolute;
-
-	top: 320px;
-}
-
-.tabs {
-	position: absolute;
-	top:320px;
-}
-
-.tabsItem {
-	position: absolute;
-	top:400px;
 }
 
 .separator {
@@ -460,4 +467,5 @@ position: absolute;
 .v-slide-group__prev--disabled {
 	display: none !important;
 }
+
 </style>
