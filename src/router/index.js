@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import Administration from '../views/Administration.vue';
 import Profile from '../views/Profile.vue';
 
 Vue.use(VueRouter);
@@ -67,6 +68,12 @@ const routes = [
 		props: {
 			authenticateDisplay: true
 		}
+	},
+	{
+		path: '/admin',
+		name: 'Admin',
+		component: Administration,
+		props: true 
 	},
 	{
 		path: '/profile',

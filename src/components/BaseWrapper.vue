@@ -73,7 +73,8 @@
 					<ActionsMenuItem
 						v-if="admin"
 						icon="mdi-account-cog"
-						content="home.adminPanel" />
+						content="home.adminPanel"
+						@click="adminClicked" />
 				</ActionsMenu>
 			</v-container>
 			<v-btn
@@ -276,6 +277,9 @@ export default {
 		},
 		profileClicked() {
 			router.push('/profile');
+		},
+		adminClicked() {
+			router.push('/admin');
 		},
 		switchLocale() {
 			if(this.$i18n.locale == this.langs[1]) {

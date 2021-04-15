@@ -85,7 +85,7 @@
 			<v-col class="pl-0">
 				<v-row class="mt-2">
 					<v-col class="titles">
-						{{ artTitle }}
+						{{ contribTitle }}
 					</v-col>
 					<v-col class="text-right mr-5">
 						<v-menu
@@ -109,28 +109,29 @@
 				</v-row>
 				<v-row class="mt-0">
 					<v-col class="pt-2 light">
-						{{ artAuthor }},
-						<div
-							class="city-name"
-							@click="cityNameClicked">
-							{{ artCity }}
-						</div>
+						{{ this.$t("contributionDisplay.contributor") + " : " + contributorName }}, 
+						{{ this.$t("contributionDisplay.author") + " : " + artAuthor }}
 					</v-col>
 				</v-row>
 				<v-divider class="mt-5 mr-5" />
 				<v-row class="mt-1">
 					<v-col class="base">
-						{{ artDesc }}
-					</v-col>
-				</v-row>
-				<v-row>
-					<v-col class="pt-0 light">
-						{{ this.$t("artDisplay.created") + contribCreationDT.toLocaleDateString() }}
+						{{ contribDesc }}
 					</v-col>
 				</v-row>
 				<v-row class="mt-1">
+					<v-col class="light">
+						Longitude : {{ artLongitude }}
+					</v-col>
+				</v-row>
+				<v-row class="mt-0">
 					<v-col class="pt-0 light">
-						{{ this.$t("artDisplay.modified") + contribCreationDT.toLocaleDateString() }}
+						Latitude : {{ artLatitude }}
+					</v-col>
+				</v-row>
+				<v-row class="mt-1">
+					<v-col class="light">
+						{{ this.$t("contributionDisplay.contributionAdded") + contribCreationDT.toLocaleDateString() }}
 					</v-col>
 				</v-row>
 			</v-col>
@@ -154,12 +155,12 @@ export default {
 		event: 'update'
 	},
 	props: {
-		data: {
-			type: Boolean,
-			required: true
-		},
 		contribId: {
 			type: Number,
+			required: true
+		},
+		data: {
+			type: Boolean,
 			required: true
 		}
 	},
@@ -178,28 +179,26 @@ export default {
 	},
 	watch: {
 		contribId() {
-		},
-	},
-	mounted() {
-		// a supprimer
-		axios
-			.get('/api/contrib/' + this.contribId)
-			.then((response) => {
-				this.contribTitle = response.data.data.name;
-				this.contribDesc = response.data.data.description;
-				this.artId = response.data.data.art;
-				this.contribImages = response.data.data.pictures;
-				this.artAuthor = response.data.data.authorName;
-				this.contribCreationDT = new Date(response.data.data.creationDateTime);
-				this.artLongitude = response.data.data.longitude;
-				this.artLatitude = response.data.data.latitude;
-				this.contributorName = response.data.data.contributor.username;
-				// Filtre le tableau d'images
-				this.contribImages = this.contribImages.filter((elem) => {
-					return elem != ''; 
-				});
-			})
-			.catch((error) => console.error(error));
+			axios
+				.get('/api/contrib/' + this.contribId)
+				.then((response) => {
+					this.contribTitle = response.data.data.name;
+					this.contribDesc = response.data.data.description;
+					this.artId = response.data.data.art;
+					this.contribImages = response.data.data.pictures;
+					this.artAuthor = response.data.data.authorName;
+					this.contribCreationDT = new Date(response.data.data.creationDateTime);
+					this.artLongitude = response.data.data.longitude;
+					this.artLatitude = response.data.data.latitude;
+					this.contributorName = response.data.data.contributor.username;
+					// Filtre le tableau d'images
+					this.contribImages = this.contribImages.filter((elem) => {
+						return elem != ''; 
+					});
+				})
+				.catch((error) => console.error(error));
+		}
+
 	}
 };
 </script>
