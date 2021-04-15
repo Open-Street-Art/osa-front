@@ -29,8 +29,8 @@
 					</v-col>
 					<v-col>
 						<CheckBoxInput
-							class="mt-0 ml-2"
-							:switched="isPublic" />
+							v-model="isPublic"
+							class="mt-0 ml-2" />
 					</v-col>
 				</v-row>
 			</v-container>
@@ -110,7 +110,6 @@ export default {
 					this.description = response.data.data.description;
 					if(response.data.data.profilePicture != null) {
 						this.profilePic = response.data.data.profilePicture;
-						console.log(this.profilePic);
 					}
 					else
 					 {
@@ -132,6 +131,7 @@ export default {
 					isPublic: this.isPublic,
 				})
 				.then((response) => {
+					console.log(this.isPublic);
 					router.push('/profile');
 					router.go();
 

@@ -32,7 +32,9 @@
 				<p class="base ml-1">
 					{{ this.$t("register.profilType") }}
 				</p>
-				<CheckBoxInput class="pt-0 pb-1" />
+				<CheckBoxInput
+					v-model="profilType"
+					class="pt-0 pb-1" />
 			</v-row>
 		</v-container>
 		<v-container
@@ -106,19 +108,11 @@ export default {
 			username: '',
 			password: '',
 			confirmPassword: '',
-			role: 'ROLE_USER',
-			error: false
+			error: false,
+			profilType: false
 		};
 	},
 	methods: {
-		changeRole() {
-			if(this.role === 'ROLE_USER') {
-				this.role = 'ROLE_ARTIST';
-			}
-			else {
-				this.role = 'ROLE_USER';
-			}
-		},
 		register() {
 			axios
 				// requête post vers la route du back en lui donnant les arguments attendu
@@ -127,7 +121,7 @@ export default {
 					username: this.username,
 					password:this.password,
 					confirmPassword: this.confirmPassword,
-					role: this.role
+					role: this.profilType ? 'ROLE_ARTIST' : 'ROLE_USER'
 				})
 				// le bloc then est exécuté lorsque le back renvoie la réponse car axios est asynchrone (système de promesse)
 				.then((response) => {

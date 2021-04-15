@@ -206,7 +206,7 @@ export default {
 					this.admin = true;
 				}
 				else {
-					this.role = 'Artiste';
+					this.role = 'artist';
 				}
 			} else {
 				// Le token est expiré

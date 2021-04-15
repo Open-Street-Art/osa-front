@@ -1,14 +1,18 @@
 <template>
 	<v-switch
-		v-model="switched"
 		color="primary"
 		inset
+		:input-value="switched"
 		@change="$emit('update', $event)" />
 </template>
 
 <script>
 export default {
 	name: 'CheckBoxInput',
+	model: {
+		prop: 'switched',
+		event: 'update'
+	},
 	props: {
 		switched: {
 			default: false,

@@ -14,6 +14,13 @@
 		"adminPanel" : "Outils d'administration",
 		"home": "Accueil"
 	},
+	"profile": {
+		"contributions" : "Contributions",
+		"favArtists" : "Artistes favoris",
+		"favCities" : "Villes favorites",
+		"favArts" : "Œuvres favorites",
+		"artCount" : "œuvre(s)"
+	},
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",
 		"modified": "Dernière modification le ",

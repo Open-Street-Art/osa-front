@@ -86,8 +86,10 @@
 					<v-tab
 						:key="1"
 						class="tabIcon">
-						<v-row v-if="tab==0">
-							Contributions
+						<v-row
+							v-if="tab==0"
+							class="profile-list">
+							{{ this.$t("profile.contributions") }}
 						</v-row>
 						<v-icon
 							v-else
@@ -96,10 +98,13 @@
 						</v-icon>
 					</v-tab>
 					<v-tab
+						v-if="isPublic"
 						:key="2"
 						class="tabIcon">
-						<v-row v-if="tab==1">
-							Artistes favoris
+						<v-row
+							v-if="tab==1"
+							class="profile-list">
+							{{ this.$t("profile.favArtists") }}
 						</v-row>
 						<v-icon
 							v-else
@@ -109,10 +114,13 @@
 						</v-icon>
 					</v-tab>
 					<v-tab
+						v-if="isPublic"
 						:key="3"
 						class="tabIcon">
-						<v-row v-if="tab==2">
-							Villes favorites
+						<v-row
+							v-if="tab==2"
+							class="profile-list">
+							{{ this.$t("profile.favCities") }}
 						</v-row>
 						<v-icon
 							v-else
@@ -122,10 +130,13 @@
 						</v-icon>
 					</v-tab>
 					<v-tab
+						v-if="isPublic"
 						:key="4"
 						class="tabIcon">
-						<v-row v-if="tab==3">
-							Oeuvre favorites
+						<v-row
+							v-if="tab==3"
+							class="profile-list">
+							{{ this.$t("profile.favArts") }}
 						</v-row>
 						<v-icon
 							v-else
@@ -165,6 +176,7 @@
 								:card-title="username"
 								:round-img="true"
 								card-desc=""
+								width="100%"
 								:img-src="(profilePicture != null) ? profilePicture : placeholder"
 								@click="goToProfile(id)" />
 							<div class="separator mb-4" />
@@ -180,7 +192,8 @@
 								class="toto"
 								:card-title="name"
 								:img-src="picture"
-								:card-desc="length + ' oeuvre(s)'"
+								width="100%"
+								:card-desc="length + ' ' + $t('profile.artCount')"
 								@click="goToCity(id)" />
 							<div class="separator mb-4" />
 						</div>
@@ -195,6 +208,7 @@
 								:card-title="name"
 								:card-desc="authorName"
 								:img-src="pictures[0]"
+								width="100%"
 								@click="goToArt(id)" />
 							<div class="separator mb-4" />
 						</div>
@@ -255,6 +269,7 @@ export default {
 			profileInfoLoaded: false,
 			contributionsLoaded: false,
 			isFavourited: false,
+			isPublic: true,
 			placeholder: require('@/assets/avatarPlaceholder.png'),
 			tab: 'contrib',
 		};
@@ -339,21 +354,28 @@ export default {
 							this.role = 'artist';
 						else if((array.roles[0] == 'ROLE_USER'))
 							this.role = 'contributor';
-						this.favArtists = array.favArtists;
-						this.favArts = array.favArts;
-						this.favCities = [];
-						for (let i = 0 ; i < array.favCities.length;++i) {
-							axios
-								.get('api/city/arts/' +  array.favCities[i].id)
-								.then((response) => {
-									var id = array.favCities[i].id;
-									var name = array.favCities[i].name;
-									var picture = response.data.data[0].pictures[0];
-									var length = response.data.data.length;
-									this.favCities.push({id, name, picture, length});
-								})
-								.catch((error) => console.error(error));
+						if(array.isPublic) {
+							this.isPublic = true;
+							this.favArtists = array.favArtists;
+							this.favArts = array.favArts;
+							this.favCities = [];
+							for (let i = 0 ; i < array.favCities.length;++i) {
+								axios
+									.get('api/city/arts/' +  array.favCities[i].id)
+									.then((response) => {
+										var id = array.favCities[i].id;
+										var name = array.favCities[i].name;
+										var picture = response.data.data[0].pictures[0];
+										var length = response.data.data.length;
+										this.favCities.push({id, name, picture, length});
+									})
+									.catch((error) => console.error(error));
+							}
 						}
+						else {
+							this.isPublic = false;
+						}
+						console.log(array);
 						this.userPicture = array.profilePicture;
 						this.profileInfoLoaded = true;
 					})
@@ -388,7 +410,9 @@ export default {
 						for(let i = 0; i < array.length;++i) {
 							var contribId = array[i].id;
 							var title =array[i].name;
-							result.push({contribId, title});
+							var author = array[i].author;
+							var picture = array[i].picture1;
+							result.push({contribId, title, author, picture});
 						}
 						this.contribList = result;
 						this.contributionsLoaded = true;
@@ -462,6 +486,8 @@ export default {
 
 .tabIcon {
 	min-width:20px !important;
+	padding-left:5%;
+	padding-right:5%;
 }
 
 .v-slide-group__prev--disabled {
