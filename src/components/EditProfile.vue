@@ -118,12 +118,10 @@ export default {
 					this.isPublic = response.data.data.isPublic;
 					if(this.isPublic == null)
 						this.isPublic = false;
-					console.log(this.isPublic);
 				})
 				.catch((error) => console.error(error));
 		},
 		updateProfile() {
-			console.log(this.isPublic);
 			axios
 				.patch('/api/user/profile', {
 					description: this.description,
@@ -131,7 +129,6 @@ export default {
 					isPublic: this.isPublic,
 				})
 				.then((response) => {
-					console.log(this.isPublic);
 					router.push('/profile');
 					router.go();
 

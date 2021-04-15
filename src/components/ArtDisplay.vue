@@ -45,7 +45,7 @@
 				</v-row>
 				<v-row class="mt-1 mb-1">
 					<v-col class="pt-0 light">
-						{{ artAuthor }},
+						{{ artAuthor }}
 						<div
 							class="city-name"
 							@click="cityNameClicked">
@@ -115,7 +115,7 @@
 					</v-row>
 					<v-row class="mt-0">
 						<v-col class="pt-2 light">
-							{{ artAuthor }},
+							{{ artAuthor }}
 							<div
 								class="city-name"
 								@click="cityNameClicked">
@@ -188,21 +188,24 @@ export default {
 		};
 	},
 	watch: {
-		data() {
-			if (this.$route.params.id !== undefined)
-				axios
-					.get('/api/art/' + this.$route.params.id)
-					.then((response) => {
-						this.artId = this.$route.params.id;
-						this.artTitle = response.data.data.name;
-						this.artDesc = response.data.data.description;
-						this.artAuthor = response.data.data.authorName;
-						this.artImages = response.data.data.pictures;
-						this.artCity = response.data.data.city.name;
-						this.artCityId = response.data.data.city.id;
-						this.artCreationDT = new Date(response.data.data.creationDateTime);
-					})
-					.catch((error) => console.error(error));
+		data: {
+			immediate: true,
+			handler(b, a) {
+				if (this.$route.params.id !== undefined)
+					axios
+						.get('/api/art/' + this.$route.params.id)
+						.then((response) => {
+							this.artId = this.$route.params.id;
+							this.artTitle = response.data.data.name;
+							this.artDesc = response.data.data.description;
+							this.artAuthor = response.data.data.authorName;
+							this.artImages = response.data.data.pictures;
+							this.artCity = response.data.data.city.name;
+							this.artCityId = response.data.data.city.id;
+							this.artCreationDT = new Date(response.data.data.creationDateTime);
+						})
+						.catch((error) => console.error(error));
+			}
 		}
 	},
 	created() {

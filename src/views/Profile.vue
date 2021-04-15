@@ -219,6 +219,7 @@
 				:data="profileModal"
 				@close="editProfileClosed" />
 			<contribution-display
+				v-if="contributionId != null"
 				:contrib-id="contributionId"
 				:data="contributionModal"
 				@close="contributionClosed" />
@@ -254,7 +255,7 @@ export default {
 	data() {
 		return {
 			drawer: false,
-			contributionId: -1,
+			contributionId: null,
 			profileUsername: '',
 			description: '',
 			role:'',
@@ -375,7 +376,6 @@ export default {
 						else {
 							this.isPublic = false;
 						}
-						console.log(array);
 						this.userPicture = array.profilePicture;
 						this.profileInfoLoaded = true;
 					})

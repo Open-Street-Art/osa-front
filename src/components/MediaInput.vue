@@ -52,9 +52,9 @@ export default {
 	},
 	watch: {
 		imageDataProp: {
-			 immediate: true ,
+			 immediate: true,
 			 handler(old, ne) {
-				if(this.imageDataProp != '') {
+				if(this.imageDataProp != '' && this.imageDataProp != null) {
 					this.imageStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url("' + this.imageDataProp + '")';
 				}
 			 }

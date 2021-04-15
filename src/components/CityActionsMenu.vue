@@ -1,12 +1,12 @@
 <template>
 	<ActionsMenu>
 		<ActionsMenuItem
-			v-if="!isFavourited"
+			v-if="!isFavourited && isAuthentified"
 			icon="mdi-star-outline"
 			content="cityDisplay.addFavourite"
 			@click="addToFavourite" />
 		<ActionsMenuItem
-			v-if="isFavourited"
+			v-if="isFavourited && isAuthentified"
 			icon="mdi-star"
 			content="cityDisplay.removeFavourite"
 			@click="removeFavourite" />
@@ -34,23 +34,28 @@ export default {
 	data() {
 		return {
 			cityId: this.$route.params.id,
-			isFavourited: false
+			isFavourited: false,
+			isAuthentified: false
 		};
 	},
 	created() {
 		// On récupère le profile de l'utilisateur pour savoir
 		// si l'oeuvre est deja en favoris
-		axios
-			.get('/api/user/profile')
-			.then((response) => {
-				for (const city of response.data.data.favCities) {
-					if (city.id == this.cityId) {
-						this.isFavourited = true;
-						break;
+		var token = localStorage.getItem('authtoken');
+		if (token != null) {
+			axios
+				.get('/api/user/profile')
+				.then((response) => {
+					this.isAuthentified = true;
+					for (const city of response.data.data.favCities) {
+						if (city.id == this.cityId) {
+							this.isFavourited = true;
+							break;
+						}
 					}
-				}
-			})
-			.catch((error) => console.error(error));
+				})
+				.catch((error) => console.error(error));
+		}
 	},
 	methods: {
 		addToFavourite() {

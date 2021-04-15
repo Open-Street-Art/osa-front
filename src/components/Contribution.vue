@@ -145,9 +145,9 @@ export default {
 			artist: '',
 			description: '',
 			latlng: [],
-			pic1: '',
-			pic2: '',
-			pic3: '',
+			pic1: null,
+			pic2: null,
+			pic3: null,
 			locationPickerModal: false
 		};
 	},

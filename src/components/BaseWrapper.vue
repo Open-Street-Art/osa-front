@@ -212,14 +212,14 @@ export default {
 				// Le token est expiré
 				localStorage.removeItem('authtoken');
 			}
+			axios
+				.get('/api/user/profile')
+				.then((response) => {
+					var array = response.data.data;
+					this.profilePicture = array.profilePicture;
+				})
+	     		 .catch((error) => console.error(error));
 		}
-		axios
-			.get('/api/user/profile')
-			.then((response) => {
-				var array = response.data.data;
-				this.profilePicture = array.profilePicture;
-			})
-	      .catch((error) => console.error(error));
 		if(this.register) {
 			this.registerModal = true;
 		}

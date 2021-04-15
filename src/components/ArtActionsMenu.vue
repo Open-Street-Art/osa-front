@@ -11,16 +11,17 @@
 			content="artDisplay.deleteArt"
 			@click="deleteArt" />
 		<ActionsMenuItem
-			v-if="!isFavourited"
+			v-if="!isFavourited && isAuthentified"
 			icon="mdi-star-outline"
 			content="artDisplay.addFavourite"
 			@click="addToFavourite" />
 		<ActionsMenuItem
-			v-if="isFavourited"
+			v-if="isFavourited && isAuthentified"
 			icon="mdi-star"
 			content="artDisplay.removeFavourite"
 			@click="removeFavourite" />
 		<ActionsMenuItem
+			v-if="isAuthentified"
 			icon="mdi-text-box-plus-outline"
 			content="artDisplay.contribute"
 			@click="contribute" />
@@ -52,33 +53,32 @@ export default {
 			artId: this.$route.params.id,
 			isFavourited: false,
 			isAdmin: false,
-			changeArtAdminModal: false
+			changeArtAdminModal: false,
+			isAuthentified: false
 		};
 	},
 	created() {
-		// On récupère le profile de l'utilisateur pour savoir
-		// si l'oeuvre est deja en favoris
-		axios
-			.get('/api/user/profile')
-			.then((response) => {
-				for (const art of response.data.data.favArts) {
-					if (art.id == this.artId) {
-						this.isFavourited = true;
-						break;
-					}
-				}
-			})
-			.catch((error) => console.error(error));
-
-		//recupere le role d'un utilisateur pour savoir si il est admin ou non
+		// Récupere le role d'un utilisateur pour savoir si il est admin ou non
 		var token = localStorage.getItem('authtoken');
-		if(token!=null) {
-
-			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+		if (token != null) {
 			var userInfo = jwt_decode(token);
 			if (userInfo.roles === 'ROLE_ADMIN') {
 				this.isAdmin = true;
 			}
+			// On récupère le profile de l'utilisateur pour savoir
+			// si l'oeuvre est deja en favoris
+			axios
+				.get('/api/user/profile')
+				.then((response) => {
+					this.isAuthentified = true;
+					for (const art of response.data.data.favArts) {
+						if (art.id == this.artId) {
+							this.isFavourited = true;
+							break;
+						}
+					}
+				})
+				.catch((error) => console.error(error));
 		}
 	},
 	methods: {
