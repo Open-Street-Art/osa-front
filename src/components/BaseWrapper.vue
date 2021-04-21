@@ -83,7 +83,9 @@
 				fab
 				small
 				@click="switchLocale">
-				{{ $i18n.locale }}
+				<div
+					class="lang-icon"
+					:style="langStyle" /> 
 			</v-btn>
 			<v-btn
 				class="logout"
@@ -182,6 +184,8 @@ export default {
 			role:'',
 			forme: 'forme-profile',
 			placeholder: require('@/assets/avatarPlaceholder.png'),
+			langStyle: {},
+			langIcon: '',
 			profilePicture: null,
 			langs: ['fr', 'en']
 		};
@@ -240,6 +244,10 @@ export default {
 				router.push('/');
 			}
 		}
+		this.langStyle = {
+			'background-image' : 'url(/img/lang/' + this.$i18n.locale + '.png)'
+		};
+		//this.langIcon = '/img/lang/' + this.$i18n.locale + '.png';
 
 	},
 	methods : {
@@ -290,6 +298,9 @@ export default {
 				this.$i18n.locale = this.langs[1];
 				store.commit('setAppLanguage',this.langs[1]);
 			}
+			this.langStyle = {
+				'background-image' : 'url(/img/lang/' + this.$i18n.locale + '.png)'
+			};
 		},
 		logout() {
 			localStorage.removeItem('authtoken');
@@ -342,6 +353,16 @@ div.view {
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
+}
+
+.lang-icon {
+	width: 36px !important;
+	height: 36px !important;
+
+	border-radius: 50%;
+
+	background-position: center center;
+	background-size: cover;
 }
 
 </style>
