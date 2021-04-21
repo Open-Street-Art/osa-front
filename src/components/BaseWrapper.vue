@@ -56,6 +56,7 @@
 						content="home.searchUser" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
+						v-if="connected"
 						icon="mdi-palette"
 						content="home.commitArt"
 						@click="contributionClicked" />
