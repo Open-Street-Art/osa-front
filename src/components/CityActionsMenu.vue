@@ -15,7 +15,8 @@
 			content="cityDisplay.exportPDF" />
 		<ActionsMenuItem
 			icon="mdi-export-variant"
-			content="cityDisplay.exportCSV" />
+			content="cityDisplay.exportCSV"
+			@click="exportCSV" />
 	</ActionsMenu>
 </template>
 
@@ -87,6 +88,39 @@ export default {
 						EventBus.$emit('error', 'unknown');
 					}
 				});
+		},
+		exportCSV() {
+			axios
+				.get('/api/city/arts/' + this.cityId)
+				.then((response) => {
+					let csv = 'name,description,author,creationdatetime,longitude,latitude\n';
+					for (const art of response.data.data) {
+						// name
+						csv += art.name;
+						csv += ',';
+						// description
+						csv += art.description;
+						csv += ',';
+						// author
+						csv += art.authorName;
+						csv += ',';
+						// creationDateTime
+						csv += art.creationDateTime;
+						csv += ',';
+						// longitude
+						csv += art.longitude;
+						csv += ',';
+						// latitude
+						csv += art.latitude;
+						csv += '\n';
+					}
+					const anchor = document.createElement('a');
+					anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+					anchor.target = '_blank';
+					anchor.download = response.data.data[0].city.name + '_arts.csv';
+					anchor.click();
+				})
+				.catch((error) => console.error(error));
 		}
 	}
 };
