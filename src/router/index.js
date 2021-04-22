@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Administration from '../views/Administration.vue';
 import Profile from '../views/Profile.vue';
+import SearchUser from '../views/SearchUser';
 
 Vue.use(VueRouter);
 
@@ -93,6 +94,12 @@ const routes = [
 		props: {
 			editProfileDisplay: true
 		}
+	},
+	{
+		path: '/searchUser',
+		name: 'SearchUser',
+		component: SearchUser,
+		props: true 
 	},
 ];
 
