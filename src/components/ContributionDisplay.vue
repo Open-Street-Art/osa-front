@@ -186,7 +186,7 @@ export default {
 			immediate: true,
 			handler(old, ne) {
 				axios
-					.get('/api/contrib/' + this.contribId)
+					.get('/api/contribs/' + this.contribId)
 					.then((response) => {
 						this.contribTitle = response.data.data.name;
 						this.contribDesc = response.data.data.description;

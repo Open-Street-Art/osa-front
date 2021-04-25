@@ -193,7 +193,7 @@ export default {
 			handler(b, a) {
 				if (this.$route.params.id !== undefined)
 					axios
-						.get('/api/art/' + this.$route.params.id)
+						.get('/api/arts/' + this.$route.params.id)
 						.then((response) => {
 							this.artId = this.$route.params.id;
 							this.artTitle = response.data.data.name;

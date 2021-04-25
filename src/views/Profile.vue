@@ -385,7 +385,7 @@ export default {
 		getContrib(id){
 			if(id == null) {
 				axios
-					.get('/api/contrib/personnal')
+					.get('/api/contribs/personnal')
 					.then((response) => {
 						var array = response.data.data;
 						var result= [];
@@ -403,7 +403,7 @@ export default {
 			}
 			else {
 				axios
-					.get('/api/contrib/user/' + id)
+					.get('/api/contribs/user/' + id)
 					.then((response) => {
 						var array = response.data.data;
 						var result= [];

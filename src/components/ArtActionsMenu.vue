@@ -84,7 +84,7 @@ export default {
 	methods: {
 		addToFavourite() {
 			axios
-				.post('/api/fav/art/' + this.artId)
+				.post('/api/fav/arts/' + this.artId)
 				.then((response) => {
 					EventBus.$emit('success', 'artActionsMenu.added');
 					this.isFavourited = true;
@@ -99,7 +99,7 @@ export default {
 		},
 		removeFavourite() {
 			axios
-				.delete('/api/fav/art/' + this.artId)
+				.delete('/api/fav/arts/' + this.artId)
 				.then((response) => {
 					EventBus.$emit('success', 'artActionsMenu.deleted');
 					this.isFavourited = false;
@@ -115,7 +115,7 @@ export default {
 		deleteArt() {
 			if (this.isAdmin) {
 				axios
-					.delete('/api/admin/art/' + this.artId)
+					.delete('/api/admin/arts/' + this.artId)
 					.then((response) => {
 						router.push('/');
 						router.go();

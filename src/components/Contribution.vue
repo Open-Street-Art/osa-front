@@ -155,7 +155,7 @@ export default {
 		data() {
 			if (this.$route.params.id !== undefined)
 				axios
-					.get('/api/art/' + this.$route.params.id)
+					.get('/api/arts/' + this.$route.params.id)
 					.then((response) => {
 						this.name = response.data.data.name;
 						this.artist = response.data.data.authorName;
@@ -179,7 +179,7 @@ export default {
 				this.sendContribOfArt();
 			} else {
 				axios
-					.post('/api/contrib', {
+					.post('/api/contribs', {
 						name: this.name,
 						description: this.description,
 						picture1: this.pic1,
@@ -216,7 +216,7 @@ export default {
 		},
 		changingArtAdmin() {
 			axios
-				.patch('/api/admin/art/' + this.$route.params.id, {
+				.patch('/api/admin/arts/' + this.$route.params.id, {
 					name: this.name,
 					description: this.description,
 					picture1: this.pic1,
@@ -238,7 +238,7 @@ export default {
 		},
 		sendContribOfArt() {
 			axios
-				.post('/api/contrib/' + this.$route.params.id, {
+				.post('/api/contribs/' + this.$route.params.id, {
 					name: this.name,
 					description: this.description,
 					picture1: this.pic1,

@@ -250,7 +250,7 @@ export default {
 		},
 		pinPopup(id) {
 			axios
-				.get('/api/art/' + id)
+				.get('/api/arts/' + id)
 				.then((response) => {
 					this.cardTitle = response.data.data.name;
 					this.cardDesc = response.data.data.authorName;

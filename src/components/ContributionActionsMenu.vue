@@ -57,7 +57,7 @@ export default {
 					}
 				}
 				axios
-					.get('/api/contrib/personnal')
+					.get('/api/contribs/personnal')
 					.then((response) => {
 						for (var contrib of response.data.data) {
 							if (contrib.id == this.contribId)
@@ -71,7 +71,7 @@ export default {
 	methods: {
 		acceptContrib() {
 			axios
-				.post('/api/contrib/accept/' + this.contribId)
+				.post('/api/contribs/accept/' + this.contribId)
 				.then((response) => {
 					this.$emit('close');
 				})
@@ -79,7 +79,7 @@ export default {
 		},
 		denyContrib() {
 			axios
-				.post('/api/contrib/deny/' + this.contribId)
+				.post('/api/contribs/deny/' + this.contribId)
 				.then((response) => {
 					this.$emit('close');
 				})
@@ -87,7 +87,7 @@ export default {
 		},
 		removeContrib() {
 			axios
-				.delete('/api/contrib/' + this.contribId)
+				.delete('/api/contribs/' + this.contribId)
 				.then((response) => {
 					this.$emit('close');
 				})
