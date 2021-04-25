@@ -198,7 +198,7 @@ export default {
 		},
 		addingArt() {
 			axios
-				.post('/api/admin/art', {
+				.post('/api/admin/arts', {
 					name: this.name,
 					description: this.description,
 					picture1: this.pic1,

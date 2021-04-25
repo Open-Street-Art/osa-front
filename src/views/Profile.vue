@@ -317,7 +317,7 @@ export default {
 						this.favCities = [];
 						for (let i = 0 ; i < array.favCities.length;++i) {
 							axios
-								.get('api/city/arts/' +  array.favCities[i].id)
+								.get('api/cities/arts/' +  array.favCities[i].id)
 								.then((response) => {
 									var id = array.favCities[i].id;
 									var name = array.favCities[i].name;
@@ -362,7 +362,7 @@ export default {
 							this.favCities = [];
 							for (let i = 0 ; i < array.favCities.length;++i) {
 								axios
-									.get('api/city/arts/' +  array.favCities[i].id)
+									.get('api/cities/arts/' +  array.favCities[i].id)
 									.then((response) => {
 										var id = array.favCities[i].id;
 										var name = array.favCities[i].name;
@@ -403,7 +403,7 @@ export default {
 			}
 			else {
 				axios
-					.get('/api/contribs/user/' + id)
+					.get('/api/contribs/users/' + id)
 					.then((response) => {
 						var array = response.data.data;
 						var result= [];
@@ -434,14 +434,14 @@ export default {
 		favouriteClicked() {
 			if (!this.isFavourited)
 				axios
-					.post('/api/fav/artist/' + this.$route.params.id)
+					.post('/api/fav/artists/' + this.$route.params.id)
 					.then((response) => {
 						this.isFavourited = true;
 					})
 					.catch((error) => console.error(error));
 			else
 				axios
-					.delete('/api/fav/artist/' + this.$route.params.id)
+					.delete('/api/fav/artists/' + this.$route.params.id)
 					.then((response) => {
 						this.isFavourited = false;
 					})

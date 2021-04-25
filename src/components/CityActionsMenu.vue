@@ -61,7 +61,7 @@ export default {
 	methods: {
 		addToFavourite() {
 			axios
-				.post('/api/fav/city/' + this.cityId)
+				.post('/api/fav/cities/' + this.cityId)
 				.then((response) => {
 					EventBus.$emit('success', 'cityActionsMenu.added');
 					this.isFavourited = true;
@@ -76,7 +76,7 @@ export default {
 		},
 		removeFavourite() {
 			axios
-				.delete('/api/fav/city/' + this.cityId)
+				.delete('/api/fav/cities/' + this.cityId)
 				.then((response) => {
 					EventBus.$emit('success', 'cityActionsMenu.deleted');
 					this.isFavourited = false;
@@ -91,7 +91,7 @@ export default {
 		},
 		exportCSV() {
 			axios
-				.get('/api/city/arts/' + this.cityId)
+				.get('/api/cities/' + this.cityId + '/arts')
 				.then((response) => {
 					let csv = 'name,description,author,creationdatetime,longitude,latitude\n';
 					for (const art of response.data.data) {

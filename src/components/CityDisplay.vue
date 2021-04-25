@@ -135,12 +135,12 @@ export default {
 			if (this.$route.params.id !== undefined)
 			// On recupere les infos de la ville avec l'id dans la route
 				axios
-					.get('/api/city/' + this.$route.params.id)
+					.get('/api/cities/' + this.$route.params.id)
 					.then((response) => {
 						this.cityName = response.data.data.name;
 						// On recupere l'image de la premiere oeuvre
 						axios
-							.get('/api/city/arts/' + this.$route.params.id)
+							.get('/api/cities/' + this.$route.params.id + '/arts')
 							.then((response) => {
 								this.image = response.data.data[0].pictures[0];
 								this.artList = response.data.data;
