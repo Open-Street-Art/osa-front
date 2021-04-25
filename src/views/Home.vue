@@ -238,7 +238,7 @@ export default {
 		getMapPins() {
 			var tempPinList = [];
 			axios
-				.get('/api/art/locations')
+				.get('/api/arts/locations')
 				.then((response) => {
 					var array = response.data.data;
 					for(let i = 0;i < array.length;++i) {
