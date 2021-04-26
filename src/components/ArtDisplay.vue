@@ -184,7 +184,8 @@ export default {
 			artCity: '',
 			artImages: [],
 			artCreationDT: new Date(),
-			contributionModal: false
+			contributionModal: false,
+			artCityId: null
 		};
 	},
 	watch: {
@@ -205,6 +206,16 @@ export default {
 							this.artCreationDT = new Date(response.data.data.creationDateTime);
 						})
 						.catch((error) => console.error(error));
+				else {
+					this.artId = null;
+					this.artTitle = '';
+					this.artDesc = '';
+					this.artAuthor = '';
+					this.artImages = '';
+					this.artCity = '';
+					this.artCityId = null;
+					this.artCreationDT = new Date();
+				}
 			}
 		}
 	},
