@@ -92,6 +92,9 @@
 	"admin-menu" : {
 		"title": "Administrer les contributions"
 	},
+	"searchUser-menu" : {
+		"title": "Rechercher un utilisateur"
+	},
 	"contributionDisplay": {
 		"contributor": "Contributeur",
 		"author": "Auteur",
