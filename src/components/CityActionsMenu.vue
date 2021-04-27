@@ -104,40 +104,17 @@ export default {
 				.catch(console.error);
 		},
 		exportPDF() {
-			// axios
-			// 	.get('/api/cities/' + this.cityId + '/arts')
-			// 	.then((response) => {
-			// 		let content = '<style>div { font-family: Arial, Helvetica, sans-serif; } </style>';
-			// 		content += '<div style="margin-top: 25px;margin-bottom: 25px; margin-left: 50px; margin-right: 20px;">';
-			// 		content += '<h1>Open Street Art</h1>';
-			// 		content += '<h2>Liste des oeuvres de la ville : ' + response.data.data[0].city.name + '</h2>';
-			// 		content += '<div style="margin-left: 20px"><ul>';
-			// 		for (const art of response.data.data) {
-			// 			content += '<li style="margin-top: 30px">';
-			// 			// image
-			// 			content += '<img style="float: right; max-width: 120px; margin-right: 50px; margin-top: 15px" src="' + art.pictures[0] + '" />';
-			// 			// name
-			// 			content += '<h3>' + art.name + '</h3>';
-			// 			// author
-			// 			content += '<h4>Auteur : ' + art.authorName + '</h4>';
-			// 			// description
-			// 			content += '<p>Description : ' + art.description + '</p>';
-			// 			// creationDateTime
-			// 			content += '<p>Date de création : ' + art.creationDateTime.split('T')[0] + '</p>';
-			// 			content += '<p>Heure de création : ' + art.creationDateTime.split('T')[1].split('.')[0] + '</p>';
-			// 			// longitude
-			// 			content += '<p>Longitude : ' + art.longitude + '</p>';
-			// 			// latitude
-			// 			content += '<p>Latitude : ' + art.latitude + '</p>';
-			// 			content += '</li>';
-			// 		}
-			// 		content += '</ul></div>';
-			// 		content += '</div>';
-			// 		html2pdf(content, {
-			// 			filename: response.data.data[0].city.name + '_arts.pdf',
-			// 		});
-			// 	})
-			// 	.catch((error) => console.error(error));
+			axios
+				.get('/api/media/pdf/' + this.cityId, { responseType: 'blob' })
+				.then((response) => {
+					const blob = new Blob([response.data], { type: 'application/pdf' });
+					const link = document.createElement('a');
+					link.href = URL.createObjectURL(blob);
+					link.download = 'arts_list.pdf';
+					link.click();
+					URL.revokeObjectURL(link.href);
+				})
+				.catch(console.error);
 		}
 	}
 };
