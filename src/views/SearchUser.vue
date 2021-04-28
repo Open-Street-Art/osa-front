@@ -20,24 +20,27 @@
 				</v-btn>
 			</Header>
 			<div class="content">
-				<div
-					v-for="{id, name, author, picture1} in contribList"
-					:key="id">
-					<Card
-						:card-title="name"
-						:card-desc="author"
-						:img-src="picture1"
-						width="100%"
-						@click="contribDisplayOpened(id)" />
-					<v-divider class="mb-3" />
-				</div>
+				<Searchbar
+					v-model="searchValue"
+					:result-count="searchCount"
+					:show-button="true"
+					@update="search"
+					@click:clear="getMapPins">
+					<div class="mb-4" />
+					<div
+						v-for="{id, title, desc, img} in searchList"
+						:key="id">
+						<card
+							class="searchResult"
+							:card-title="title"
+							:card-desc="desc"
+							:img-src="img"
+							@click="getUser(name)" />
+						<div class="separator mt-1 mb-4" />
+					</div>
+				</Searchbar>
 			</div>
 		</base-wrapper>
-		<ContributionDisplay
-			v-if="selectedContribId != null"
-			:contrib-id="selectedContribId"
-			:data="contribDisplayModal"
-			@close="contribDisplayClosed()" />
 	</v-main>
 </template>
 
@@ -45,9 +48,9 @@
 import BaseWrapper from '../components/BaseWrapper.vue';
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
-import ContributionDisplay from '../components/ContributionDisplay.vue';
 import axios from 'axios';
 import router from '../router';
+import Searchbar from '../components/Searchbar.vue';
 
 export default {
 	name: 'SearchUser',
@@ -55,37 +58,77 @@ export default {
 		BaseWrapper,
 		Header,
 		Card,
-		ContributionDisplay
+		Searchbar
 	},
 	data() {
 		return {
 			drawer: false,
 			contribList: [],
 			contribDisplayModal: false,
-			selectedContribId: null
+			selectedContribId: null,
+			searchValue: '',
 		};
 	},
 	mounted() {
-		this.loadContrib();
+		
 	},
 	methods: {
-		loadContrib() {
-			axios
-				.get('/api/contrib/unapproved')
-				.then((response) => {
-					this.contribList = response.data.data;
-				})
-				.catch((error) => console.error(error));
+		getUser(name){
+			router.push('/api/search/users/'+ name);
+		   
 		},
-		contribDisplayOpened(id) {
-			this.contribDisplayModal = true;
-			this.selectedContribId = id;
+		search() {
+			if(this.searchValue != null && this.searchValue.length > 1 ) {
+				var res = {
+					searchList: [],
+					pinList: [],
+					searchCount: 0,
+				};
+				this.gotData = false;
+				axios
+					.get('/api/search/arts/' + this.searchValue)
+					.then((response) => {
+						if(response.data.data.length > 0) {
+							this.addArt(response.data.data, res);
+							this.gotData = true;
+						}
+						axios
+							.get('/api/search/arts/artist/' + this.searchValue)
+							.then((response) => {
+								if(response.data.data.length > 0) {
+									this.addArt(response.data.data, res);
+									this.gotData = true;
+								}
+								axios
+									.get('/api/search/cities/' + this.searchValue)
+									.then((response) => {
+										if(response.data.data.length > 0) {
+											this.addArt(response.data.data, res);
+											this.gotData = true;
+										}
+										if(!this.gotData) {
+											this.searchList = [];
+											this.pinList = [];
+											this.searchCount = 0;
+										}
+										else {
+											this.searchList = res.searchList;
+											this.pinList = res.pinList;
+											this.searchCount = res.searchCount;
+										}
+									})
+									.catch((error) => console.error(error));
+							})
+							.catch((error) => console.error(error));
+					})
+					.catch((error) => console.error(error));
+			}
+			else {
+				this.searchList = [];
+				this.searchCount = 0;
+				this.getMapPins();
+			}
 		},
-		contribDisplayClosed() {
-			router.go(this.$router.currentRoute);
-			this.selectedContribId = null;
-			this.contribDisplayModal = false;
-		}
 	}
 };
 </script>
