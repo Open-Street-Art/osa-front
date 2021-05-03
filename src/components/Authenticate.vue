@@ -76,6 +76,12 @@ export default {
 			error: false
 		};
 	},
+	mounted() {
+		window.addEventListener('keyup', this.authenticateOnEnter);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keyup', this.authenticateOnEnter);
+	},
 	methods: {
 		sendAuthentication() {
 			axios
@@ -93,6 +99,11 @@ export default {
 					console.error(error);
 					this.error = true;
 				});
+		},
+		authenticateOnEnter(event) {
+			if (event.code == 'Enter' && this.data) {
+				this.sendAuthentication();
+			}
 		}
 	}
 };

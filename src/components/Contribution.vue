@@ -169,6 +169,12 @@ export default {
 					.catch((error) => console.error(error));
 		}
 	},
+	mounted() {
+		window.addEventListener('keyup', this.sendContribOnEnter);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keyup', this.sendContribOnEnter);
+	},
 	methods : {
 		sendContrib() {
 			if (this.addArt) {
@@ -251,6 +257,11 @@ export default {
 					router.go();
 				})
 				.catch((error) => console.error(error));
+		},
+		sendContribOnEnter(event) {
+			if (event.code == 'Enter' && this.data) {
+				this.sendContrib();
+			}
 		}
 	}
 };
