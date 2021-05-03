@@ -49,17 +49,20 @@
 					class="artmap"
 					:base-center="centerTest"
 					@mapref="getMap">
-					<pin
-						v-for="{id, latitude, longitude} in pinList"
-						:key="id"
-						:marker-latlng="[latitude, longitude]"
-						@click="pinPopup(id)">
-						<card
-							:card-title="cardTitle"
-							:card-desc="cardDesc"
-							:img-src="imgSrc"
-							@click="pinClicked(id)" />
-					</pin>
+					<v-marker-cluster
+						:options="clusterOptions">
+						<pin
+							v-for="{id, latitude, longitude} in pinList"
+							:key="id"
+							:marker-latlng="[latitude, longitude]"
+							@click="pinPopup(id)">
+							<card
+								:card-title="cardTitle"
+								:card-desc="cardDesc"
+								:img-src="imgSrc"
+								@click="pinClicked(id)" />
+						</pin>
+					</v-marker-cluster>
 					<v-btn
 						fab
 						rounded
@@ -101,6 +104,7 @@ import Contribution from '../components/Contribution.vue';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import router from '../router';
+import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster';
 
 export default {
 	name: 'Home',
@@ -113,7 +117,8 @@ export default {
 		CityDisplay,
 		Searchbar,
 		Header,
-		Contribution
+		Contribution,
+		'v-marker-cluster': Vue2LeafletMarkerCluster
 	},
 	props: {
 		artDisplay: {
@@ -163,7 +168,13 @@ export default {
 			gotData: false,
 			authenticateModal: false,
 			isAdmin: false,
-			centerTest: [49.386758892241396, 1.0686564445495608]
+			centerTest: [49.386758892241396, 1.0686564445495608],
+			clusterOptions: {
+				iconCreateFunction : (cluster) => {
+					let markersCount = cluster.getChildCount();
+					return L.divIcon({ html: markersCount, className: 'mycluster', iconSize: L.point(40, 40) });
+				}
+			}
 		};
 	},
 	mounted() {
@@ -200,6 +211,14 @@ export default {
 				}
 			}
 			return false;
+		},
+		clusterIcon(cluster) {
+			var markers = cluster.getAllChildMarkers();
+			var n = 0;
+			for (var i = 0; i < markers.length; i++) {
+				n += markers[i].number;
+			}
+			return L.divIcon({ html: n, className: 'mycluster', iconSize: L.point(40, 40) });
 		},
 		addArt(array, res) {
 			if(this.searchCount == 0) {
@@ -238,7 +257,7 @@ export default {
 		getMapPins() {
 			var tempPinList = [];
 			axios
-				.get('/api/art/locations')
+				.get('/api/arts/locations')
 				.then((response) => {
 					var array = response.data.data;
 					for(let i = 0;i < array.length;++i) {
@@ -250,7 +269,7 @@ export default {
 		},
 		pinPopup(id) {
 			axios
-				.get('/api/art/' + id)
+				.get('/api/arts/' + id)
 				.then((response) => {
 					this.cardTitle = response.data.data.name;
 					this.cardDesc = response.data.data.authorName;
@@ -356,6 +375,7 @@ export default {
 
 <style lang="scss" >
 @import "../assets/styles/text.scss";
+@import "../assets/styles/_variables.scss";
 
 .homeButton {
 	top:10px;
@@ -394,5 +414,17 @@ export default {
 		width: 90%;
 		margin:auto
 	}
+
+	.mycluster {
+			width: 40px;
+			height: 40px;
+			background-color: $main-color;
+			color: $white-color;
+			text-align: center;
+			padding-top: 5px;
+			font: $profile-font;
+			border: solid 3px $white-color;
+			border-radius: 24px;
+		}
 
 </style>

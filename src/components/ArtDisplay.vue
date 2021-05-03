@@ -184,7 +184,8 @@ export default {
 			artCity: '',
 			artImages: [],
 			artCreationDT: new Date(),
-			contributionModal: false
+			contributionModal: false,
+			artCityId: null
 		};
 	},
 	watch: {
@@ -193,7 +194,7 @@ export default {
 			handler(b, a) {
 				if (this.$route.params.id !== undefined)
 					axios
-						.get('/api/art/' + this.$route.params.id)
+						.get('/api/arts/' + this.$route.params.id)
 						.then((response) => {
 							this.artId = this.$route.params.id;
 							this.artTitle = response.data.data.name;
@@ -205,6 +206,16 @@ export default {
 							this.artCreationDT = new Date(response.data.data.creationDateTime);
 						})
 						.catch((error) => console.error(error));
+				else {
+					this.artId = null;
+					this.artTitle = '';
+					this.artDesc = '';
+					this.artAuthor = '';
+					this.artImages = '';
+					this.artCity = '';
+					this.artCityId = null;
+					this.artCreationDT = new Date();
+				}
 			}
 		}
 	},

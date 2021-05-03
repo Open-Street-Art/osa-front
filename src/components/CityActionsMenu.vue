@@ -12,10 +12,12 @@
 			@click="removeFavourite" />
 		<ActionsMenuItem
 			icon="mdi-export-variant"
-			content="cityDisplay.exportPDF" />
+			content="cityDisplay.exportPDF"
+			@click="exportPDF" />
 		<ActionsMenuItem
 			icon="mdi-export-variant"
-			content="cityDisplay.exportCSV" />
+			content="cityDisplay.exportCSV"
+			@click="exportCSV" />
 	</ActionsMenu>
 </template>
 
@@ -60,7 +62,7 @@ export default {
 	methods: {
 		addToFavourite() {
 			axios
-				.post('/api/fav/city/' + this.cityId)
+				.post('/api/fav/cities/' + this.cityId)
 				.then((response) => {
 					EventBus.$emit('success', 'cityActionsMenu.added');
 					this.isFavourited = true;
@@ -75,7 +77,7 @@ export default {
 		},
 		removeFavourite() {
 			axios
-				.delete('/api/fav/city/' + this.cityId)
+				.delete('/api/fav/cities/' + this.cityId)
 				.then((response) => {
 					EventBus.$emit('success', 'cityActionsMenu.deleted');
 					this.isFavourited = false;
@@ -87,6 +89,32 @@ export default {
 						EventBus.$emit('error', 'unknown');
 					}
 				});
+		},
+		exportCSV() {
+			axios
+				.get('/api/media/csv/' + this.cityId)
+				.then((response) => {
+					const blob = new Blob([response.data], { type: 'text/csv' });
+					const link = document.createElement('a');
+					link.href = URL.createObjectURL(blob);
+					link.download = 'arts_list.csv';
+					link.click();
+					URL.revokeObjectURL(link.href);
+				})
+				.catch(console.error);
+		},
+		exportPDF() {
+			axios
+				.get('/api/media/pdf/' + this.cityId, { responseType: 'blob' })
+				.then((response) => {
+					const blob = new Blob([response.data], { type: 'application/pdf' });
+					const link = document.createElement('a');
+					link.href = URL.createObjectURL(blob);
+					link.download = 'arts_list.pdf';
+					link.click();
+					URL.revokeObjectURL(link.href);
+				})
+				.catch(console.error);
 		}
 	}
 };

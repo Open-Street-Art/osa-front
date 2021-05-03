@@ -71,7 +71,7 @@ export default {
 	methods: {
 		loadContrib() {
 			axios
-				.get('/api/contrib/unapproved')
+				.get('/api/contribs/unapproved')
 				.then((response) => {
 					this.contribList = response.data.data;
 				})
