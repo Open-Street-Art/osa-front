@@ -22,21 +22,21 @@
 			<div class="content">
 				<Searchbar
 					v-model="searchValue"
+					class="searchbar"
 					:result-count="searchCount"
-					:show-button="true"
-					@update="search"
-					@click:clear="getMapPins">
-					<div class="mb-4" />
+					placeholder="searchUser-menu.title"
+					@update="search">
 					<div
-						v-for="{id, title, desc, img} in searchList"
+						v-for="{id, username, profilePicture} in searchList"
 						:key="id">
+						<div class="separator mt-1 mb-4" />
 						<card
 							class="searchResult"
-							:card-title="title"
-							:card-desc="desc"
-							:img-src="img"
-							@click="getUser(name)" />
-						<div class="separator mt-1 mb-4" />
+							:card-title="username"
+							card-desc=""
+							:round-img="true"
+							:img-src="(profilePicture != null) ? profilePicture : placeholder"
+							@click="getUser(id)" />
 					</div>
 				</Searchbar>
 			</div>
@@ -63,70 +63,56 @@ export default {
 	data() {
 		return {
 			drawer: false,
-			contribList: [],
-			contribDisplayModal: false,
-			selectedContribId: null,
 			searchValue: '',
+			searchList: [],
+			searchCount: 0,
+			placeholder: require('@/assets/avatarPlaceholder.png')
 		};
 	},
 	mounted() {
-		
+
 	},
 	methods: {
-		getUser(name){
-			router.push('/api/search/users/'+ name);
-		   
+		includeUser(id, array) {
+			for (let i = 0;i < array.length;++i) {
+				var json = JSON.parse(JSON.stringify(array[i]));
+				if (json.id == id) {
+					return true;
+				}
+			}
+			return false;
+		},
+		getUser(id){
+			router.push('/profile/' + id);
+
 		},
 		search() {
 			if(this.searchValue != null && this.searchValue.length > 1 ) {
-				var res = {
-					searchList: [],
-					pinList: [],
-					searchCount: 0,
-				};
-				this.gotData = false;
 				axios
-					.get('/api/search/arts/' + this.searchValue)
+					.get('/api/search/users/' + this.searchValue)
 					.then((response) => {
+						var tempSearchList = [];
+						var tempSearchCount = 0;
 						if(response.data.data.length > 0) {
-							this.addArt(response.data.data, res);
-							this.gotData = true;
-						}
-						axios
-							.get('/api/search/arts/artist/' + this.searchValue)
-							.then((response) => {
-								if(response.data.data.length > 0) {
-									this.addArt(response.data.data, res);
-									this.gotData = true;
+							for(let i = 0 ;i < response.data.data.length;++i ) {
+								if(!this.includeUser(response.data.data[i].id, tempSearchList)) {
+									tempSearchList.push(response.data.data[i]);
+									++tempSearchCount;
 								}
-								axios
-									.get('/api/search/cities/' + this.searchValue)
-									.then((response) => {
-										if(response.data.data.length > 0) {
-											this.addArt(response.data.data, res);
-											this.gotData = true;
-										}
-										if(!this.gotData) {
-											this.searchList = [];
-											this.pinList = [];
-											this.searchCount = 0;
-										}
-										else {
-											this.searchList = res.searchList;
-											this.pinList = res.pinList;
-											this.searchCount = res.searchCount;
-										}
-									})
-									.catch((error) => console.error(error));
-							})
-							.catch((error) => console.error(error));
+							}
+							this.searchList = tempSearchList;
+							this.searchCount = tempSearchCount;
+						}
+						else {
+							this.searchList = [];
+							this.searchCount = 0;
+						}
 					})
 					.catch((error) => console.error(error));
 			}
 			else {
 				this.searchList = [];
 				this.searchCount = 0;
-				this.getMapPins();
 			}
 		},
 	}
@@ -155,6 +141,10 @@ export default {
 	height: calc(100vh - 60px);
   overflow: auto !important;
   padding: 12px;
+}
+
+.searchbar {
+	border: 1px solid $light-color;
 }
 
 </style>

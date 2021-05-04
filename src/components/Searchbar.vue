@@ -11,16 +11,18 @@
 			flat
 			solo
 			hide-details
-			:placeholder="this.$t('search.bar')"
+			:placeholder="this.$t(placeholder)"
 			@input="updateSearchBar"
 			@focus="focusSearchBar" />
-		<div class="separator" />
 		<slot />
 		<div
 			v-if="resultCount==0"
 			class="sad light-emphase py-5">
 			{{ this.$t("search.sad") }}
 		</div>
+		<div
+			v-if="resultCount>0 && showButton"
+			class="separator mt-1 mb-4" />
 		<div
 			v-if="resultCount>0 && showButton"
 			class="explorer button"
@@ -46,6 +48,10 @@ export default {
 		resultCount: {
 			default: 0,
 			type: Number
+		},
+		placeholder: {
+			default: 'search.bar',
+			type: String
 		}
 	},
 	data: function() {

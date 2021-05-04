@@ -74,7 +74,7 @@ const routes = [
 		path: '/admin',
 		name: 'Admin',
 		component: Administration,
-		props: true 
+		props: true
 	},
 	{
 		path: '/profile',
@@ -96,10 +96,10 @@ const routes = [
 		}
 	},
 	{
-		path: '/searchUser',
+		path: '/searchuser',
 		name: 'SearchUser',
 		component: SearchUser,
-		props: true 
+		props: true
 	},
 ];
 

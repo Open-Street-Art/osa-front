@@ -53,7 +53,8 @@
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						icon="mdi-account-search"
-						content="home.searchUser" />
+						content="home.searchUser"
+						@click="searchUserClicked" />
 					<v-divider class="mx-auto" />
 					<ActionsMenuItem
 						v-if="connected"
@@ -86,7 +87,7 @@
 				@click="switchLocale">
 				<div
 					class="lang-icon"
-					:style="langStyle" /> 
+					:style="langStyle" />
 			</v-btn>
 			<v-btn
 				class="logout"
@@ -289,6 +290,9 @@ export default {
 		},
 		adminClicked() {
 			router.push('/admin');
+		},
+		searchUserClicked() {
+			router.push('/searchuser');
 		},
 		switchLocale() {
 			if(this.$i18n.locale == this.langs[1]) {
