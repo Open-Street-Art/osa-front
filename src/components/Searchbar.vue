@@ -22,7 +22,7 @@
 		</div>
 		<div
 			v-if="resultCount>0 && showButton"
-			class="separator mt-1 mb-4" />
+			class="separator mt-1 mb-2" />
 		<div
 			v-if="resultCount>0 && showButton"
 			class="explorer button"
@@ -140,30 +140,16 @@ export default {
 	}
 
 	.explorer {
-		height : 0;
-		overflow: hidden;
-
-		cursor: pointer;
 		user-select: none;
 
-		display: block;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-
-		padding-top: 31px;
-
 		text-align: center;
-
+		padding-bottom: 10px;
 		background: $white-color;
 		background: linear-gradient(0deg, $white-color 0%, $white-color 80%, rgba(0,0,0,0) 100%);
 
 		transition: height 0.125s ease;
 	}
 
-	.searchbar.large > .explorer {
-		height: 64px;
-	}
 
 	.hidden {
 		display: none;
