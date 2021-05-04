@@ -35,13 +35,13 @@
 							<div
 								v-for="{id, title, desc, img} in searchList"
 								:key="id">
+								<div class="separator mt-1 mb-4" />
 								<card
 									class="searchResult"
 									:card-title="title"
 									:card-desc="desc"
 									:img-src="img"
 									@click="centerMap(id)" />
-								<div class="separator mt-1 mb-4" />
 							</div>
 						</searchbar>
 					</v-row>
@@ -318,7 +318,7 @@ export default {
 							this.gotData = true;
 						}
 						axios
-							.get('/api/search/arts/artist/' + this.searchValue)
+							.get('/api/search/arts/artists/' + this.searchValue)
 							.then((response) => {
 								if(response.data.data.length > 0) {
 									this.addArt(response.data.data, res);

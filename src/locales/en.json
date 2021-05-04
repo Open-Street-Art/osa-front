@@ -88,7 +88,10 @@
 		"deleted": "The city has been deleted from your favorites."
 	},
 	"admin-menu" : {
-		"title": "Administrer les contributions"
+		"title": "Administer the contributions"
+	},
+	"searchUser-menu" : {
+		"title": "Search user"
 	},
 	"contributionDisplay": {
 		"contributor": "Contributor",

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Administration from '../views/Administration.vue';
 import Profile from '../views/Profile.vue';
+import SearchUser from '../views/SearchUser';
 
 Vue.use(VueRouter);
 
@@ -81,7 +82,7 @@ const routes = [
 		path: '/admin',
 		name: 'Admin',
 		component: Administration,
-		props: true 
+		props: true
 	},
 	{
 		path: '/profile',
@@ -101,7 +102,13 @@ const routes = [
 		props: {
 			editProfileDisplay: true
 		}
-	}
+	},
+	{
+		path: '/searchuser',
+		name: 'SearchUser',
+		component: SearchUser,
+		props: true
+	},
 ];
 
 const router = new VueRouter({
