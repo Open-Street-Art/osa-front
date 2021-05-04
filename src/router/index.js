@@ -14,6 +14,14 @@ const routes = [
 		props: true,
 	},
 	{
+		path: '/settings',
+		name: 'SettingsMenu',
+		component: Home,
+		props: {
+			settingsDisplay: true
+		}
+	},
+	{
 		path: '/art/:id',
 		name: 'ArtDisplay',
 		component: Home,
@@ -93,7 +101,7 @@ const routes = [
 		props: {
 			editProfileDisplay: true
 		}
-	},
+	}
 ];
 
 const router = new VueRouter({

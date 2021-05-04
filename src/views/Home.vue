@@ -6,7 +6,8 @@
 				:register="registerModal"
 				:authenticate="authenticateDisplay"
 				:contribution-display="contributionDisplay"
-				:add-art="addArtModal">
+				:add-art="addArtModal"
+				:settings-display="settingsDisplay">
 				<v-col>
 					<v-row>
 						<Header class="test">
@@ -146,6 +147,10 @@ export default {
 			type: Boolean
 		},
 		authenticateDisplay: {
+			default: false,
+			type: Boolean
+		},
+		settingsDisplay: {
 			default: false,
 			type: Boolean
 		}

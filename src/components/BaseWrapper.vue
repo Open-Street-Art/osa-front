@@ -79,6 +79,14 @@
 				</ActionsMenu>
 			</v-container>
 			<v-btn
+				class="accountSettings"
+				fab
+				small
+				text
+				@click="settingsClicked">
+				<v-icon>mdi-cog</v-icon>
+			</v-btn>
+			<v-btn
 				v-model="$i18n.locale"
 				class="localeChanger"
 				fab
@@ -111,6 +119,9 @@
 			:add-art="addingArt"
 			:data="addArtModal"
 			@close="addArtClosed" />
+		<Settings
+			:open="settingsModal"
+			@close="settingsClosed" />
 	</div>
 </template>
 
@@ -124,6 +135,7 @@ import store  from '../store/index.js';
 import Register from './Register.vue';
 import Authenticate from './Authenticate.vue';
 import Contribution from './Contribution.vue';
+import Settings from './Settings.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
@@ -141,6 +153,7 @@ export default {
 		Photo,
 		Contribution,
 		Authenticate,
+		Settings
 	},
 	model: {
 		prop: 'value',
@@ -163,6 +176,10 @@ export default {
 			default: false,
 			type: Boolean
 		},
+		settingsDisplay: {
+			default: false,
+			type: Boolean
+		},
 		addArt: {
 			default: false,
 			type: Boolean
@@ -179,6 +196,7 @@ export default {
 			contributionModal: false,
 			authenticateModal: false,
 			addArtModal: false,
+			settingsModal: false,
 			connected: false,
 			admin: false,
 			username: '',
@@ -225,17 +243,20 @@ export default {
 				})
 	     		 .catch((error) => console.error(error));
 		}
-		if(this.register) {
+		if (this.register) {
 			this.registerModal = true;
 		}
-		if(this.authenticate) {
+		if (this.authenticate) {
 			this.authenticateModal = true;
 		}
-		if(this.contributionDisplay) {
+		if (this.contributionDisplay) {
 			this.contributionModal = true;
 		}
-		if(this.profileDisplay) {
+		if (this.profileDisplay) {
 			this.profileModal = true;
+		}
+		if (this.settingsDisplay) {
+			this.settingsModal = true;
 		}
 		if(this.addArt) {
 			if(this.role === 'administrator') {
@@ -311,6 +332,14 @@ export default {
 		homeClicked() {
 			router.push('/');
 			this.value = false;
+		},
+		settingsClicked() {
+			this.settingsModal = true;
+			router.push('/settings');
+		},
+		settingsClosed() {
+			router.push('/');
+			this.settingsModal = false;
 		}
 	}
 };
@@ -337,6 +366,12 @@ div.view {
 }
 
 .localeChanger {
+	position: absolute;
+	bottom: 10px;
+	left: 50px;
+}
+
+.accountSettings {
 	position: absolute;
 	bottom: 10px;
 	left: 10px;

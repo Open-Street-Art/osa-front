@@ -101,5 +101,19 @@
 		"accept": "Accepter la contribution",
 		"deny": "Refuser la contribution",
 		"delete": "Supprimer la contribution"
+	},
+	"settings": {
+		"title": "Paramètres du compte",
+		"changeEmail": "Changer d'adresse mail",
+		"changePsw": "Changer de mot de passe",
+		"newEmail": "Nouvelle adresse mail",
+		"confirmEmail": "Confirmer l'adresse mail",
+		"oldPsw": "Ancien mot de passe",
+		"newPsw": "Nouveau mot de passe",
+		"confirmPsw": "Confirmation mot de passe",
+		"cancel": "Annuler",
+		"save": "Valider",
+		"emailModified": "L'adresse email a été modifiée",
+		"pswModified": "Le mot de passe a été modifié"
 	}
 }

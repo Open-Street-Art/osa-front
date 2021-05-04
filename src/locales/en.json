@@ -99,5 +99,19 @@
 		"accept": "Accept the contribution",
 		"deny": "Deny the contribution",
 		"delete": "Delete the contribution"
+	},
+	"settings": {
+		"title": "Account settings",
+		"changeEmail": "Change email address",
+		"changePsw": "Change password",
+		"newEmail": "New email address",
+		"confirmEmail": "Confirm email address",
+		"oldPsw": "Old password",
+		"newPsw": "New password",
+		"confirmPsw": "Confirm password",
+		"cancel": "Cancel",
+		"save": "Save",
+		"emailModified": "Email address has been modified",
+		"pswModified": "Password has been been modified"
 	}
 }
