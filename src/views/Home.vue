@@ -78,6 +78,7 @@
 		</div>
 		<ArtDisplay
 			:data="artDisplayModal"
+			:actual-position="actualPosition"
 			@close="artDisplayClosed()"
 			@cityClicked="cityNameClicked"
 			@changeArtAdmin="changeArtAdmin" />
@@ -183,7 +184,8 @@ export default {
 					let markersCount = cluster.getChildCount();
 					return L.divIcon({ html: markersCount, className: 'mycluster', iconSize: L.point(40, 40) });
 				}
-			}
+			},
+			actualPosition: [0, 0]
 		};
 	},
 	mounted() {
@@ -210,6 +212,14 @@ export default {
 			this.contributionModal = true;
 		else if (this.authenticateDisplay == true)
 			this.authenticateModal = true;
+
+		// Récupération de la localisation
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				this.actualPosition = [position.coords.latitude, position.coords.longitude];
+				console.log(position);
+			}
+		);
 	},
 	methods: {
 		includeArt(id, array) {

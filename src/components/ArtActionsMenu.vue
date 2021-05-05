@@ -27,7 +27,8 @@
 			@click="contribute" />
 		<ActionsMenuItem
 			icon="mdi-map"
-			content="artDisplay.displayRoute" />
+			content="artDisplay.displayRoute"
+			@click="itinerary" />
 		<ActionsMenuItem
 			icon="mdi-flag-variant"
 			content="artDisplay.reportArt" />
@@ -55,6 +56,16 @@ export default {
 		axiosFavService,
 		axiosUserService
 	],
+	props: {
+		actualPosition: {
+			required: true,
+			type: Array
+		},
+		artPosition: {
+			required: true,
+			type: Array
+		}
+	},
 	data() {
 		return {
 			artId: this.$route.params.id,
@@ -139,6 +150,39 @@ export default {
 		},
 		contribute() {
 			this.$emit('modifyContrib');
+		},
+		itinerary() {
+			var prefix = '';
+			if (this.actualPosition != null) {
+				prefix = 'saddr=' 
+					+ this.actualPosition[0] 
+					+ ','
+					+ this.actualPosition[1]
+					+ '&';
+			}
+			if
+			(navigator.platform.indexOf('iPhone') != -1 || 
+				navigator.platform.indexOf('iPad') != -1 || 
+				navigator.platform.indexOf('iPod') != -1) {
+				window.open(
+					'maps://maps.google.com/maps?'
+						+ prefix
+						+ 'daddr='
+						+ this.artPosition[0]
+						+ ',' 
+						+ this.artPosition[1]
+						+ '&dirflg=w'
+				);
+			} else {
+				window.open('https://maps.google.com/maps?'
+						+ prefix
+						+ 'daddr='
+						+ this.artPosition[0]
+						+ ',' 
+						+ this.artPosition[1]
+						+ '&dirflg=w'
+				);
+			}
 		}
 	}
 };

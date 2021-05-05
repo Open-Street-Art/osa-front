@@ -38,6 +38,8 @@
 								</v-btn>
 							</template>
 							<ArtActionsMenu 
+								:actual-position="actualPosition"
+								:art-position="artLocation"
 								@changeArtAdmin="changeArtAdmin"
 								@modifyContrib="modifyContrib" />
 						</v-menu>
@@ -107,7 +109,9 @@
 										</v-icon>
 									</v-btn>
 								</template>
-								<ArtActionsMenu 
+								<ArtActionsMenu
+									:actual-position="actualPosition"
+									:art-position="artLocation"
 									@changeArtAdmin="changeArtAdmin"
 									@modifyContrib="modifyContrib" />
 							</v-menu>
@@ -176,6 +180,10 @@ export default {
 		data: {
 			type: Boolean,
 			required: true
+		},
+		actualPosition: {
+			type: Array,
+			required: true
 		}
 	},
 	data() {
@@ -188,7 +196,8 @@ export default {
 			artImages: [],
 			artCreationDT: new Date(),
 			contributionModal: false,
-			artCityId: null
+			artCityId: null,
+			artLocation: null
 		};
 	},
 	watch: {
@@ -206,6 +215,7 @@ export default {
 							this.artCity = response.data.data.city.name;
 							this.artCityId = response.data.data.city.id;
 							this.artCreationDT = new Date(response.data.data.creationDateTime);
+							this.artLocation = [response.data.data.latitude, response.data.data.longitude];
 						})
 						.catch((error) => console.error(error));
 				else {
