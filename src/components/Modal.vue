@@ -106,6 +106,7 @@ export default {
 	z-index: 100;
 	top: 20px;
 	left: 20px;
+	cursor: pointer;
 }
 
 .round {
