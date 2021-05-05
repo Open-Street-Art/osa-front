@@ -150,7 +150,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 import Modal from './Modal.vue';
 import ContributionActionsMenu from './ContributionActionsMenu.vue';
