@@ -31,6 +31,9 @@ export default {
 					picture3: pic3,
 					author: artistName,
 				});
+		},
+		getArtsLocations() {
+			return axios.get('/api/arts/locations');
 		}
 	}
 };

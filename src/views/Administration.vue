@@ -19,6 +19,10 @@
 					</v-icon>
 				</v-btn>
 			</Header>
+			<v-progress-linear
+				v-if="isLoading"
+				indeterminate
+				color="primary" />
 			<div class="content">
 				<div
 					v-for="{id, name, author, picture1} in contribList"
@@ -65,7 +69,8 @@ export default {
 			drawer: false,
 			contribList: [],
 			contribDisplayModal: false,
-			selectedContribId: null
+			selectedContribId: null,
+			isLoading: false
 		};
 	},
 	mounted() {
@@ -73,9 +78,11 @@ export default {
 	},
 	methods: {
 		loadContrib() {
+			this.isLoading = true;
 			this.getUnapprovedContribs()
 				.then((response) => {
 					this.contribList = response.data.data;
+					this.isLoading = false;
 				})
 				.catch((error) => console.error(error));
 		},
@@ -97,7 +104,7 @@ export default {
 .header-center {
   position: absolute;
 	top: 18px;
-  width: 100%;
+	width: 100%;
 	text-align: center;
 }
 
