@@ -74,7 +74,7 @@
 	},
 	"search" : {
 		"bar" : "Search for an art, an artist ...",
-		"sad" : "No results were found for your search :(",
+		"sad" : "No results were found for your search 🙁",
 		"explore" : "Explore the map"
 	},
 	"unauthorized": "Your must be authentified to perform this action",

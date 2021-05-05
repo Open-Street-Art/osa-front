@@ -76,7 +76,7 @@
 	},
 	"search" : {
 		"bar" : "Rechercher une œuvre, un artiste...",
-		"sad" : "Aucun résultat ne correspond à votre recherche :(",
+		"sad" : "Aucun résultat ne correspond à votre recherche 🙁",
 		"explore" : "Explorer la carte"
 	},
 	"unauthorized": "Vous devez être authentifié pour faire cette action.",
