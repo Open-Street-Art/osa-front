@@ -1,12 +1,12 @@
 <template>
 	<ActionsMenu>
 		<ActionsMenuItem
-			v-if="isAdmin"
+			v-if="isAdmin && !isDecided"
 			icon="mdi-check"
 			content="contributionActionsMenu.accept"
 			@click="acceptContribClicked" />
 		<ActionsMenuItem
-			v-if="isAdmin"
+			v-if="isAdmin && !isDecided"
 			icon="mdi-close"
 			content="contributionActionsMenu.deny"
 			@click="denyContribClicked" />
@@ -38,6 +38,10 @@ export default {
 		contribId: {
 			type: Number,
 			required: true
+		},
+		isDecided: {
+			type: Boolean,
+			required: true
 		}
 	},
 	data() {
@@ -62,8 +66,10 @@ export default {
 				}
 				this.getOwnContribs().then((response) => {
 					for (var contrib of response.data.data) {
-						if (contrib.id == this.contribId)
+						if (contrib.id == this.contribId) {
 							this.isContributor = true;
+							break;
+						}
 					}
 				}).catch((error) => console.error(error));
 			}
@@ -76,6 +82,7 @@ export default {
 					this.$emit('close');
 				})
 				.catch((error) => console.error(error));
+			this.$emit('decided');
 		},
 		denyContribClicked() {
 			this.denyContrib(this.contribId)
@@ -83,6 +90,7 @@ export default {
 					this.$emit('close');
 				})
 				.catch((error) => console.error(error));
+			this.$emit('decided');
 		},
 		removeContrib() {
 			this.removeContrib(this.contribId)

@@ -38,6 +38,8 @@
 						</template>
 						<ContributionActionsMenu
 							:contrib-id="contribId"
+							:is-decided="isDecided"
+							@decided="isDecided = true"
 							@close="$emit('close')" />
 					</v-menu>
 				</v-col>
@@ -109,6 +111,8 @@
 							</template>
 							<ContributionActionsMenu
 								:contrib-id="contribId"
+								:is-decided="isDecided"
+								@decided="isDecided = true"
 								@close="$emit('close')" />
 						</v-menu>
 					</v-col>
@@ -182,7 +186,8 @@ export default {
 			artAuthor: '',
 			contribCreationDT: new Date(),
 			artLongitude: null,
-			artLatitude: null
+			artLatitude: null,
+			isDecided: true
 		};
 	},
 	watch: {
@@ -204,6 +209,12 @@ export default {
 						this.contribImages = this.contribImages.filter((elem) => {
 							return elem != '';
 						});
+						if (response.data.data.approved != null) {
+							this.isDecided = true;
+						} else {
+							this.isDecided = false;
+						}
+						console.log(response);
 					})
 					.catch((error) => console.error(error));
 			}
