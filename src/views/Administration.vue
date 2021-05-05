@@ -46,8 +46,8 @@ import BaseWrapper from '../components/BaseWrapper.vue';
 import Header from '../components/Header.vue';
 import Card from '../components/Card.vue';
 import ContributionDisplay from '../components/ContributionDisplay.vue';
-import axios from 'axios';
 import router from '../router';
+import axiosContribService from '../components/mixins/axiosContribService';
 
 export default {
 	name: 'Administration',
@@ -57,6 +57,9 @@ export default {
 		Card,
 		ContributionDisplay
 	},
+	mixins: [
+		axiosContribService
+	],
 	data() {
 		return {
 			drawer: false,
@@ -70,8 +73,7 @@ export default {
 	},
 	methods: {
 		loadContrib() {
-			axios
-				.get('/api/contribs/unapproved')
+			this.getUnapprovedContribs()
 				.then((response) => {
 					this.contribList = response.data.data;
 				})

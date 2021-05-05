@@ -83,6 +83,7 @@ import ActionsMenuItem from './ActionsMenuItem.vue';
 import TextInput from './TextInput.vue';
 import axios from 'axios';
 import { EventBus } from '@/event-bus';
+import axiosUserService from './mixins/axiosUserService';
 
 export default {
 	name: 'Settings',
@@ -94,6 +95,9 @@ export default {
 		ActionsMenuItem,
 		TextInput
 	},
+	mixins: [
+		axiosUserService
+	],
 	model: {
 		prop: 'open',
 		event: 'update'
@@ -150,22 +154,13 @@ export default {
 		},
 		save() {
 			if (this.onEmailMenu && this.valid) {
-				axios
-					.patch('/api/user/email', {
-						newMail: this.mail
-					})
-					.then((response) => {
-						EventBus.$emit('success', 'settings.emailModified');
-						this.settingsClosing();
-					})
-					.catch((error) => console.error(error));
+				this.patchEmail(this.mail).then((response) => {
+					EventBus.$emit('success', 'settings.emailModified');
+					this.settingsClosing();
+				}).catch((error) => console.error(error));
 			}
 			else if (this.onPswMenu && this.valid) {
-				axios
-					.patch('/api/user/password', {
-						oldPassword: this.oldPassword,
-						newPassword: this.newPassword
-					})
+				this.patchPassword(this.oldPassword, this.newPassword)
 					.then((response) => {
 						EventBus.$emit('success', 'settings.pswModified');
 						this.settingsClosing();

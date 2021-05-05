@@ -67,9 +67,9 @@ import CheckBoxInput from './CheckBoxInput.vue';
 import Button from './Button.vue';
 import Modal from './Modal.vue';
 import Header from './Header.vue';
-import axios from 'axios';
 import router from '../router';
 import Snackbar from './Snackbar.vue';
+import axiosUserService from './mixins/axiosUserService';
 
 export default {
 	name: 'Register',
@@ -81,6 +81,9 @@ export default {
 		Header,
 		Snackbar
 	},
+	mixins: [
+		axiosUserService
+	],
 	model: {
 		prop: 'open',
 		event: 'update'
@@ -114,22 +117,14 @@ export default {
 	},
 	methods: {
 		register() {
-			axios
-				// requête post vers la route du back en lui donnant les arguments attendu
-				.post('/api/register', {
-					email: this.email,
-					username: this.username,
-					password:this.password,
-					confirmPassword: this.confirmPassword,
-					role: this.profilType ? 'ROLE_ARTIST' : 'ROLE_USER'
-				})
-				// le bloc then est exécuté lorsque le back renvoie la réponse car axios est asynchrone (système de promesse)
-				.then((response) => {
-					axios
-						.post('/api/authenticate', {
-							username: this.username,
-							password: this.password
-						})
+			this.registerUser(
+				this.email, 
+				this.username, 
+				this.password, 
+				this.confirmPassword, 
+				this.profilType)
+				.then((resp) => {
+					this.loginUser(this.username, this.password)
 						.then((response) => {
 							localStorage.setItem('authtoken',response.data.data.token);
 							axios.defaults.headers.common = {'Authorization': `Bearer ${response.data.data.token}`};

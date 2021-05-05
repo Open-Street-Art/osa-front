@@ -152,10 +152,10 @@
 <script>
 import Modal from '../components/Modal.vue';
 import ArtActionsMenu from '../components/ArtActionsMenu.vue';
-import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 import router from '../router';
 import Contribution from './Contribution.vue';
+import axiosArtService from './mixins/axiosArtService';
 
 export default {
 	name: 'ArtDisplay',
@@ -164,7 +164,10 @@ export default {
 		ArtActionsMenu,
 		Contribution
 	},
-	mixins: [ mobileDetection ],
+	mixins: [
+		mobileDetection,
+		axiosArtService
+	 ],
 	model: {
 		prop: 'artDisplayModel',
 		event: 'update'
@@ -193,8 +196,7 @@ export default {
 			immediate: true,
 			handler(b, a) {
 				if (this.$route.params.id !== undefined)
-					axios
-						.get('/api/arts/' + this.$route.params.id)
+					this.getArt(this.$route.params.id)
 						.then((response) => {
 							this.artId = this.$route.params.id;
 							this.artTitle = response.data.data.name;

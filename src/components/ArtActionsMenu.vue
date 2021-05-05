@@ -9,7 +9,7 @@
 			v-if="isAdmin"
 			icon="mdi-delete"
 			content="artDisplay.deleteArt"
-			@click="deleteArt" />
+			@click="deleteArtClicked" />
 		<ActionsMenuItem
 			v-if="!isFavourited && isAuthentified"
 			icon="mdi-star-outline"
@@ -37,10 +37,12 @@
 <script>
 import router from '../router';
 import jwt_decode from 'jwt-decode';
-import axios from 'axios';
 import ActionsMenu from './ActionsMenu.vue';
 import ActionsMenuItem from './ActionsMenuItem.vue';
 import { EventBus } from '@/event-bus';
+import axiosFavService from './mixins/axiosFavService';
+import axiosArtService from './mixins/axiosArtService';
+import axiosUserService from './mixins/axiosUserService';
 
 export default {
 	name: 'ArtActionsMenu',
@@ -48,6 +50,11 @@ export default {
 		ActionsMenu,
 		ActionsMenuItem,
 	},
+	mixins: [
+		axiosArtService,
+		axiosFavService,
+		axiosUserService
+	],
 	data() {
 		return {
 			artId: this.$route.params.id,
@@ -67,8 +74,7 @@ export default {
 			}
 			// On récupère le profile de l'utilisateur pour savoir
 			// si l'oeuvre est deja en favoris
-			axios
-				.get('/api/user/profile')
+			this.getOwnProfile()
 				.then((response) => {
 					this.isAuthentified = true;
 					for (const art of response.data.data.favArts) {
@@ -83,8 +89,7 @@ export default {
 	},
 	methods: {
 		addToFavourite() {
-			axios
-				.post('/api/fav/arts/' + this.artId)
+			this.addArtToFavourites(this.artId)
 				.then((response) => {
 					EventBus.$emit('success', 'artActionsMenu.added');
 					this.isFavourited = true;
@@ -98,8 +103,7 @@ export default {
 				});
 		},
 		removeFavourite() {
-			axios
-				.delete('/api/fav/arts/' + this.artId)
+			this.removeArtFromFavourites(this.artId)
 				.then((response) => {
 					EventBus.$emit('success', 'artActionsMenu.deleted');
 					this.isFavourited = false;
@@ -112,10 +116,9 @@ export default {
 					}
 				});
 		},
-		deleteArt() {
+		deleteArtClicked() {
 			if (this.isAdmin) {
-				axios
-					.delete('/api/admin/arts/' + this.artId)
+				this.deleteArt(this.artId)
 					.then((response) => {
 						router.push('/');
 						router.go();

@@ -50,9 +50,10 @@ import TextInput from '../components/TextInput.vue';
 import Modal from '../components/Modal.vue';
 import Button from '../components/Button.vue';
 import Header from  '../components/Header.vue';
-import axios from 'axios';
 import router from '../router';
 import Snackbar from './Snackbar.vue';
+import axiosUserService from './mixins/axiosUserService';
+import axios from 'axios';
 
 export default {
 	name: 'Authenticate',
@@ -63,6 +64,9 @@ export default {
 		Header,
 		Snackbar
 	},
+	mixins: [
+		axiosUserService
+	],
 	props: {
 		data: {
 			type: Boolean,
@@ -78,11 +82,7 @@ export default {
 	},
 	methods: {
 		sendAuthentication() {
-			axios
-				.post('/api/authenticate', {
-					username: this.username,
-					password: this.password
-				})
+			this.loginUser(this.username, this.password)
 				.then((response) => {
 					localStorage.setItem('authtoken', response.data.data.token);
 					axios.defaults.headers.common = { 'Authorization': `Bearer ${response.data.data.token}` };

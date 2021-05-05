@@ -235,6 +235,10 @@ import Photo from '../components/Photo.vue';
 import Card from '../components/Card.vue';
 import axios from 'axios';
 import router from '../router';
+import axiosUserService from '../components/mixins/axiosUserService';
+import axiosCityService from '../components/mixins/axiosCityService';
+import axiosContribService from '../components/mixins/axiosContribService';
+import axiosFavService from '../components/mixins/axiosFavService';
 
 export default {
 	name: 'Profile',
@@ -246,6 +250,12 @@ export default {
 		Photo,
 		Card
 	},
+	mixins: [
+		axiosUserService,
+		axiosCityService,
+		axiosContribService,
+		axiosFavService
+	],
 	props: {
 		editProfileDisplay: {
 			default: false,
@@ -298,9 +308,8 @@ export default {
 	},
 	methods:{
 		getProfileInfo(id){
-			if(id == null) {
-				axios
-					.get('/api/user/profile')
+			if (id == null) {
+				this.getOwnProfile()
 					.then((response) => {
 						var array = response.data.data;
 						this.profileUsername = array.username;
@@ -315,9 +324,8 @@ export default {
 						this.favArtists = array.favArtists;
 						this.favArts = array.favArts;
 						this.favCities = [];
-						for (let i = 0 ; i < array.favCities.length;++i) {
-							axios
-								.get('api/cities/arts/' +  array.favCities[i].id)
+						for (let i = 0; i < array.favCities.length; ++i) {
+							this.getCityArts(array.favCities[i].id)
 								.then((response) => {
 									var id = array.favCities[i].id;
 									var name = array.favCities[i].name;
@@ -342,27 +350,25 @@ export default {
 	      			.catch((error) => console.error(error));
 			}
 			else {
-				axios
-					.get('/api/user/' + id)
+				this.getUserProfile(id)
 					.then((response) => {
 						var array = response.data.data;
 						this.profileUsername = array.username;
-						if(array.description != null)
+						if (array.description != null)
 							this.description = array.description;
-						if(array.roles[0] == 'ROLE_ADMIN')
+						if (array.roles[0] == 'ROLE_ADMIN')
 							this.role = 'administrator';
-						else if(array.roles[0] == 'ROLE_ARTIST')
+						else if (array.roles[0] == 'ROLE_ARTIST')
 							this.role = 'artist';
-						else if((array.roles[0] == 'ROLE_USER'))
+						else if ((array.roles[0] == 'ROLE_USER'))
 							this.role = 'contributor';
-						if(array.isPublic) {
+						if (array.isPublic) {
 							this.isPublic = true;
 							this.favArtists = array.favArtists;
 							this.favArts = array.favArts;
 							this.favCities = [];
 							for (let i = 0 ; i < array.favCities.length;++i) {
-								axios
-									.get('api/cities/arts/' +  array.favCities[i].id)
+								this.getCityArts(array.favCities[i].id)
 									.then((response) => {
 										var id = array.favCities[i].id;
 										var name = array.favCities[i].name;
@@ -384,8 +390,7 @@ export default {
 		},
 		getContrib(id){
 			if(id == null) {
-				axios
-					.get('/api/contribs/personnal')
+				this.getOwnContribs()
 					.then((response) => {
 						var array = response.data.data;
 						var result= [];
@@ -402,8 +407,7 @@ export default {
 					.catch((error) => console.error(error));
 			}
 			else {
-				axios
-					.get('/api/contribs/users/' + id)
+				this.getUserContribs(id)
 					.then((response) => {
 						var array = response.data.data;
 						var result= [];
@@ -432,20 +436,20 @@ export default {
 			this.contributionModal = false;
 		},
 		favouriteClicked() {
-			if (!this.isFavourited)
-				axios
-					.post('/api/fav/artists/' + this.$route.params.id)
+			if (!this.isFavourited) {
+				this.addArtistToFavourites(this.$route.params.id)
 					.then((response) => {
 						this.isFavourited = true;
 					})
 					.catch((error) => console.error(error));
-			else
-				axios
-					.delete('/api/fav/artists/' + this.$route.params.id)
+			}
+			else {
+				this.removeArtistFromFavourites(this.$route.params.id)
 					.then((response) => {
 						this.isFavourited = false;
 					})
 					.catch((error) => console.error(error));
+			}
 		},
 		goToContrib(id) {
 			this.contributionId = id;

@@ -140,6 +140,7 @@ import Settings from './Settings.vue';
 import router from '../router';
 import jwt_decode from 'jwt-decode';
 import Photo from './Photo.vue';
+import axiosUserService from './mixins/axiosUserService';
 import axios from 'axios';
 
 export default {
@@ -156,6 +157,9 @@ export default {
 		Authenticate,
 		Settings
 	},
+	mixins: [
+		axiosUserService
+	],
 	model: {
 		prop: 'value',
 		event: 'update'
@@ -236,8 +240,7 @@ export default {
 				// Le token est expiré
 				localStorage.removeItem('authtoken');
 			}
-			axios
-				.get('/api/user/profile')
+			this.getOwnProfile()
 				.then((response) => {
 					var array = response.data.data;
 					this.profilePicture = array.profilePicture;

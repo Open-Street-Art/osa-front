@@ -101,7 +101,8 @@ import LocationPicker from '../components/LocationPicker.vue';
 import axios from 'axios';
 import router from '../router';
 import mobileDetection from './mixins/mobileDetection';
-
+import axiosArtService from './mixins/axiosArtService';
+import axiosContribService from './mixins/axiosContribService';
 
 export default {
 	name: 'Contribution',
@@ -114,7 +115,11 @@ export default {
 		MediaInput,
 		LocationPicker
 	},
-	mixins: [ mobileDetection ],
+	mixins: [
+		mobileDetection,
+		axiosArtService,
+		axiosContribService
+	],
 	model: {
 		prop: 'contributionModel',
 		event: 'update'
@@ -154,8 +159,7 @@ export default {
 	watch: {
 		data() {
 			if (this.$route.params.id !== undefined)
-				axios
-					.get('/api/arts/' + this.$route.params.id)
+				this.getArt(this.$route.params.id)
 					.then((response) => {
 						this.name = response.data.data.name;
 						this.artist = response.data.data.authorName;
@@ -178,17 +182,16 @@ export default {
 			} else if (this.modifyContrib) {
 				this.sendContribOfArt();
 			} else {
-				axios
-					.post('/api/contribs', {
-						name: this.name,
-						description: this.description,
-						picture1: this.pic1,
-						picture2: this.pic2,
-						picture3: this.pic3,
-						authorName: this.artist,
-						latitude: this.latlng[0],
-						longitude: this.latlng[1]
-					})
+				this.postNewContrib(
+					this.name, 
+					this.description, 
+					this.pic1, 
+					this.pic2, 
+					this.pic3, 
+					this.artist, 
+					this.latlng[0], 
+					this.latlng[1]
+				)
 					.then((response) => {
 						router.push('/');
 						router.go();
@@ -197,38 +200,33 @@ export default {
 			}
 		},
 		addingArt() {
-			axios
-				.post('/api/admin/arts', {
-					name: this.name,
-					description: this.description,
-					picture1: this.pic1,
-					picture2: this.pic2,
-					picture3: this.pic3,
-					author: this.artist,
-					latitude: this.latlng[0],
-					longitude: this.latlng[1]
-				})
-				.then((response) => {
-					router.push('/');
-					router.go();
-				})
-				.catch((error) => console.error(error));
+			this.postArt(
+				this.name,
+				this.description,
+				this.pic1,
+				this.pic2,
+				this.pic3,
+				this.artist,
+				this.latlng[0],
+				this.latlng[1]
+			).then((response) => {
+				router.push('/');
+				router.go();
+			}).catch((error) => console.error(error));
 		},
 		changingArtAdmin() {
-			axios
-				.patch('/api/admin/arts/' + this.$route.params.id, {
-					name: this.name,
-					description: this.description,
-					picture1: this.pic1,
-					picture2: this.pic2,
-					picture3: this.pic3,
-					author: this.artist,
-				})
-				.then((response) => {
-					router.push('/');
-					router.go();
-				})
-				.catch((error) => console.error(error));
+			this.patchArt(
+				this.$route.params.id,
+				this.name,
+				this.description,
+				this.pic1,
+				this.pic2,
+				this.pic3,
+				this.artist
+			).then((response) => {
+				router.push('/');
+				router.go();
+			}).catch((error) => console.error(error));
 		},
 		locationPickerClosed() {
 			this.locationPickerModal = false;
@@ -237,20 +235,18 @@ export default {
 			this.latlng = coord;
 		},
 		sendContribOfArt() {
-			axios
-				.post('/api/contribs/' + this.$route.params.id, {
-					name: this.name,
-					description: this.description,
-					picture1: this.pic1,
-					picture2: this.pic2,
-					picture3: this.pic3,
-					authorName: this.artist,
-				})
-				.then((response) => {
-					router.push('/');
-					router.go();
-				})
-				.catch((error) => console.error(error));
+			this.postContrib(
+				this.$route.params.id,
+				this.name,
+				this.description,
+				this.pic1,
+				this.pic2,
+				this.pic3,
+				this.artist
+			).then((response) => {
+				router.push('/');
+				router.go();
+			}).catch((error) => console.error(error));
 		}
 	}
 };

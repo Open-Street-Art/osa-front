@@ -106,6 +106,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import router from '../router';
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster';
+import axiosSearchService from '../components/mixins/axiosSearchService';
 
 export default {
 	name: 'Home',
@@ -121,6 +122,9 @@ export default {
 		Contribution,
 		'v-marker-cluster': Vue2LeafletMarkerCluster
 	},
+	mixins: [
+		axiosSearchService
+	],
 	props: {
 		artDisplay: {
 			default: false,
@@ -232,9 +236,9 @@ export default {
 				var tempPinList = [];
 			}
 			else {
-				var tempList = this.searchList;
-				var tempCount = this.searchCount;
-				var tempPinList = this.pinList;
+				tempList = this.searchList;
+				tempCount = this.searchCount;
+				tempPinList = this.pinList;
 			}
 			for(let i = 0;i < array.length;++i) {
 				var id = array[i].id;
@@ -310,43 +314,34 @@ export default {
 					searchCount: 0,
 				};
 				this.gotData = false;
-				axios
-					.get('/api/search/arts/' + this.searchValue)
-					.then((response) => {
-						if(response.data.data.length > 0) {
+				this.searchArts(this.searchValue).then((response) => {
+					if (response.data.data.length > 0) {
+						this.addArt(response.data.data, res);
+						this.gotData = true;
+					}
+					this.searchArtists(this.searchValue).then((response) => {
+						if (response.data.data.length > 0) {
 							this.addArt(response.data.data, res);
 							this.gotData = true;
 						}
-						axios
-							.get('/api/search/arts/artists/' + this.searchValue)
-							.then((response) => {
-								if(response.data.data.length > 0) {
-									this.addArt(response.data.data, res);
-									this.gotData = true;
-								}
-								axios
-									.get('/api/search/cities/' + this.searchValue)
-									.then((response) => {
-										if(response.data.data.length > 0) {
-											this.addArt(response.data.data, res);
-											this.gotData = true;
-										}
-										if(!this.gotData) {
-											this.searchList = [];
-											this.pinList = [];
-											this.searchCount = 0;
-										}
-										else {
-											this.searchList = res.searchList;
-											this.pinList = res.pinList;
-											this.searchCount = res.searchCount;
-										}
-									})
-									.catch((error) => console.error(error));
-							})
-							.catch((error) => console.error(error));
-					})
-					.catch((error) => console.error(error));
+						this.searchCities(this.searchValue).then((response) => {
+							if (response.data.data.length > 0) {
+								this.addArt(response.data.data, res);
+								this.gotData = true;
+							}
+							if (!this.gotData) {
+								this.searchList = [];
+								this.pinList = [];
+								this.searchCount = 0;
+							}
+							else {
+								this.searchList = res.searchList;
+								this.pinList = res.pinList;
+								this.searchCount = res.searchCount;
+							}
+						}).catch((error) => console.error(error));
+					}).catch((error) => console.error(error));
+				}).catch((error) => console.error(error));
 			}
 			else {
 				this.searchList = [];

@@ -4,12 +4,12 @@
 			v-if="isAdmin"
 			icon="mdi-check"
 			content="contributionActionsMenu.accept"
-			@click="acceptContrib" />
+			@click="acceptContribClicked" />
 		<ActionsMenuItem
 			v-if="isAdmin"
 			icon="mdi-close"
 			content="contributionActionsMenu.deny"
-			@click="denyContrib" />
+			@click="denyContribClicked" />
 		<ActionsMenuItem
 			v-if="isContributor"
 			icon="mdi-delete"
@@ -23,6 +23,7 @@ import ActionsMenu from './ActionsMenu.vue';
 import ActionsMenuItem from './ActionsMenuItem.vue';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import axiosContribService from './mixins/axiosContribService';
 
 export default {
 	name: 'ContributionActionsMenu',
@@ -30,6 +31,9 @@ export default {
 		ActionsMenu,
 		ActionsMenuItem,
 	},
+	mixins: [
+		axiosContribService
+	],
 	props: {
 		contribId: {
 			type: Number,
@@ -56,38 +60,32 @@ export default {
 						this.isAdmin = true;
 					}
 				}
-				axios
-					.get('/api/contribs/personnal')
-					.then((response) => {
-						for (var contrib of response.data.data) {
-							if (contrib.id == this.contribId)
-								this.isContributor = true;
-						}
-					})
-					.catch((error) => console.error(error));
+				this.getOwnContribs().then((response) => {
+					for (var contrib of response.data.data) {
+						if (contrib.id == this.contribId)
+							this.isContributor = true;
+					}
+				}).catch((error) => console.error(error));
 			}
 		}
 	},
 	methods: {
-		acceptContrib() {
-			axios
-				.post('/api/contribs/accept/' + this.contribId)
+		acceptContribClicked() {
+			this.acceptContrib(this.contribId)
 				.then((response) => {
 					this.$emit('close');
 				})
 				.catch((error) => console.error(error));
 		},
-		denyContrib() {
-			axios
-				.post('/api/contribs/deny/' + this.contribId)
+		denyContribClicked() {
+			this.denyContrib(this.contribId)
 				.then((response) => {
 					this.$emit('close');
 				})
 				.catch((error) => console.error(error));
 		},
 		removeContrib() {
-			axios
-				.delete('/api/contribs/' + this.contribId)
+			this.removeContrib(this.contribId)
 				.then((response) => {
 					this.$emit('close');
 				})

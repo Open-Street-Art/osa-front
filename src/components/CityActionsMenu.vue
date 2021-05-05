@@ -22,10 +22,12 @@
 </template>
 
 <script>
-import axios from 'axios';
 import ActionsMenu from './ActionsMenu.vue';
 import ActionsMenuItem from './ActionsMenuItem.vue';
 import { EventBus } from '@/event-bus';
+import axiosUserService from './mixins/axiosUserService';
+import axiosFavService from './mixins/axiosFavService';
+import axiosMediaService from './mixins/axiosMediaService';
 
 export default {
 	name: 'CityActionsMenu',
@@ -33,6 +35,11 @@ export default {
 		ActionsMenu,
 		ActionsMenuItem
 	},
+	mixins: [
+		axiosUserService,
+		axiosFavService,
+		axiosMediaService
+	],
 	data() {
 		return {
 			cityId: this.$route.params.id,
@@ -45,8 +52,7 @@ export default {
 		// si l'oeuvre est deja en favoris
 		var token = localStorage.getItem('authtoken');
 		if (token != null) {
-			axios
-				.get('/api/user/profile')
+			this.getOwnProfile()
 				.then((response) => {
 					this.isAuthentified = true;
 					for (const city of response.data.data.favCities) {
@@ -61,8 +67,7 @@ export default {
 	},
 	methods: {
 		addToFavourite() {
-			axios
-				.post('/api/fav/cities/' + this.cityId)
+			this.addCityToFavourites(this.cityId)
 				.then((response) => {
 					EventBus.$emit('success', 'cityActionsMenu.added');
 					this.isFavourited = true;
@@ -76,8 +81,7 @@ export default {
 				});
 		},
 		removeFavourite() {
-			axios
-				.delete('/api/fav/cities/' + this.cityId)
+			this.removeCityFromFavourites(this.cityId)
 				.then((response) => {
 					EventBus.$emit('success', 'cityActionsMenu.deleted');
 					this.isFavourited = false;
@@ -91,8 +95,7 @@ export default {
 				});
 		},
 		exportCSV() {
-			axios
-				.get('/api/media/csv/' + this.cityId)
+			this.exportArtsInCSV(this.cityId)
 				.then((response) => {
 					const blob = new Blob([response.data], { type: 'text/csv' });
 					const link = document.createElement('a');
@@ -104,8 +107,7 @@ export default {
 				.catch(console.error);
 		},
 		exportPDF() {
-			axios
-				.get('/api/media/pdf/' + this.cityId, { responseType: 'blob' })
+			this.exportArtsInPDF(this.cityId)
 				.then((response) => {
 					const blob = new Blob([response.data], { type: 'application/pdf' });
 					const link = document.createElement('a');

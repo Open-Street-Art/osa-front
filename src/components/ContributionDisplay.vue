@@ -150,6 +150,7 @@ import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 import Modal from './Modal.vue';
 import ContributionActionsMenu from './ContributionActionsMenu.vue';
+import axiosContribService from './mixins/axiosContribService';
 
 export default {
 	name: 'ContributionDisplay',
@@ -157,7 +158,10 @@ export default {
 		Modal,
 		ContributionActionsMenu
 	},
-	mixins: [ mobileDetection ],
+	mixins: [
+		mobileDetection,
+		axiosContribService
+	],
 	props: {
 		contribId: {
 			type: Number,
@@ -185,8 +189,7 @@ export default {
 		contribId: {
 			immediate: true,
 			handler(old, ne) {
-				axios
-					.get('/api/contribs/' + this.contribId)
+				this.getContrib(this.contribId)
 					.then((response) => {
 						this.contribTitle = response.data.data.name;
 						this.contribDesc = response.data.data.description;

@@ -65,6 +65,7 @@ import MediaInput from '../components/MediaInput.vue';
 import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 import router from '../router';
+import axiosUserService from './mixins/axiosUserService';
 
 export default {
 	name: 'EditProfile',
@@ -76,7 +77,10 @@ export default {
 		Header,
 		MediaInput
 	},
-	mixins: [ mobileDetection ],
+	mixins: [
+		mobileDetection,
+		axiosUserService
+	],
 	model: {
 		prop: 'editProfileModel',
 		event: 'update'
@@ -104,8 +108,7 @@ export default {
 	},
 	methods : {
 		loadInfo() {
-			axios
-				.get('/api/user/profile')
+			this.getOwnProfile()
 				.then((response) => {
 					this.description = response.data.data.description;
 					if(response.data.data.profilePicture != null) {
@@ -122,18 +125,15 @@ export default {
 				.catch((error) => console.error(error));
 		},
 		updateProfile() {
-			axios
-				.patch('/api/user/profile', {
-					description: this.description,
-					profilePicture:this.profilePic,
-					isPublic: this.isPublic,
-				})
-				.then((response) => {
-					router.push('/profile');
-					router.go();
+			this.patchProfile(
+				this.description,
+				this.profilePic,
+				this.isPublic
+			).then((response) => {
+				router.push('/profile');
+				router.go();
 
-				})
-				.catch((error) => console.error(error));
+			}).catch((error) => console.error(error));
 		},
 	}
 };

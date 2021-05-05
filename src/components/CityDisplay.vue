@@ -101,9 +101,9 @@
 import Modal from '../components/Modal.vue';
 import Card from '../components/Card.vue';
 import CityActionsMenu from '../components/CityActionsMenu.vue';
-import axios from 'axios';
 import mobileDetection from './mixins/mobileDetection';
 import router from '../router';
+import axiosCityService from './mixins/axiosCityService';
 
 export default {
 	name: 'CityDisplay',
@@ -112,7 +112,10 @@ export default {
 		Card,
 		CityActionsMenu
 	},
-	mixins: [ mobileDetection ],
+	mixins: [
+		mobileDetection,
+		axiosCityService
+	],
 	model: {
 		prop: 'cityDisplayModel',
 		event: 'update'
@@ -134,13 +137,11 @@ export default {
 		data() {
 			if (this.$route.params.id !== undefined)
 			// On recupere les infos de la ville avec l'id dans la route
-				axios
-					.get('/api/cities/' + this.$route.params.id)
+				this.getCity(this.$route.params.id)
 					.then((response) => {
 						this.cityName = response.data.data.name;
 						// On recupere l'image de la premiere oeuvre
-						axios
-							.get('/api/cities/' + this.$route.params.id + '/arts')
+						this.getCityArts(this.$route.params.id)
 							.then((response) => {
 								this.image = response.data.data[0].pictures[0];
 								this.artList = response.data.data;
