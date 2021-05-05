@@ -25,10 +25,12 @@
 			<div
 				v-if="connected">
 				<Header style="height: 160px">
-					<Photo
-						class="mx-auto picture"
-						:link-photo="(profilePicture != null) ? profilePicture : placeholder"
-						:forme="forme" />
+					<router-link to="/profile">
+						<Photo
+							class="mx-auto picture"
+							:link-photo="(profilePicture != null) ? profilePicture : placeholder"
+							:forme="forme" />
+					</router-link>
 					<p
 						class="userDisplay titles mb-0 mt-2 ">
 						{{ username }}
