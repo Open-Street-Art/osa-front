@@ -98,7 +98,6 @@ import Modal from '../components/Modal.vue';
 import Header from '../components/Header.vue';
 import MediaInput from '../components/MediaInput.vue';
 import LocationPicker from '../components/LocationPicker.vue';
-import axios from 'axios';
 import router from '../router';
 import mobileDetection from './mixins/mobileDetection';
 import axiosArtService from './mixins/axiosArtService';
@@ -172,6 +171,12 @@ export default {
 					})
 					.catch((error) => console.error(error));
 		}
+	},
+	mounted() {
+		window.addEventListener('keyup', this.sendContribOnEnter);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keyup', this.sendContribOnEnter);
 	},
 	methods : {
 		sendContrib() {
@@ -247,6 +252,11 @@ export default {
 				router.push('/');
 				router.go();
 			}).catch((error) => console.error(error));
+		},
+		sendContribOnEnter(event) {
+			if (event.code == 'Enter' && this.data) {
+				this.sendContrib();
+			}
 		}
 	}
 };

@@ -32,6 +32,10 @@
 							@update="search"
 							@click:clear="getMapPins">
 							<div class="mb-4" />
+							<v-progress-linear
+								v-if="isLoading"
+								indeterminate
+								color="primary" />
 							<div
 								v-for="{id, title, desc, img} in searchList"
 								:key="id">
@@ -110,6 +114,7 @@ import jwt_decode from 'jwt-decode';
 import router from '../router';
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster';
 import axiosSearchService from '../components/mixins/axiosSearchService';
+import axiosArtService from '../components/mixins/axiosArtService';
 
 export default {
 	name: 'Home',
@@ -126,7 +131,8 @@ export default {
 		'v-marker-cluster': Vue2LeafletMarkerCluster
 	},
 	mixins: [
-		axiosSearchService
+		axiosSearchService,
+		axiosArtService
 	],
 	props: {
 		artDisplay: {
@@ -277,16 +283,13 @@ export default {
 		},
 		getMapPins() {
 			var tempPinList = [];
-			axios
-				.get('/api/arts/locations')
-				.then((response) => {
-					var array = response.data.data;
-					for(let i = 0;i < array.length;++i) {
-						tempPinList.push(array[i]);
-					}
-					this.pinList = tempPinList;
-				})
-				.catch((error) => console.error(error));
+			this.getArtsLocations().then((response) => {
+				var array = response.data.data;
+				for(let i = 0;i < array.length;++i) {
+					tempPinList.push(array[i]);
+				}
+				this.pinList = tempPinList;
+			}).catch((error) => console.error(error));
 		},
 		pinPopup(id) {
 			this.isLoading = true;
@@ -321,6 +324,7 @@ export default {
 			this.changeArtAdminModal = false;
 		},
 		search() {
+			this.isLoading = true;
 			if(this.searchValue != null && this.searchValue.length > 1 ) {
 				var res = {
 					searchList: [],
@@ -353,6 +357,7 @@ export default {
 								this.pinList = res.pinList;
 								this.searchCount = res.searchCount;
 							}
+							this.isLoading = false;
 						}).catch((error) => console.error(error));
 					}).catch((error) => console.error(error));
 				}).catch((error) => console.error(error));

@@ -105,6 +105,11 @@ export default {
 			axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
 		}
 		this.loadInfo();
+
+		window.addEventListener('keyup', this.updateOnEnter);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keyup', this.updateOnEnter);
 	},
 	methods : {
 		loadInfo() {
@@ -135,6 +140,11 @@ export default {
 
 			}).catch((error) => console.error(error));
 		},
+		updateOnEnter(event) {
+			if (event.code == 'Enter' && this.data) {
+				this.updateProfile();
+			}
+		}
 	}
 };
 </script>

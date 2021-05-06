@@ -47,7 +47,8 @@
 		"cancel":"Cancel",
 		"validate":"Sign In",
 		"profilType": "Artist account",
-		"error" : "Register failed."
+		"error" : "Register failed.",
+		"authenticateSuggestion": "Already have an account ? Log-in here !"
 	},
 	"authenticate": {
 		"title": "Log In",
@@ -55,7 +56,8 @@
 		"password": "Password",
 		"cancel": "Cancel",
 		"login": "Log In",
-		"error" : "Connection failed."
+		"error" : "Connection failed.",
+		"registerSuggestion": "You do not have am account ? Register here !"
 	},
 	"contribution": {
 		"title": "Suggest an art",

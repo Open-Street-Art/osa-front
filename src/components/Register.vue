@@ -36,6 +36,13 @@
 					v-model="profilType"
 					class="pt-0 pb-1" />
 			</v-row>
+			<v-flex md12>
+				<a href="/authenticate">
+					<p class="text-center">
+						{{ $t('register.authenticateSuggestion') }}
+					</p>
+				</a>
+			</v-flex>
 		</v-container>
 		<v-container
 			class="buttons">
@@ -115,6 +122,12 @@ export default {
 			profilType: false
 		};
 	},
+	mounted() {
+		window.addEventListener('keyup', this.registerOnEnter);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keyup', this.registerOnEnter);
+	},
 	methods: {
 		register() {
 			this.registerUser(
@@ -137,6 +150,11 @@ export default {
 					console.error(error);
 					this.error = true;
 				});
+		},
+		registerOnEnter(event) {
+			if (event.code == 'Enter' && this.open) {
+				this.register();
+			}
 		}
 	}
 };

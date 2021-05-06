@@ -21,6 +21,13 @@
 						label-string="authenticate.password"
 						:show="false" />
 				</v-row>
+				<v-flex md12>
+					<a href="/register">
+						<p class="text-center">
+							{{ $t('authenticate.registerSuggestion') }}
+						</p>
+					</a>
+				</v-flex>
 			</v-container>
 		</v-container>
 		<v-container
@@ -80,6 +87,12 @@ export default {
 			error: false
 		};
 	},
+	mounted() {
+		window.addEventListener('keyup', this.authenticateOnEnter);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keyup', this.authenticateOnEnter);
+	},
 	methods: {
 		sendAuthentication() {
 			this.loginUser(this.username, this.password)
@@ -93,6 +106,11 @@ export default {
 					console.error(error);
 					this.error = true;
 				});
+		},
+		authenticateOnEnter(event) {
+			if (event.code == 'Enter' && this.data) {
+				this.sendAuthentication();
+			}
 		}
 	}
 };

@@ -40,14 +40,15 @@
 	},
 	"register":{
 		"title": "Inscription",
-		"email":"Adresse mail",
-		"username":"Nom d'utilisateur",
-	    "password":"Mot de passe",
-		"confirmPassword":"Confirmation de mot de passe",
+		"email": "Adresse mail",
+		"username": "Nom d'utilisateur",
+	    "password": "Mot de passe",
+		"confirmPassword": "Confirmation de mot de passe",
 		"cancel":"Annuler",
 		"validate":"Valider",
 		"profilType": "Profil artiste",
-		"error" : "L'inscription a échouée."
+		"error" : "L'inscription a échouée.",
+		"authenticateSuggestion": "Vous avez déjà un compte ? Connectez-vous ici !"
 	},
 	"authenticate": {
 		"title": "Connexion",
@@ -55,7 +56,8 @@
 		"password": "Mot de passe",
 		"cancel": "Annuler",
 		"login": "Valider",
-		"error" : "La connexion a échouée."
+		"error" : "La connexion a échouée.",
+		"registerSuggestion": "Vous n'avez pas de compte ? Inscrivez-vous ici !"
 	},
 	"contribution": {
 		"addArttitle": "Ajouter une œuvre",
