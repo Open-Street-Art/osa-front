@@ -31,17 +31,19 @@
 							indeterminate
 							color="primary" />
 					</div>
-					<div
-						v-for="{id, username, profilePicture} in searchList"
-						:key="id">
-						<div class="separator mt-1 mb-4" />
-						<card
-							class="searchResult"
-							:card-title="username"
-							card-desc=""
-							:round-img="true"
-							:img-src="(profilePicture != null) ? profilePicture : placeholder"
-							@click="getUser(id)" />
+					<div class="searchUserScroll">
+						<div
+							v-for="{id, username, profilePicture} in searchList"
+							:key="id">
+							<div class="separator mt-1 mb-4" />
+							<card
+								class="searchResult"
+								:card-title="username"
+								card-desc=""
+								:round-img="true"
+								:img-src="(profilePicture != null) ? profilePicture : placeholder"
+								@click="getUser(id)" />
+						</div>
 					</div>
 				</Searchbar>
 			</div>
@@ -154,6 +156,14 @@ export default {
 .searchbar {
 	border: 1px solid $light-color;
 }
+
+.searchUserScroll {
+	overflow-y:auto;
+	overflow-x: hidden;
+	min-height: 115px;
+	max-height: 341px;
+}
+
 
 </style>
 

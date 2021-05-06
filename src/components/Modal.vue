@@ -80,13 +80,13 @@ export default {
 	background-color: $white-color;
 	max-width: calc(100% - 20px) !important;
 	min-height: 100vh;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 
 .desktop-content {
 	min-height: 80vh;
 	background-color: $white-color;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 
 .modal-arrow {

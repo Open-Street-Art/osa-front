@@ -57,7 +57,4 @@ export default {
 	z-index: 12000 !important;
 }
 
-html {
-	overflow: hidden !important;
-}
 </style>

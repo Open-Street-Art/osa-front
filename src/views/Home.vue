@@ -31,21 +31,24 @@
 							:show-button="true"
 							@update="search"
 							@click:clear="getMapPins">
-							<div class="mb-4" />
-							<v-progress-linear
-								v-if="isLoading"
-								indeterminate
-								color="primary" />
 							<div
-								v-for="{id, title, desc, img} in searchList"
-								:key="id">
-								<div class="separator mt-1 mb-4" />
-								<card
-									class="searchResult"
-									:card-title="title"
-									:card-desc="desc"
-									:img-src="img"
-									@click="centerMap(id)" />
+								class="searchResultScroll">
+								<div class="mb-4" />
+								<v-progress-linear
+									v-if="isLoading"
+									indeterminate
+									color="primary" />
+								<div
+									v-for="{id, title, desc, img} in searchList"
+									:key="id">
+									<div class="separator mt-1 mb-4" />
+									<card
+										class="searchResult"
+										:card-title="title"
+										:card-desc="desc"
+										:img-src="img"
+										@click="centerMap(id)" />
+								</div>
 							</div>
 						</searchbar>
 					</v-row>
@@ -424,7 +427,13 @@ export default {
 }
 
 .searchResult {
-	width:100% !important
+	width:100% !important;
+}
+
+.searchResultScroll {
+	overflow-y:auto;
+	overflow-x: hidden;
+	height:270px;
 }
 
 .separator {
