@@ -213,7 +213,6 @@ export default {
 						} else {
 							this.isDecided = false;
 						}
-						console.log(response);
 					})
 					.catch((error) => console.error(error));
 			}

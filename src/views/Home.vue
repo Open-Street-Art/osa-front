@@ -61,6 +61,7 @@
 								:card-title="cardTitle"
 								:card-desc="cardDesc"
 								:img-src="imgSrc"
+								:is-loading="isLoading"
 								@click="pinClicked(id)" />
 						</pin>
 					</v-marker-cluster>
@@ -185,7 +186,8 @@ export default {
 					return L.divIcon({ html: markersCount, className: 'mycluster', iconSize: L.point(40, 40) });
 				}
 			},
-			actualPosition: [0, 0]
+			actualPosition: [0, 0],
+			isLoading: true
 		};
 	},
 	mounted() {
@@ -217,7 +219,6 @@ export default {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				this.actualPosition = [position.coords.latitude, position.coords.longitude];
-				console.log(position);
 			}
 		);
 	},
@@ -287,12 +288,14 @@ export default {
 				.catch((error) => console.error(error));
 		},
 		pinPopup(id) {
+			this.isLoading = true;
 			axios
 				.get('/api/arts/' + id)
 				.then((response) => {
 					this.cardTitle = response.data.data.name;
 					this.cardDesc = response.data.data.authorName;
 					this.imgSrc = response.data.data.pictures[0];
+					this.isLoading = false;
 				})
 				.catch((error) => console.error(error));
 		},

@@ -5,7 +5,16 @@
 		class="card"
 		elevation="0"
 		@click="$emit('click')">
-		<v-row>
+		<v-row v-if="isLoading">
+			<v-col offset="5">
+				<v-progress-circular
+					class="pin-loader"
+					:size="40"
+					indeterminate
+					color="primary" />
+			</v-col>
+		</v-row>
+		<v-row v-if="!isLoading">
 			<v-col
 				class="col-auto ml-3">
 				<img
@@ -49,6 +58,10 @@ export default {
 		width: {
 			default: '349',
 			type: String
+		},
+		isLoading: {
+			default: false,
+			type: Boolean
 		}
 	}
 };
@@ -71,4 +84,7 @@ export default {
 	border-radius: 10px;
 }
 
+.pin-loader {
+	margin-top: 5px;
+}
 </style>

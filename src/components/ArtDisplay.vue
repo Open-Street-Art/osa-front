@@ -2,8 +2,12 @@
 	<div>
 		<Modal
 			v-model="data"
-			@close="$emit('close')">
-			<v-container v-if="isMobile()">
+			@close="isClosing">
+			<v-progress-linear
+				v-if="isLoading"
+				indeterminate
+				color="primary" />
+			<v-container v-if="isMobile() && !isLoading">
 				<v-row>
 					<v-carousel
 						height="50%"
@@ -47,7 +51,7 @@
 				</v-row>
 				<v-row class="mt-1 mb-1">
 					<v-col class="pt-0 light">
-						{{ artAuthor }}
+						{{ artAuthor }},
 						<div
 							class="city-name"
 							@click="cityNameClicked">
@@ -72,7 +76,7 @@
 					</v-col>
 				</v-row>
 			</v-container>
-			<v-row v-if="!isMobile()">
+			<v-row v-if="!isMobile() && !isLoading">
 				<v-col cols="8">
 					<v-carousel
 						height="100%"
@@ -119,7 +123,7 @@
 					</v-row>
 					<v-row class="mt-0">
 						<v-col class="pt-2 light">
-							{{ artAuthor }}
+							{{ artAuthor }},
 							<div
 								class="city-name"
 								@click="cityNameClicked">
@@ -197,14 +201,15 @@ export default {
 			artCreationDT: new Date(),
 			contributionModal: false,
 			artCityId: null,
-			artLocation: null
+			artLocation: null,
+			isLoading: true
 		};
 	},
 	watch: {
 		data: {
 			immediate: true,
 			handler(b, a) {
-				if (this.$route.params.id !== undefined)
+				if (this.$route.params.id !== undefined && this.data == true)
 					this.getArt(this.$route.params.id)
 						.then((response) => {
 							this.artId = this.$route.params.id;
@@ -216,6 +221,7 @@ export default {
 							this.artCityId = response.data.data.city.id;
 							this.artCreationDT = new Date(response.data.data.creationDateTime);
 							this.artLocation = [response.data.data.latitude, response.data.data.longitude];
+							this.isLoading = false;
 						})
 						.catch((error) => console.error(error));
 				else {
@@ -236,6 +242,7 @@ export default {
 	},
 	methods: {
 		cityNameClicked() {
+			this.isLoading = true;
 			this.$emit('close');
 			this.$emit('cityClicked');
 			router.push('/city/' + this.artCityId);
@@ -246,6 +253,10 @@ export default {
 		},
 		modifyContrib() {
 			this.contributionModal = true;
+		},
+		isClosing() {
+			this.isLoading = true;
+			this.$emit('close');
 		}
 	}
 };

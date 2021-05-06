@@ -1,8 +1,12 @@
 <template>
 	<Modal
 		v-model="data"
-		@close="$emit('close')">
-		<v-container v-if="isMobile()">
+		@close="isClosing">
+		<v-progress-linear
+			v-if="isLoading"
+			indeterminate
+			color="primary" />
+		<v-container v-if="isMobile() && !isLoading">
 			<v-row>
 				<v-img :src="image" />
 			</v-row>
@@ -46,7 +50,7 @@
 				</div>
 			</v-row>
 		</v-container>
-		<v-row v-if="!isMobile()">
+		<v-row v-if="!isMobile() && !isLoading">
 			<v-col cols="8">
 				<v-img
 					min-height="100%"
@@ -130,12 +134,13 @@ export default {
 		return {
 			cityName: '',
 			image: '',
-			artList: []
+			artList: [],
+			isLoading: true
 		};
 	},
 	watch: {
 		data() {
-			if (this.$route.params.id !== undefined)
+			if (this.$route.params.id !== undefined && this.data == true)
 			// On recupere les infos de la ville avec l'id dans la route
 				this.getCity(this.$route.params.id)
 					.then((response) => {
@@ -145,6 +150,7 @@ export default {
 							.then((response) => {
 								this.image = response.data.data[0].pictures[0];
 								this.artList = response.data.data;
+								this.isLoading = false;
 							})
 							.catch((error) => console.error(error));
 					})
@@ -156,9 +162,14 @@ export default {
 	},
 	methods: {
 		artClicked(id) {
+			this.isLoading = true;
 			this.$emit('close');
 			this.$emit('art');
 			router.push('/art/' + id);
+		},
+		isClosing() {
+			this.isLoading = true;
+			this.$emit('close');
 		}
 	}
 };
