@@ -57,4 +57,8 @@ export default {
 	z-index: 12000 !important;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 </style>
