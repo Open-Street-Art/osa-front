@@ -19,7 +19,7 @@
 		"favArtists" : "Artistes favoris",
 		"favCities" : "Villes favorites",
 		"favArts" : "Œuvres favorites",
-		"artCount" : "œuvre(s)"
+		"artCount" : "œuvre | œuvres"
 	},
 	"artDisplay": {
 		"created": "Œuvre ajoutée le ",

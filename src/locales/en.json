@@ -19,7 +19,7 @@
 		"favArtists" : "Favorites artists",
 		"favCities" : "Favorites cities",
 		"favArts" : "Favorites arts",
-		"artCount" : "art(s)"
+		"artCount" : "art | arts"
 	},
 	"artDisplay": {
 		"created": "Art added on ",

@@ -193,7 +193,7 @@
 								:card-title="name"
 								:img-src="picture"
 								width="100%"
-								:card-desc="length + ' ' + $t('profile.artCount')"
+								:card-desc="length + ' ' + $tc('profile.artCount', length)"
 								@click="goToCity(id)" />
 							<div class="separator mb-4" />
 						</div>
