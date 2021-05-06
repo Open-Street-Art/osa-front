@@ -86,7 +86,7 @@ export default {
 .desktop-content {
 	min-height: 80vh;
 	background-color: $white-color;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 .modal-arrow {
