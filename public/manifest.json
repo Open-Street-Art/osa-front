@@ -1,6 +1,6 @@
 {
-	"short_name": "FirstVuePWA",
-	"name": "First Vue PWA App",
+	"short_name": "OpenStreetArt",
+	"name": "Open Street Art",
 	"icons": [
 	  {
 		"src": "/img/icons/android-chrome-192x192.png",
