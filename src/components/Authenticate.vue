@@ -21,6 +21,13 @@
 						label-string="authenticate.password"
 						:show="false" />
 				</v-row>
+				<v-flex md12>
+					<a href="/register">
+						<p class="text-center">
+							{{ $t('authenticate.registerSuggestion') }}
+						</p>
+					</a>
+				</v-flex>
 			</v-container>
 		</v-container>
 		<v-container

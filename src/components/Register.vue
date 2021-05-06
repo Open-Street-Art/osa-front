@@ -36,6 +36,13 @@
 					v-model="profilType"
 					class="pt-0 pb-1" />
 			</v-row>
+			<v-flex md12>
+				<a href="/authenticate">
+					<p class="text-center">
+						{{ $t('register.authenticateSuggestion') }}
+					</p>
+				</a>
+			</v-flex>
 		</v-container>
 		<v-container
 			class="buttons">

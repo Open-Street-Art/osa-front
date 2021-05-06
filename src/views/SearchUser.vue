@@ -26,6 +26,11 @@
 					:result-count="searchCount"
 					placeholder="searchUser-menu.title"
 					@update="search">
+					<div v-if="isLoading">
+						<v-progress-linear
+							indeterminate
+							color="primary" />
+					</div>
 					<div
 						v-for="{id, username, profilePicture} in searchList"
 						:key="id">
@@ -62,6 +67,7 @@ export default {
 	},
 	data() {
 		return {
+			isLoading: true,
 			drawer: false,
 			searchValue: '',
 			searchList: [],
@@ -87,7 +93,8 @@ export default {
 
 		},
 		search() {
-			if(this.searchValue != null && this.searchValue.length > 1 ) {
+			if (this.searchValue != null && this.searchValue.length > 1 ) {
+				this.isLoading = true;
 				axios
 					.get('/api/search/users/' + this.searchValue)
 					.then((response) => {
@@ -107,6 +114,7 @@ export default {
 							this.searchList = [];
 							this.searchCount = 0;
 						}
+						this.isLoading = false;
 					})
 					.catch((error) => console.error(error));
 			}
