@@ -68,6 +68,7 @@
 					<v-btn
 						fab
 						rounded
+						small
 						class="locate-button"
 						@click="locateUser">
 						<v-icon color="primary">
@@ -408,7 +409,7 @@ export default {
 .locate-button {
 	position: absolute;
 	z-index: 1000 !important;
-	bottom:70px;
+	bottom: 20px;
 	right: 10px;
 }
 

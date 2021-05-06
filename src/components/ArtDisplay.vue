@@ -133,7 +133,9 @@
 					</v-row>
 					<v-divider class="mt-5 mr-5" />
 					<v-row class="mt-1">
-						<v-col class="base">
+						<v-col
+							md="11"
+							class="base">
 							{{ artDesc }}
 						</v-col>
 					</v-row>
