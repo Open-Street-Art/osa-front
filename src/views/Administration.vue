@@ -21,6 +21,11 @@
 			</Header>
 			<div class="content">
 				<div
+					v-if="contribList.length == 0"
+					class="light placeholder">
+					{{ this.$t("admin-menu.placeholder") }}
+				</div>
+				<div
 					v-for="{id, name, author, picture1} in contribList"
 					:key="id">
 					<Card
@@ -114,6 +119,11 @@ export default {
 	height: calc(100vh - 60px);
   overflow: auto !important;
   padding: 12px;
+}
+
+.placeholder {
+	text-align: center;
+	margin-top: 2.5%;
 }
 
 </style>

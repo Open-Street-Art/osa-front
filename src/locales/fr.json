@@ -90,7 +90,8 @@
 		"deleted": "La ville a été supprimé de vos favoris."
 	},
 	"admin-menu" : {
-		"title": "Administrer les contributions"
+		"title": "Administrer les contributions",
+		"placeholder": "Il n'y a pas de nouvelle contribution disponible."
 	},
 	"searchUser-menu" : {
 		"title": "Rechercher un utilisateur"
