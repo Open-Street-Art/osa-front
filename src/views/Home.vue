@@ -419,22 +419,22 @@ export default {
 }
 
 .separator {
-		height: 1px;
-		background-color: $light-color;
-		width: 90%;
-		margin:auto
-	}
+	height: 1px;
+	background-color: $light-color;
+	width: 90%;
+	margin:auto
+}
 
-	.mycluster {
-			width: 40px;
-			height: 40px;
-			background-color: $main-color;
-			color: $white-color;
-			text-align: center;
-			padding-top: 5px;
-			font: $profile-font;
-			border: solid 3px $white-color;
-			border-radius: 24px;
-		}
+.mycluster {
+	width: 40px;
+	height: 40px;
+	background-color: $main-color;
+	color: $white-color;
+	text-align: center;
+	padding-top: 5px;
+	font: $profile-font;
+	border: solid 3px $white-color;
+	border-radius: 24px;
+}
 
 </style>
