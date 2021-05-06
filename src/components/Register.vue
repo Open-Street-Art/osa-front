@@ -122,6 +122,12 @@ export default {
 			profilType: false
 		};
 	},
+	mounted() {
+		window.addEventListener('keyup', this.registerOnEnter);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keyup', this.registerOnEnter);
+	},
 	methods: {
 		register() {
 			this.registerUser(
@@ -144,6 +150,11 @@ export default {
 					console.error(error);
 					this.error = true;
 				});
+		},
+		registerOnEnter(event) {
+			if (event.code == 'Enter' && this.open) {
+				this.register();
+			}
 		}
 	}
 };
