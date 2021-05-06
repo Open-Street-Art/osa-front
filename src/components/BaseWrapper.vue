@@ -90,8 +90,8 @@
 			<v-btn
 				v-model="$i18n.locale"
 				class="localeChanger"
-				fab
-				small
+				icon
+				x-small
 				@click="switchLocale">
 				<div
 					class="lang-icon"
@@ -273,8 +273,6 @@ export default {
 		this.langStyle = {
 			'background-image' : 'url(/img/lang/' + this.$i18n.locale + '.png)'
 		};
-		//this.langIcon = '/img/lang/' + this.$i18n.locale + '.png';
-
 	},
 	methods : {
 		addArtClicked() {
@@ -374,8 +372,8 @@ div.view {
 
 .localeChanger {
 	position: absolute;
-	bottom: 10px;
-	left: 50px;
+	bottom: 20px;
+	left: 55px;
 }
 
 .accountSettings {
@@ -401,9 +399,7 @@ div.view {
 .lang-icon {
 	width: 36px !important;
 	height: 36px !important;
-
 	border-radius: 50%;
-
 	background-position: center center;
 	background-size: cover;
 }

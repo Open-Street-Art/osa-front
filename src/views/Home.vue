@@ -178,7 +178,7 @@ export default {
 			gotData: false,
 			authenticateModal: false,
 			isAdmin: false,
-			centerTest: [49.386758892241396, 1.0686564445495608],
+			centerTest: [49.43671, 1.09294],
 			clusterOptions: {
 				iconCreateFunction : (cluster) => {
 					let markersCount = cluster.getChildCount();

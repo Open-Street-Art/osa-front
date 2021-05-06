@@ -49,7 +49,7 @@ export default {
 	props: {
 		baseCenter: {
 			type: Array,
-			default: () => [49.386758892241396, 1.0686564445495608]
+			default: () => [49.43671, 1.09294]
 		},
 		url: {
 			type: String,
@@ -71,7 +71,7 @@ export default {
 	data () {
 		return {
 			zoom: 3,
-			center: [47.413220, -1.219482],
+			center: [49.43671, 1.09294],
 			markerLatLng: [30, 1.0686564445495608],
 			bounds: null,
 			icon: L.divIcon({
