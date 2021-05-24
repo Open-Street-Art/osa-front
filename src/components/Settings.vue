@@ -42,15 +42,18 @@
 			<v-form v-model="valid">
 				<TextInput
 					v-model="oldPassword"
-					label-string="settings.oldPsw" />
+					label-string="settings.oldPsw"
+					:show="false" />
 				<TextInput
 					v-model="newPassword"
 					label-string="settings.newPsw"
-					:input-rules="rules.password" />
+					:input-rules="rules.password"
+					:show="false" />
 				<TextInput
 					v-model="confirmPassword"
 					label-string="settings.confirmPsw"
-					:input-rules="rules.confirmPassword" />
+					:input-rules="rules.confirmPassword"
+					:show="false" />
 			</v-form>
 		</v-container>
 		<v-container

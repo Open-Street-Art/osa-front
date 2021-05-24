@@ -81,24 +81,39 @@
 						@click="adminClicked" />
 				</ActionsMenu>
 			</v-container>
-			<v-btn
-				class="accountSettings"
-				fab
-				small
-				text
-				@click="settingsClicked">
-				<v-icon>mdi-cog</v-icon>
-			</v-btn>
-			<v-btn
-				v-model="$i18n.locale"
-				class="localeChanger"
-				icon
-				x-small
-				@click="switchLocale">
-				<div
-					class="lang-icon"
-					:style="langStyle" />
-			</v-btn>
+			<div v-if="connected">
+				<v-btn
+					v-if="connected"
+					class="accountSettings"
+					fab
+					small
+					text
+					@click="settingsClicked">
+					<v-icon>mdi-cog</v-icon>
+				</v-btn>
+				<v-btn
+					v-model="$i18n.locale"
+					class="localeChanger"
+					icon
+					x-small
+					@click="switchLocale">
+					<div
+						class="lang-icon"
+						:style="langStyle" />
+				</v-btn>
+			</div>
+			<div v-if="!connected">
+				<v-btn
+					v-model="$i18n.locale"
+					class="localeChangerAlone"
+					icon
+					x-small
+					@click="switchLocale">
+					<div
+						class="lang-icon"
+						:style="langStyle" />
+				</v-btn>
+			</div>
 			<v-btn
 				class="logout"
 				fab
@@ -376,6 +391,12 @@ div.view {
 	position: absolute;
 	bottom: 20px;
 	left: 55px;
+}
+
+.localeChangerAlone {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
 }
 
 .accountSettings {
