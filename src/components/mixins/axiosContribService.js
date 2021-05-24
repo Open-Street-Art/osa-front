@@ -19,7 +19,7 @@ export default {
 			return axios
 				.post('/api/contribs/' + artId, {
 					name: name,
-					description: description,
+					description: desc,
 					picture1: pic1,
 					picture2: pic2,
 					picture3: pic3,

@@ -77,6 +77,7 @@ import Header from './Header.vue';
 import router from '../router';
 import Snackbar from './Snackbar.vue';
 import axiosUserService from './mixins/axiosUserService';
+import axios from 'axios';
 
 export default {
 	name: 'Register',

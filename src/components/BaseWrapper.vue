@@ -115,6 +115,7 @@
 				</v-btn>
 			</div>
 			<v-btn
+				v-if="connected"
 				class="logout"
 				fab
 				small

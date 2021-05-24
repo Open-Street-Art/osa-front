@@ -143,7 +143,7 @@ export default {
 	},
 	data() {
 		return {
-			descLimit: 160,
+			descLimit: 300,
 			descRows: 8,
 			name: '',
 			artist: '',
